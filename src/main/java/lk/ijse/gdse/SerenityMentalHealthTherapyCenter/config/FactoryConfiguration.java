@@ -1,9 +1,11 @@
 package lk.ijse.gdse.SerenityMentalHealthTherapyCenter.config;
 
+import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.entity.*;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
+import javax.management.relation.Role;
 import java.io.InputStream;
 import java.util.Properties;
 
@@ -27,7 +29,14 @@ public class FactoryConfiguration {
 
         // Build the SessionFactory
         try {
-            Configuration configuration = new Configuration().addProperties(properties);
+            Configuration configuration = new Configuration().addProperties(properties)
+                    .addAnnotatedClass(User.class)
+                    .addAnnotatedClass(Patient.class)
+                    .addAnnotatedClass(Payment.class)
+                    .addAnnotatedClass(Reservation.class)
+                    .addAnnotatedClass(Therapist.class)
+                    .addAnnotatedClass(TherapyProgram.class);
+
             sessionFactory = configuration.buildSessionFactory();
         } catch (Exception e) {
             e.printStackTrace();
