@@ -4,31 +4,53 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
-import java.io.FileInputStream;
-import java.io.IOException;
+import java.io.InputStream;
 import java.util.Properties;
 
 public class FactoryConfiguration {
     private static FactoryConfiguration factoryConfiguration;
     private final SessionFactory sessionFactory;
 
-    private FactoryConfiguration(){
+    private FactoryConfiguration() {
         Properties properties = new Properties();
-        try {
-            properties.load(new FileInputStream("hibernate.properties"));
-        }catch (IOException e) {
+
+        // Load hibernate.properties from classpath (src/main/resources)
+        try (InputStream input = FactoryConfiguration.class.getClassLoader().getResourceAsStream("hibernate.properties")) {
+            if (input == null) {
+                throw new RuntimeException("'hibernate.properties' file not found in classpath (src/main/resources).");
+            }
+            properties.load(input);
+        } catch (Exception e) {
             e.printStackTrace();
+            throw new RuntimeException(" Failed to load 'hibernate.properties' file.", e);
         }
-        Configuration configuration = new Configuration()
-                .addProperties(properties);
-        sessionFactory = configuration.buildSessionFactory();
+
+        // Build the SessionFactory
+        try {
+            Configuration configuration = new Configuration().addProperties(properties);
+            sessionFactory = configuration.buildSessionFactory();
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException(" Failed to build SessionFactory.", e);
+        }
     }
 
-    public static FactoryConfiguration getInstance(){
-        return (factoryConfiguration == null) ? factoryConfiguration = new FactoryConfiguration() : factoryConfiguration;
+    public static FactoryConfiguration getInstance() {
+        if (factoryConfiguration == null) {
+            synchronized (FactoryConfiguration.class) {
+                if (factoryConfiguration == null) {
+                    factoryConfiguration = new FactoryConfiguration();
+                }
+            }
+        }
+        return factoryConfiguration;
     }
 
-    public Session getSession(){
-        return sessionFactory.openSession();
+    public Session getSession() {
+        if (sessionFactory != null) {
+            return sessionFactory.openSession();
+        } else {
+            throw new IllegalStateException(" SessionFactory is not initialized.");
+        }
     }
 }

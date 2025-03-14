@@ -1,4 +1,4 @@
 package lk.ijse.gdse.SerenityMentalHealthTherapyCenter.dto;
 
-public class TherapySession {
+public class Reservation {
 }
