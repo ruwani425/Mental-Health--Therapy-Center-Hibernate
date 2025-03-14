@@ -13,7 +13,7 @@ public class Appinitializer extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/dashboard-view.fxml"))));
+        stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/admin-dashboard.fxml"))));
         stage.show();
     }
 }
