@@ -1,6 +1,10 @@
 module hello.serenitymentalhealththerapycenter {
     requires javafx.controls;
     requires javafx.fxml;
+    requires com.jfoenix;
+    requires static lombok;
+    requires net.sf.jasperreports.core;
+
     requires org.hibernate.orm.core;
     requires jakarta.persistence;
     requires java.naming;
