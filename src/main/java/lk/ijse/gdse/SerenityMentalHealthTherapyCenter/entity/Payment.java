@@ -21,5 +21,4 @@ public class Payment {
     private String status;
     private Double cost;
     private Date paymentDate;
-    //create payment clss
 }
