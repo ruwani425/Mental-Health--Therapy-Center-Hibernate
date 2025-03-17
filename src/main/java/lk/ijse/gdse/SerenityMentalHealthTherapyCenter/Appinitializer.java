@@ -15,7 +15,7 @@ public class Appinitializer extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/admin-dashboard.fxml"))));
+        stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/welcome-view.fxml"))));
         stage.show();
         Session session = FactoryConfiguration.getInstance().getSession();
         session.close();

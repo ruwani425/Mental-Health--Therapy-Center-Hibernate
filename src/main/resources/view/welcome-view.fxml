@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="456.0" prefWidth="669.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.gdse.SerenityMentalHealthTherapyCenter.controller.WelcomeViewController">
+   <children>
+      <ImageView fitHeight="456.0" fitWidth="702.0" layoutX="-4.0" layoutY="-1.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../asserts/white-cement-wall.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="recipImg" fitHeight="115.0" fitWidth="115.0" layoutX="104.0" layoutY="165.0" onMouseClicked="#navigateLoginPageReceptionist" onMouseEntered="#onMouseEnterdImg" onMouseExited="#onMouseExitedImg" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../asserts/img_2.png" />
+         </image></ImageView>
+      <Label layoutX="116.0" layoutY="285.0" prefHeight="18.0" prefWidth="115.0" text="Receptionist" />
+      <ImageView fx:id="adminImg" fitHeight="108.0" fitWidth="108.0" layoutX="413.0" layoutY="163.0" onMouseClicked="#navigateToLoginPageAdmin" onMouseEntered="#onMouseEnterdImg" onMouseExited="#onMouseExitedImg" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../asserts/admin.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="433.0" layoutY="280.0" prefHeight="18.0" prefWidth="99.0" text="Administrator" textFill="#251e25" />
+      <Separator layoutX="44.0" layoutY="95.0" prefHeight="0.0" prefWidth="571.0" />
+      <Separator layoutX="52.0" layoutY="393.0" prefHeight="3.0" prefWidth="571.0" />
+      <Label layoutX="156.0" layoutY="48.0" prefHeight="32.0" prefWidth="374.0" text="Serenity Mental Health Theraphy Center">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font></Label>
+      <Label layoutX="152.0" layoutY="405.0" prefHeight="18.0" prefWidth="392.0" text="© 2025 Serenity Mental Health Therapy Center. All Rights Reserved.">
+         <font>
+            <Font size="12.0" />
+         </font></Label>
+      <Label layoutX="240.0" layoutY="423.0" prefHeight="18.0" prefWidth="185.0" text="Developed by Ruwani Ranthika.">
+         <font>
+            <Font size="12.0" />
+         </font></Label>
+      <Label layoutX="205.0" layoutY="357.0" prefHeight="18.0" prefWidth="268.0" text="Please Pick a role to access the system.." textFill="#d31010">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </Label>
+      <Label layoutX="276.0" layoutY="10.0" prefHeight="35.0" prefWidth="115.0" text="Welcome">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>
