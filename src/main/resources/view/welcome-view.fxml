@@ -11,7 +11,7 @@
    <children>
       <ImageView fitHeight="456.0" fitWidth="702.0" layoutX="-4.0" layoutY="-1.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../asserts/white-cement-wall.jpg" />
+            <Image url="@../asserts/gradient-abstract-borders.jpg" />
          </image>
       </ImageView>
       <ImageView fx:id="recipImg" fitHeight="115.0" fitWidth="115.0" layoutX="104.0" layoutY="165.0" onMouseClicked="#navigateLoginPageReceptionist" onMouseEntered="#onMouseEnterdImg" onMouseExited="#onMouseExitedImg" pickOnBounds="true" preserveRatio="true">
