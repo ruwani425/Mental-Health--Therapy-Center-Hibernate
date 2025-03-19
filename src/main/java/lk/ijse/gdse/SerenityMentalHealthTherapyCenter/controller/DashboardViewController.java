@@ -2,12 +2,16 @@ package lk.ijse.gdse.SerenityMentalHealthTherapyCenter.controller;
 
 import javafx.animation.ScaleTransition;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
+
+import java.io.IOException;
 
 public class DashboardViewController {
     public AnchorPane homeAnchor;
@@ -57,6 +61,44 @@ public class DashboardViewController {
             scaleT.setToY(1);
             scaleT.play();
             icon.setEffect(null);
+        }
+    }
+
+    @FXML
+    void navigateBookingPage(MouseEvent event) {
+        loadPage("appointment-view.fxml");
+    }
+
+    @FXML
+    void navigatePatientsPage(MouseEvent event) {
+        loadPage("patient-view.fxml");
+    }
+
+    @FXML
+    void navigateProgramsPage(MouseEvent event) {
+        loadPage("theraphy-program-view.fxml");
+    }
+
+    @FXML
+    void navigateSettingsPage(MouseEvent event) {
+        loadPage("setting-view.fxml");
+    }
+
+    @FXML
+    void navigateTherapistsPage(MouseEvent event) {
+        loadPage("therapists-view.fxml");
+    }
+
+    private void loadPage(String fxmlFile) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/" + fxmlFile));
+            AnchorPane newPane = loader.load();
+
+            homeAnchor.getChildren().setAll(newPane);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.err.println("Failed to load " + fxmlFile);
         }
     }
 
