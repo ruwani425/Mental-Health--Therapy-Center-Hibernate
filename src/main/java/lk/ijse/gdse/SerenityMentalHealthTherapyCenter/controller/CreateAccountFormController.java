@@ -16,10 +16,8 @@ public class CreateAccountFormController {
 
     public void navigateToLoginPage(ActionEvent actionEvent) {
         try {
-            // Load the login view
             Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/view/login-view.fxml")));
 
-            // Get the current stage and change the scene
             Stage stage = (Stage) btnCreate.getScene().getWindow();
             stage.setScene(new Scene(root));
             stage.centerOnScreen();

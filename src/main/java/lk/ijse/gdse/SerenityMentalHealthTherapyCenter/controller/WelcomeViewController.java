@@ -19,6 +19,7 @@ public class WelcomeViewController {
     public ImageView adminImg;
 
     public void navigateLoginPageReceptionist(MouseEvent mouseEvent) {
+        LoginViewController.selectedRole = "Receptionist";
         loadLoginPage("login-view.fxml", mouseEvent);
     }
 
@@ -41,6 +42,7 @@ public class WelcomeViewController {
     }
 
     public void navigateToLoginPageAdmin(MouseEvent mouseEvent) {
+        LoginViewController.selectedRole = "Admin";
         loadLoginPage("login-view.fxml", mouseEvent);
     }
 

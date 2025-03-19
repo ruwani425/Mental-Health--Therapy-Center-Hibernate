@@ -1,4 +1,4 @@
 package lk.ijse.gdse.SerenityMentalHealthTherapyCenter.controller;
 
-public class ReceptionistDashboardController {
+public class PatientsViewController {
 }

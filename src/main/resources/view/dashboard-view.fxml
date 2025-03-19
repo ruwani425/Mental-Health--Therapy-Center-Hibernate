@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane prefHeight="657.0" prefWidth="1153.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.gdse.SerenityMentalHealthTherapyCenter.controller.DashboardViewController">
+   <children>
+      <AnchorPane fx:id="homeAnchor" layoutX="206.0" prefHeight="660.0" prefWidth="990.0" />
+      <ImageView fitHeight="660.0" fitWidth="222.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../asserts/RectangleDashboard.png" />
+         </image>
+      </ImageView>
+      <VBox layoutX="19.0" layoutY="37.0" prefHeight="447.0" prefWidth="165.0" spacing="20.0">
+         <children>
+            <ImageView fx:id="imgHomeBtn" fitHeight="42.0" fitWidth="174.0" onMouseEntered="#onMouseEnterdBtn" onMouseExited="#onMouseExitedBtn" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../asserts/homeBtn.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="imgPatientsBtn" fitHeight="42.0" fitWidth="174.0" onMouseEntered="#onMouseEnterdBtn" onMouseExited="#onMouseExitedBtn" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../asserts/patientsBtn.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="imgBookingsBtn" fitHeight="42.0" fitWidth="174.0" onMouseEntered="#onMouseEnterdBtn" onMouseExited="#onMouseExitedBtn" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../asserts/bookingsBtn.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="imgProgramsBtn" fitHeight="42.0" fitWidth="174.0" onMouseEntered="#onMouseEnterdBtn" onMouseExited="#onMouseExitedBtn" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../asserts/programsBtn.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="imgTherapistsBtn" fitHeight="42.0" fitWidth="174.0" onMouseEntered="#onMouseEnterdBtn" onMouseExited="#onMouseExitedBtn" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../asserts/theraphysistsBtn.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="imgSettingsBtn" fitHeight="42.0" fitWidth="174.0" onMouseEntered="#onMouseEnterdBtn" onMouseExited="#onMouseExitedBtn" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../asserts/settingsBtn.png" />
+               </image>
+            </ImageView>
+         </children>
+      </VBox>
+      <ImageView fitHeight="701.0" fitWidth="988.0" layoutX="208.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../asserts/img_4.png" />
+         </image>
+      </ImageView>
+   </children>
+</AnchorPane>
