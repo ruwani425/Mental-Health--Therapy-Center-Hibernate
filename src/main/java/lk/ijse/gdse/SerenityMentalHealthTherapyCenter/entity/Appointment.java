@@ -1,14 +1,13 @@
 package lk.ijse.gdse.SerenityMentalHealthTherapyCenter.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.sql.Date;
-import java.sql.Timestamp;
+
 
 @Entity
 @NoArgsConstructor
@@ -18,8 +17,19 @@ import java.sql.Timestamp;
 public class Appointment {
     @Id
     private String appointmentId;
-    private Date reservationDate;
+    private Date startDate;
+    private Date endDate;
     private String description;
-    private Timestamp startTime;
-    private Timestamp endTime;
+
+    @ManyToOne
+    private Therapist therapist;
+
+    @ManyToOne
+    private Patient patient;
+
+    @ManyToOne
+    private TherapyProgram therapyProgram;
+
+    @ManyToOne
+    private Payment payment;
 }

@@ -1,11 +1,12 @@
 package lk.ijse.gdse.SerenityMentalHealthTherapyCenter.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.List;
 
 @Entity
 @NoArgsConstructor
@@ -18,4 +19,7 @@ public class TherapyProgram {
     private String programName;
     private String duration;
     private double programFee;
+
+    @OneToMany(mappedBy = "therapyProgram", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Appointment> appointmentList;
 }

@@ -17,7 +17,7 @@ public class Appinitializer extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        stage.setScene(new Scene(FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/view/welcome-view.fxml")))));
+        stage.setScene(new Scene(FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/view/login-view.fxml")))));
         stage.show();
         stage.resizableProperty().setValue(Boolean.FALSE);
         Session session = FactoryConfiguration.getInstance().getSession();
