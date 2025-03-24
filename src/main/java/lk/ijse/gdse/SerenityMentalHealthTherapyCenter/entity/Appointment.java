@@ -15,9 +15,9 @@ import java.sql.Timestamp;
 @AllArgsConstructor
 @Getter
 @Setter
-public class Reservation {
+public class Appointment {
     @Id
-    private String reservationId;
+    private String appointmentId;
     private Date reservationDate;
     private String description;
     private Timestamp startTime;

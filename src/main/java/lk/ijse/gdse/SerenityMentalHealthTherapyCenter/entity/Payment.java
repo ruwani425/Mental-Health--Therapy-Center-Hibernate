@@ -19,6 +19,6 @@ public class Payment {
     @Id
     private String paymentId;
     private String status;
-    private Double cost;
+    private Double amount;
     private Date paymentDate;
 }

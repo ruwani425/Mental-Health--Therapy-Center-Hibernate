@@ -16,7 +16,6 @@ import lombok.Setter;
 public class Patient {
     @Id
     private String patientId;
-
     private String firstName;
     private String lastName;
     private String gender;

@@ -5,13 +5,15 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Payment {
-    private String paymentId;
-    private String status;
-    private Double amount;
-    private Date paymentDate;
+public class Appointment {
+    private String appointmentId;
+    private Date reservationDate;
+    private String description;
+    private Timestamp startTime;
+    private Timestamp endTime;
 }
