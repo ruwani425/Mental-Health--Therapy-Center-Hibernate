@@ -26,11 +26,10 @@
       <TableView layoutX="27.0" layoutY="406.0" prefHeight="227.0" prefWidth="943.0">
         <columns>
           <TableColumn prefWidth="121.33332824707031" text="Appointment Id" />
-          <TableColumn prefWidth="113.0" text="Date" />
-            <TableColumn prefWidth="134.33334350585938" text="Therapist" />
-            <TableColumn prefWidth="190.0" text="Patient" />
-            <TableColumn prefWidth="190.6666259765625" text="Therapy Program" />
-            <TableColumn prefWidth="191.0" text="Fee" />
+          <TableColumn prefWidth="170.33334350585938" text="Date" />
+            <TableColumn prefWidth="220.66665649414062" text="Therapist" />
+            <TableColumn prefWidth="206.33331298828125" text="Patient" />
+            <TableColumn prefWidth="223.3333740234375" text="Therapy Program" />
         </columns>
       </TableView>
       <Label layoutX="561.0" layoutY="159.0" text="Patient" />
