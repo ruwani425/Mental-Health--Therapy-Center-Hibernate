@@ -16,6 +16,7 @@ import java.sql.Timestamp;
 @AllArgsConstructor
 public class TherapySession {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private String therapySessionId;
     private Date date;
     private Timestamp startTime;

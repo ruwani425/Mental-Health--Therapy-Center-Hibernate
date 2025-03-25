@@ -7,22 +7,23 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.dto.tm.TherapyProgramTM;
 
 public class TheraphyProgramViewController {
     @FXML
-    private TableView<?> tblProgram;
+    private TableView<TherapyProgramTM> tblProgram;
 
     @FXML
-    private TableColumn<?, ?> colProgramID;
+    private TableColumn<TherapyProgramTM, String> colProgramID;
 
     @FXML
-    private TableColumn<?, ?> colProgramName;
+    private TableColumn<TherapyProgramTM, String> colProgramName;
 
     @FXML
-    private TableColumn<?, ?> colProgramDuration;
+    private TableColumn<TherapyProgramTM, String> colProgramDuration;
 
     @FXML
-    private TableColumn<?, ?> colProgramFee;
+    private TableColumn<TherapyProgramTM, Double> colProgramFee;
 
     @FXML
     private JFXTextField txtProgramName;

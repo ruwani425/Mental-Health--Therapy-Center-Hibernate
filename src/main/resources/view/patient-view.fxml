@@ -2,6 +2,7 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
@@ -22,15 +23,13 @@
             <TableColumn fx:id="colPhone" prefWidth="161.0" text="phone" />
         </columns>
       </TableView>
-      <Label layoutX="39.0" layoutY="86.0" text="Patient Id" />
-      <Label fx:id="lblPatientId" layoutX="155.0" layoutY="84.0" prefHeight="26.0" prefWidth="99.0" />
-      <Label layoutX="38.0" layoutY="133.0" prefHeight="26.0" prefWidth="64.0" text="Name" />
-      <Label layoutX="38.0" layoutY="183.0" prefHeight="26.0" prefWidth="64.0" text="Address" />
+      <Label layoutX="38.0" layoutY="102.0" prefHeight="26.0" prefWidth="64.0" text="Name" />
+      <Label layoutX="38.0" layoutY="152.0" prefHeight="26.0" prefWidth="64.0" text="Address" />
       <Label layoutX="503.0" layoutY="181.0" prefHeight="26.0" prefWidth="84.0" text="Date of birth" />
       <Label layoutX="503.0" layoutY="108.0" prefHeight="26.0" prefWidth="63.0" text="E mail" />
       <Label layoutX="502.0" layoutY="54.0" text="Phone" />
-      <JFXTextField fx:id="txtPatientName" layoutX="155.0" layoutY="124.0" prefHeight="28.0" prefWidth="250.0" />
-      <JFXTextField fx:id="txtPatientAddress" layoutX="155.0" layoutY="182.0" prefHeight="28.0" prefWidth="250.0" />
+      <JFXTextField fx:id="txtPatientName" layoutX="155.0" layoutY="93.0" prefHeight="28.0" prefWidth="250.0" />
+      <JFXTextField fx:id="txtPatientAddress" layoutX="155.0" layoutY="151.0" prefHeight="28.0" prefWidth="250.0" />
       <JFXTextField fx:id="txtPatientPhone" layoutX="643.0" layoutY="37.0" prefHeight="28.0" prefWidth="250.0" />
       <JFXTextField fx:id="txtPatientEmail" layoutX="644.0" layoutY="97.0" prefHeight="28.0" prefWidth="250.0" />
       <DatePicker fx:id="datePickerDob" layoutX="645.0" layoutY="175.0" prefHeight="28.0" prefWidth="150.0" />
@@ -43,5 +42,7 @@
       </HBox>
       <Label layoutX="39.0" layoutY="38.0" text="Search" />
       <TextField fx:id="txtSearch" layoutX="155.0" layoutY="33.0" onKeyPressed="#txtSearchOnAction" prefHeight="28.0" prefWidth="181.0" promptText="type here..." />
+      <Label layoutX="36.0" layoutY="206.0" prefHeight="26.0" prefWidth="64.0" text="Gender" />
+      <ComboBox fx:id="cmbGender" layoutX="155.0" layoutY="205.0" prefHeight="28.0" prefWidth="99.0" />
    </children>
 </AnchorPane>

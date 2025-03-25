@@ -16,6 +16,7 @@ import java.sql.Date;
 @Setter
 public class Appointment {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private String appointmentId;
     private Date date;
 

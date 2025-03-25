@@ -8,6 +8,9 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.dto.tm.AppointmentTM;
+
+import java.sql.Date;
 
 public class AppointmentViewController {
     @FXML
@@ -17,31 +20,31 @@ public class AppointmentViewController {
     private DatePicker datePickerDate;
 
     @FXML
-    private ComboBox<?> cmbTherapist;
+    private ComboBox<String> cmbTherapist;
 
     @FXML
-    private ComboBox<?> cmbPatient;
+    private ComboBox<String> cmbPatient;
 
     @FXML
-    private ComboBox<?> cmbTherapyProgram;
+    private ComboBox<String> cmbTherapyProgram;
 
     @FXML
-    private TableView<?> tblAppointment;
+    private TableView<AppointmentTM> tblAppointment;
 
     @FXML
-    private TableColumn<?, ?> colAppointment;
+    private TableColumn<AppointmentTM, String> colAppointment;
 
     @FXML
-    private TableColumn<?, ?> colDate;
+    private TableColumn<AppointmentTM, Date> colDate;
 
     @FXML
-    private TableColumn<?, ?> colTherapist;
+    private TableColumn<AppointmentTM, String> colTherapist;
 
     @FXML
-    private TableColumn<?, ?> colPatient;
+    private TableColumn<AppointmentTM, String> colPatient;
 
     @FXML
-    private TableColumn<?, ?> colTherapyProgram;
+    private TableColumn<AppointmentTM, String> colTherapyProgram;
 
     @FXML
     private Label lblProgramFee;

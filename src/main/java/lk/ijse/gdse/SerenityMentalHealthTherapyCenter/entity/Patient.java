@@ -15,9 +15,10 @@ import java.util.List;
 @Setter
 public class Patient {
     @Id
-    private String patientId;
-    private String firstName;
-    private String lastName;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private int patientId;
+    private String name;
+    private String address;
     private String gender;
     private String dateOfBirth;
     private String email;

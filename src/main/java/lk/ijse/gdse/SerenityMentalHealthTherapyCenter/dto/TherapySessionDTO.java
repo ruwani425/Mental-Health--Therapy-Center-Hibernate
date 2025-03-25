@@ -10,7 +10,7 @@ import java.sql.Timestamp;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class TherapySession {
+public class TherapySessionDTO {
     private String therapySessionId;
     private Date date;
     private Timestamp startTime;

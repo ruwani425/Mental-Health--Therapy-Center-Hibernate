@@ -6,6 +6,8 @@ import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.config.FactoryConfiguratio
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
+import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class UserDAOImpl implements UserDAO {
     @Override
@@ -47,5 +49,45 @@ public class UserDAOImpl implements UserDAO {
             e.printStackTrace();
             return false;
         }
+    }
+
+    @Override
+    public ArrayList<User> getAllData() throws SQLException, ClassNotFoundException {
+        return null;
+    }
+
+    @Override
+    public boolean save(User Dto) throws SQLException, ClassNotFoundException {
+        return false;
+    }
+
+    @Override
+    public boolean update(User Dto) throws SQLException, ClassNotFoundException {
+        return false;
+    }
+
+    @Override
+    public boolean existId(String id) throws SQLException, ClassNotFoundException {
+        return false;
+    }
+
+    @Override
+    public boolean delete(User id) throws SQLException, ClassNotFoundException {
+        return false;
+    }
+
+    @Override
+    public String getNewId() throws SQLException, ClassNotFoundException {
+        return "";
+    }
+
+    @Override
+    public ArrayList<User> search(User newValue) throws SQLException, ClassNotFoundException {
+        return null;
+    }
+
+    @Override
+    public User findById(User entity) throws SQLException {
+        return null;
     }
 }

@@ -17,6 +17,7 @@ import java.util.List;
 @Getter
 public class Payment {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private String paymentId;
     private String status;
     private Double amount;

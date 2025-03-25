@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Therapist {
+public class TherapistDTO {
     private String therapistId;
     private String therapistName;
     private String email;

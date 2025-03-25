@@ -10,7 +10,7 @@ import java.sql.Timestamp;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Appointment {
+public class AppointmentDTO {
     private String appointmentId;
     private Date reservationDate;
     private String description;

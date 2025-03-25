@@ -11,31 +11,34 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.dto.tm.TherapistTM;
+
+import java.sql.Date;
 
 public class TherapistsViewController {
     @FXML
-    private TableView<?> tblTherapist;
+    private TableView<TherapistTM> tblTherapist;
 
     @FXML
-    private TableColumn<?, ?> colTherapistId;
+    private TableColumn<TherapistTM, String> colTherapistId;
 
     @FXML
-    private TableColumn<?, ?> colTherapistName;
+    private TableColumn<TherapistTM, String> colTherapistName;
 
     @FXML
-    private TableColumn<?, ?> colTherapistAddress;
+    private TableColumn<TherapistTM, String> colTherapistAddress;
 
     @FXML
-    private TableColumn<?, ?> colTherapistEmail;
+    private TableColumn<TherapistTM, String> colTherapistEmail;
 
     @FXML
-    private TableColumn<?, ?> colTherapistStatus;
+    private TableColumn<TherapistTM, String> colTherapistStatus;
 
     @FXML
-    private TableColumn<?, ?> colTherapistDob;
+    private TableColumn<TherapistTM, Date> colTherapistDob;
 
     @FXML
-    private TableColumn<?, ?> colTherapistPhone;
+    private TableColumn<TherapistTM, String> colTherapistPhone;
 
     @FXML
     private JFXTextField txtTherapistName;
@@ -50,7 +53,7 @@ public class TherapistsViewController {
     private JFXTextField txtTherapistPhone;
 
     @FXML
-    private ComboBox<?> cmbTherapistStatus;
+    private ComboBox<String> cmbTherapistStatus;
 
     @FXML
     private Label lblTherapistID;

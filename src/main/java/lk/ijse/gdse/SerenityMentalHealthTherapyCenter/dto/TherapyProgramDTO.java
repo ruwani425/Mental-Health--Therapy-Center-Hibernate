@@ -4,14 +4,12 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.sql.Date;
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Payment {
-    private String paymentId;
-    private String status;
-    private Double amount;
-    private Date paymentDate;
+public class TherapyProgramDTO {
+    private String programId;
+    private String programName;
+    private String duration;
+    private double programFee;
 }

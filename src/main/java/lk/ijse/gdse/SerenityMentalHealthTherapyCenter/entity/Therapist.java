@@ -15,6 +15,7 @@ import java.util.List;
 @Setter
 public class Therapist {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private String therapistId;
     private String therapistName;
     private String email;

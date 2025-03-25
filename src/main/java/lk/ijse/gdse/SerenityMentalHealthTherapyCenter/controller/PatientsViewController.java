@@ -4,42 +4,51 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
-import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
+import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.bo.BOFactory;
+import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.bo.custom.PatientsBO;
+import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.dto.PatientDTO;
+import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.dto.tm.PatientTM;
 
-public class PatientsViewController {
+import java.net.URL;
+import java.sql.Date;
+import java.sql.SQLException;
+import java.util.ResourceBundle;
 
-    @FXML
-    private TableView<?> tblPatient;
-
-    @FXML
-    private TableColumn<?, ?> colPatientId;
-
-    @FXML
-    private TableColumn<?, ?> colName;
-
-    @FXML
-    private TableColumn<?, ?> colAddress;
+public class PatientsViewController implements Initializable {
 
     @FXML
-    private TableColumn<?, ?> colDateOfBirth;
+    private ComboBox cmbGender;
 
     @FXML
-    private TableColumn<?, ?> colEmail;
+    private TableView<PatientTM> tblPatient;
 
     @FXML
-    private TableColumn<?, ?> colPhone;
+    private TableColumn<PatientTM, Integer> colPatientId;
 
     @FXML
-    private TableColumn<?, ?> colTherapyProgram;
+    private TableColumn<PatientTM, String> colName;
 
     @FXML
-    private Label lblPatientId;
+    private TableColumn<PatientTM, String> colAddress;
+
+    @FXML
+    private TableColumn<PatientTM, Date> colDateOfBirth;
+
+    @FXML
+    private TableColumn<PatientTM, String> colEmail;
+
+    @FXML
+    private TableColumn<PatientTM, String> colPhone;
+
+    @FXML
+    private TableColumn<PatientTM, String> colTherapyProgram;
 
     @FXML
     private JFXTextField txtPatientName;
@@ -66,10 +75,18 @@ public class PatientsViewController {
     private JFXButton btnSave;
 
     @FXML
-    private ComboBox<?> cmbTherapyProgram;
-
-    @FXML
     private TextField txtSearch;
+
+    private final PatientsBO patientsBO = (PatientsBO) BOFactory.getInstance().getBO(BOFactory.BOType.PATIENT);
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        populateGender();
+    }
+
+    private void populateGender() {
+        cmbGender.getItems().addAll("Male", "Female", "Other");
+    }
 
     @FXML
     void btnDeletePatientOnAction(ActionEvent event) {
@@ -77,8 +94,17 @@ public class PatientsViewController {
     }
 
     @FXML
-    void btnSavePatientOnAction(ActionEvent event) {
+    void btnSavePatientOnAction(ActionEvent event) throws SQLException, ClassNotFoundException {
+        String name = txtPatientName.getText();
+        String address = txtPatientAddress.getText();
+        String phone = txtPatientPhone.getText();
+        String email = txtPatientEmail.getText();
+        String gender = cmbGender.getSelectionModel().getSelectedItem().toString();
+        String dateOfBirth = datePickerDob.getValue().toString();
 
+        PatientDTO patientDTO = new PatientDTO(name, address, gender, dateOfBirth, email, phone);
+
+        boolean isSaved = patientsBO.savePatient(patientDTO);
     }
 
     @FXML
@@ -90,5 +116,4 @@ public class PatientsViewController {
     void txtSearchOnAction(KeyEvent event) {
 
     }
-
 }
