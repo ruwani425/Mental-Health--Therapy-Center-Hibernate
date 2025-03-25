@@ -1,4 +1,6 @@
 package lk.ijse.gdse.SerenityMentalHealthTherapyCenter.bo.custom.impl;
 
-public class AppointmentBOImpl {
+import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.bo.custom.AppointmentBO;
+
+public class AppointmentBOImpl implements AppointmentBO {
 }

@@ -1,4 +1,6 @@
 package lk.ijse.gdse.SerenityMentalHealthTherapyCenter.bo.custom;
 
-public interface TherapistsBO {
+import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.bo.SuperBO;
+
+public interface TherapistsBO extends SuperBO {
 }

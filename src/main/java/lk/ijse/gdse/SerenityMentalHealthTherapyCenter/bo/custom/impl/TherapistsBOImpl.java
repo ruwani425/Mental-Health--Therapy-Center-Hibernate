@@ -1,4 +1,6 @@
 package lk.ijse.gdse.SerenityMentalHealthTherapyCenter.bo.custom.impl;
 
-public class TherapistsBOImpl {
+import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.bo.custom.TherapistsBO;
+
+public class TherapistsBOImpl implements TherapistsBO {
 }

@@ -1,4 +1,8 @@
 package lk.ijse.gdse.SerenityMentalHealthTherapyCenter.dao.custom;
 
-public interface PatientsDAO {
+import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.dao.CrudDAO;
+import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.dao.SuperDAO;
+import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.entity.Patient;
+
+public interface PatientsDAO extends SuperDAO, CrudDAO<Patient> {
 }

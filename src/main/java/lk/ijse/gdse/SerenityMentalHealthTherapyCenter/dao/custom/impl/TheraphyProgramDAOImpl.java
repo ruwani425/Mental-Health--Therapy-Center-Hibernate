@@ -1,4 +1,6 @@
 package lk.ijse.gdse.SerenityMentalHealthTherapyCenter.dao.custom.impl;
 
-public class TheraphyProgramDAOImpl {
+import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.dao.custom.TherapyProgramDAO;
+
+public class TheraphyProgramDAOImpl implements TherapyProgramDAO {
 }
