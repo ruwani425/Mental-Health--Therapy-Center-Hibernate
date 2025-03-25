@@ -7,6 +7,8 @@ import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.dto.PatientDTO;
 import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.entity.Patient;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class PatientsBOImpl implements PatientsBO {
 
@@ -22,5 +24,31 @@ public class PatientsBOImpl implements PatientsBO {
         patient.setEmail(patientDTO.getEmail());
         patient.setPhoneNumber(String.valueOf(patientDTO.getPhoneNumber()));
         return patientsDAO.save(patient);
+    }
+
+    @Override
+    public List<PatientDTO> getAllPatients() throws SQLException, ClassNotFoundException {
+        ArrayList<PatientDTO> patientDTOArrayList = new ArrayList<>();
+        ArrayList<Patient>patients=patientsDAO.getAllData();
+
+        for (Patient patient : patients) {
+            PatientDTO patientDTO = new PatientDTO();
+            patientDTO.setName(patient.getName());
+            patientDTO.setAddress(patient.getAddress());
+            patientDTO.setGender(patient.getGender());
+            patientDTO.setDateOfBirth(patient.getDateOfBirth());
+            patientDTO.setEmail(patient.getEmail());
+            patientDTO.setPhoneNumber(patient.getPhoneNumber());
+            patientDTO.setPatientId(String.valueOf(patient.getPatientId()));
+            patientDTOArrayList.add(patientDTO);
+        }
+        return patientDTOArrayList;
+    }
+
+    @Override
+    public boolean deletePatient(String id) throws SQLException, ClassNotFoundException {
+        Patient patient = new Patient();
+        patient.setPatientId(Integer.parseInt(id));
+        return patientsDAO.delete(patient);
     }
 }

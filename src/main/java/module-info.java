@@ -14,6 +14,6 @@ module hello.serenitymentalhealththerapycenter {
     opens lk.ijse.gdse.SerenityMentalHealthTherapyCenter.entity to org.hibernate.orm.core;
     opens lk.ijse.gdse.SerenityMentalHealthTherapyCenter to javafx.fxml;
     opens lk.ijse.gdse.SerenityMentalHealthTherapyCenter.controller to javafx.fxml;
-
+    opens lk.ijse.gdse.SerenityMentalHealthTherapyCenter.dto.tm to javafx.base;
     exports lk.ijse.gdse.SerenityMentalHealthTherapyCenter;
 }
