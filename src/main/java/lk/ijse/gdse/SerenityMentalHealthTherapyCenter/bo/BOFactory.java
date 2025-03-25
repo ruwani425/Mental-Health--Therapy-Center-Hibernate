@@ -7,17 +7,14 @@ import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.bo.custom.impl.TherapySess
 import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.bo.custom.impl.UserBOImpl;
 
 public class BOFactory {
-    private static TherapySessionBO therapySessionBO;
+    private static BOFactory boFactory;
 
     private BOFactory() {
 
     }
 
-    public static TherapySessionBO getTherapySessionBO() {
-        if (therapySessionBO == null) {
-            therapySessionBO = new TherapySessionBOImpl();
-        }
-        return therapySessionBO;
+    public static BOFactory getInstance() {
+        return boFactory == null ? new BOFactory() : boFactory;
     }
 
     public enum BOType {
@@ -29,7 +26,6 @@ public class BOFactory {
             case PATIENT:
                 return new PatientsBOImpl();
             case THERAPIST:
-
                 return new TherapySessionBOImpl();
             case APPOINTMENT:
                 return new TherapySessionBOImpl();

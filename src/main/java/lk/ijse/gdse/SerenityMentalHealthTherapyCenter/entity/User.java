@@ -1,8 +1,6 @@
 package lk.ijse.gdse.SerenityMentalHealthTherapyCenter.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,9 +13,16 @@ import lombok.Setter;
 @Setter
 public class User {
     @Id
-    @GeneratedValue
-    private String userId;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private int userId;
+
+    @Column(nullable = false)
     private String role;
+
+    @Column(unique = true, nullable = false)
     private String username;
+
+    @Column(nullable = false)
     private String password;
+
 }

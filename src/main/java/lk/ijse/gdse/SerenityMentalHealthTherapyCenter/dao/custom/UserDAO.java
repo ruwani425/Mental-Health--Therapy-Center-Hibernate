@@ -5,4 +5,7 @@ import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.dao.SuperDAO;
 import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.entity.User;
 
 public interface UserDAO extends SuperDAO, CrudDAO<User> {
+    void initializeAdmin();
+
+    boolean validateUser(String username, String password);
 }
