@@ -50,7 +50,20 @@ public class PatientsDAOImpl implements PatientsDAO {
 
     @Override
     public boolean update(Patient entity) throws SQLException, ClassNotFoundException {
-        return false;
+        Session session = FactoryConfiguration.getInstance().getSession();
+        Transaction transaction = session.beginTransaction();
+
+        try {
+            session.update(entity);
+            transaction.commit();
+            return true;
+        }catch (Exception e) {
+            transaction.rollback();
+            e.printStackTrace();
+            return false;
+        }finally {
+            session.close();
+        }
     }
 
     @Override

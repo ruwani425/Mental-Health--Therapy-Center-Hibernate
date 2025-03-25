@@ -51,4 +51,17 @@ public class PatientsBOImpl implements PatientsBO {
         patient.setPatientId(Integer.parseInt(id));
         return patientsDAO.delete(patient);
     }
+
+    @Override
+    public boolean UpdatePatient(PatientDTO patientDTO) throws SQLException, ClassNotFoundException {
+        Patient patient = new Patient();
+        patient.setPatientId(Integer.parseInt(patientDTO.getPatientId()));
+        patient.setName(patientDTO.getName());
+        patient.setAddress(patientDTO.getAddress());
+        patient.setGender(patientDTO.getGender());
+        patient.setDateOfBirth(patientDTO.getDateOfBirth());
+        patient.setEmail(patientDTO.getEmail());
+        patient.setPhoneNumber(patientDTO.getPhoneNumber());
+        return patientsDAO.update(patient);
+    }
 }

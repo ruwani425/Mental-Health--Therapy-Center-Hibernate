@@ -90,6 +90,8 @@ public class PatientsViewController implements Initializable {
         setTableListener();
         loadPatientData();
         setCellValueFactory();
+        btnDelete.setDisable(true);
+        btnUpdate.setDisable(true);
     }
 
     // Load patient data from the database
@@ -142,6 +144,8 @@ public class PatientsViewController implements Initializable {
         if (patient.getDateOfBirth() != null && !patient.getDateOfBirth().isEmpty()) {
             datePickerDob.setValue(LocalDate.parse(patient.getDateOfBirth()));
         }
+        btnDelete.setDisable(false);
+        btnUpdate.setDisable(false);
     }
 
 
@@ -194,8 +198,25 @@ public class PatientsViewController implements Initializable {
     }
 
     @FXML
-    void btnUpdatePatientOnAction(ActionEvent event) {
+    void btnUpdatePatientOnAction(ActionEvent event) throws SQLException, ClassNotFoundException {
+        String name = txtPatientName.getText();
+        String address = txtPatientAddress.getText();
+        String phone = txtPatientPhone.getText();
+        String email = txtPatientEmail.getText();
+        String gender = cmbGender.getSelectionModel().getSelectedItem().toString();
+        String dateOfBirth = datePickerDob.getValue().toString();
 
+        PatientDTO patientDTO = new PatientDTO(id,name, address, gender, dateOfBirth, email, phone);
+
+        boolean isUpdate = patientsBO.UpdatePatient(patientDTO);
+
+        if (isUpdate){
+            Alert alert = new Alert(Alert.AlertType.INFORMATION, "Patient updated successfully!");
+            clearFields();
+            loadPatientData();
+        }else {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION, "Failed to update patient!");
+        }
     }
 
     @FXML

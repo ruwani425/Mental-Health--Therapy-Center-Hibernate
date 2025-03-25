@@ -12,4 +12,6 @@ public interface PatientsBO extends SuperBO {
     List<PatientDTO> getAllPatients() throws SQLException, ClassNotFoundException;
 
     boolean deletePatient(String id) throws SQLException, ClassNotFoundException;
+
+    boolean UpdatePatient(PatientDTO patientDTO) throws SQLException, ClassNotFoundException;
 }
