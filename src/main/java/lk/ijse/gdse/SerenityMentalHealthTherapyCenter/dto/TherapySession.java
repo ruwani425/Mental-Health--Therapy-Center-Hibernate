@@ -1,0 +1,19 @@
+package lk.ijse.gdse.SerenityMentalHealthTherapyCenter.dto;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.sql.Date;
+import java.sql.Timestamp;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class TherapySession {
+    private String therapySessionId;
+    private Date date;
+    private Timestamp startTime;
+    private Timestamp endTime;
+    private String description;
+}
