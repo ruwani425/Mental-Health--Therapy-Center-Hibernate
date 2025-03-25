@@ -22,7 +22,6 @@ public class Patient {
     private String dateOfBirth;
     private String email;
     private String phoneNumber;
-    private String therapyProgram;
 
     @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Appointment> appointmentList;

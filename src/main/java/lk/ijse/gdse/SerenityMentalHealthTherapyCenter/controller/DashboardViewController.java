@@ -15,6 +15,7 @@ import java.io.IOException;
 
 public class DashboardViewController {
     public AnchorPane homeAnchor;
+    public ImageView imgLogOutBtn;
     @FXML
     private ImageView imgHomeBtn;
 
@@ -102,4 +103,7 @@ public class DashboardViewController {
         }
     }
 
+    public void navigateToLoginPage(MouseEvent mouseEvent) {
+
+    }
 }

@@ -17,9 +17,7 @@ import java.sql.Date;
 public class Appointment {
     @Id
     private String appointmentId;
-    private Date startDate;
-    private Date endDate;
-    private String description;
+    private Date date;
 
     @ManyToOne
     private Therapist therapist;

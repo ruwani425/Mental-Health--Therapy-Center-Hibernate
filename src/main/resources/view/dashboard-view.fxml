@@ -10,39 +10,44 @@
       <AnchorPane fx:id="homeAnchor" layoutX="206.0" prefHeight="660.0" prefWidth="990.0" />
       <ImageView fitHeight="660.0" fitWidth="222.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../asserts/RectangleDashboard.png" />
+            <Image url="@../asserts/Rectangle%209%20(1).png" />
          </image>
       </ImageView>
       <VBox layoutX="19.0" layoutY="37.0" prefHeight="447.0" prefWidth="165.0" spacing="20.0">
          <children>
             <ImageView fx:id="imgHomeBtn" fitHeight="42.0" fitWidth="174.0" onMouseEntered="#onMouseEnterdBtn" onMouseExited="#onMouseExitedBtn" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../asserts/homeBtn.png" />
+                  <Image url="@../asserts/homeGreenBtn.png" />
                </image>
             </ImageView>
             <ImageView fx:id="imgPatientsBtn" fitHeight="42.0" fitWidth="174.0" onMouseClicked="#navigatePatientsPage" onMouseEntered="#onMouseEnterdBtn" onMouseExited="#onMouseExitedBtn" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../asserts/patientsBtn.png" />
+                  <Image url="@../asserts/patientGreenbtn.png" />
                </image>
             </ImageView>
             <ImageView fx:id="imgBookingsBtn" fitHeight="42.0" fitWidth="174.0" onMouseClicked="#navigateBookingPage" onMouseEntered="#onMouseEnterdBtn" onMouseExited="#onMouseExitedBtn" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../asserts/bookingsBtn.png" />
+                  <Image url="@../asserts/bookingsGrennBtn.png" />
                </image>
             </ImageView>
             <ImageView fx:id="imgProgramsBtn" fitHeight="42.0" fitWidth="174.0" onMouseClicked="#navigateProgramsPage" onMouseEntered="#onMouseEnterdBtn" onMouseExited="#onMouseExitedBtn" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../asserts/programsBtn.png" />
+                  <Image url="@../asserts/programsGreenBtn.png" />
                </image>
             </ImageView>
             <ImageView fx:id="imgTherapistsBtn" fitHeight="42.0" fitWidth="174.0" onMouseClicked="#navigateTherapistsPage" onMouseEntered="#onMouseEnterdBtn" onMouseExited="#onMouseExitedBtn" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../asserts/theraphysistsBtn.png" />
+                  <Image url="@../asserts/therapistsGreenBtn.png" />
                </image>
             </ImageView>
             <ImageView fx:id="imgSettingsBtn" fitHeight="42.0" fitWidth="174.0" onMouseClicked="#navigateSettingsPage" onMouseEntered="#onMouseEnterdBtn" onMouseExited="#onMouseExitedBtn" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../asserts/settingsBtn.png" />
+                  <Image url="@../asserts/settingsGreenBtn.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="imgLogOutBtn" fitHeight="42.0" fitWidth="174.0" onMouseClicked="#navigateToLoginPage" onMouseEntered="#onMouseEnterdBtn" onMouseExited="#onMouseExitedBtn" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../asserts/logOutBtn.png" />
                </image>
             </ImageView>
          </children>
