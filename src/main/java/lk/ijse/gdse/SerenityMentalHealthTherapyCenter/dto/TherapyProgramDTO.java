@@ -8,8 +8,14 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class TherapyProgramDTO {
-    private String programId;
+    private int programId;
     private String programName;
     private String duration;
     private double programFee;
+
+    public TherapyProgramDTO(String programName, String programDuration, String programFee) {
+            this.programName = programName;
+            this.programFee = Double.parseDouble(programFee);
+            this.duration = programDuration;
+    }
 }
