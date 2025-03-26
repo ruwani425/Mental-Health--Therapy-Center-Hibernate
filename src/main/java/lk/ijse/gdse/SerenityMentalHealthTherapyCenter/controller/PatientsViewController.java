@@ -94,29 +94,27 @@ public class PatientsViewController implements Initializable {
         btnUpdate.setDisable(true);
     }
 
-    // Load patient data from the database
     private void loadPatientData() {
         patientList.clear();
         try {
-            List<PatientDTO> patients = patientsBO.getAllPatients(); // Fetch patients from DB
+            List<PatientDTO> patients = patientsBO.getAllPatients();
             for (PatientDTO dto : patients) {
                 patientList.add(new PatientTM(
                         dto.getPatientId(),
                         dto.getName(),
+                        dto.getEmail(),
+                        dto.getPhoneNumber(),
                         dto.getAddress(),
                         dto.getGender(),
-                        dto.getDateOfBirth(),
-                        dto.getEmail(),
-                        dto.getPhoneNumber()
+                        dto.getDateOfBirth()
                 ));
             }
-            tblPatient.setItems(patientList); // Set data to TableView
+            tblPatient.setItems(patientList);
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
     }
 
-    // Set cell value factory (connect TableView columns to PatientTM properties)
     private void setCellValueFactory() {
         colPatientId.setCellValueFactory(new PropertyValueFactory<>("patientId"));
         colName.setCellValueFactory(new PropertyValueFactory<>("name"));
@@ -160,6 +158,7 @@ public class PatientsViewController implements Initializable {
             new Alert(Alert.AlertType.INFORMATION, "Patient deleted successfully!").show();
             loadPatientData();
             clearFields();
+            btnDelete.setDisable(true);
         } else {
             new Alert(Alert.AlertType.ERROR, "Failed to delete patient!").show();
         }
@@ -214,6 +213,7 @@ public class PatientsViewController implements Initializable {
             Alert alert = new Alert(Alert.AlertType.INFORMATION, "Patient updated successfully!");
             clearFields();
             loadPatientData();
+            btnUpdate.setDisable(true);
         }else {
             Alert alert = new Alert(Alert.AlertType.INFORMATION, "Failed to update patient!");
         }

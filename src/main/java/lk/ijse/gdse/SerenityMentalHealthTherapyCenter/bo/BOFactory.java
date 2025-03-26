@@ -1,10 +1,7 @@
 package lk.ijse.gdse.SerenityMentalHealthTherapyCenter.bo;
 
 import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.bo.custom.TherapySessionBO;
-import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.bo.custom.impl.PatientsBOImpl;
-import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.bo.custom.impl.PaymentBOImpl;
-import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.bo.custom.impl.TherapySessionBOImpl;
-import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.bo.custom.impl.UserBOImpl;
+import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.bo.custom.impl.*;
 
 public class BOFactory {
     private static BOFactory boFactory;
@@ -26,11 +23,11 @@ public class BOFactory {
             case PATIENT:
                 return new PatientsBOImpl();
             case THERAPIST:
-                return new TherapySessionBOImpl();
+                return new TherapistsBOImpl();
             case APPOINTMENT:
-                return new TherapySessionBOImpl();
+                return new AppointmentBOImpl();
             case THERAPYPROGRAM:
-                return new TherapySessionBOImpl();
+                return new TherapyProgramBOImpl();
             case USER:
                 return new UserBOImpl();
             case THERAPYSESSION:

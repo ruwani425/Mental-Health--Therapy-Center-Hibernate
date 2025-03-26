@@ -54,7 +54,7 @@ public class PatientsDAOImpl implements PatientsDAO {
         Transaction transaction = session.beginTransaction();
 
         try {
-            session.update(entity);
+            session.merge(entity);
             transaction.commit();
             return true;
         }catch (Exception e) {
