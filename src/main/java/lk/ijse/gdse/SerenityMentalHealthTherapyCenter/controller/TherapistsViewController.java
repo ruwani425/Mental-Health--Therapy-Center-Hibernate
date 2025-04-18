@@ -204,7 +204,7 @@ public class TherapistsViewController implements Initializable {
         String status = cmbTherapistStatus.getSelectionModel().getSelectedItem();
         Date dob = Date.valueOf(datePickerDob.getValue());
         int TherapistsId = Integer.parseInt(id);
-        TherapistDTO therapistDTO = new TherapistDTO(TherapistsId,name, email, phone, address, dob, status);
+        TherapistDTO therapistDTO = new TherapistDTO(TherapistsId, name, email, phone, address, dob, status);
 
         boolean isUpdated = therapistsBO.updateTherapist(therapistDTO);
 

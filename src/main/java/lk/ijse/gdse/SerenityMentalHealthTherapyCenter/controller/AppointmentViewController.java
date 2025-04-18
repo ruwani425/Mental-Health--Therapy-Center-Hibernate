@@ -1,6 +1,7 @@
 package lk.ijse.gdse.SerenityMentalHealthTherapyCenter.controller;
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXTextField;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
@@ -8,49 +9,77 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.dto.tm.AppointmentTM;
-
-import java.sql.Date;
 
 public class AppointmentViewController {
-    @FXML
-    private Label lblAppoinmentId;
 
     @FXML
     private DatePicker datePickerDate;
 
     @FXML
-    private ComboBox<String> cmbTherapist;
+    private ComboBox<?> cmbTherapist;
 
     @FXML
-    private ComboBox<String> cmbPatient;
+    private ComboBox<?> cmbPatient;
 
     @FXML
-    private ComboBox<String> cmbTherapyProgram;
-
-    @FXML
-    private TableView<AppointmentTM> tblAppointment;
-
-    @FXML
-    private TableColumn<AppointmentTM, String> colAppointment;
-
-    @FXML
-    private TableColumn<AppointmentTM, Date> colDate;
-
-    @FXML
-    private TableColumn<AppointmentTM, String> colTherapist;
-
-    @FXML
-    private TableColumn<AppointmentTM, String> colPatient;
-
-    @FXML
-    private TableColumn<AppointmentTM, String> colTherapyProgram;
+    private ComboBox<?> cmbTherapyProgram;
 
     @FXML
     private Label lblProgramFee;
 
     @FXML
     private JFXButton btnPay;
+
+    @FXML
+    private Label lblBalance;
+
+    @FXML
+    private JFXTextField txtAdvance;
+
+    @FXML
+    private TableView<?> tblPendingAppointment;
+
+    @FXML
+    private TableColumn<?, ?> colPAppointmentId;
+
+    @FXML
+    private TableColumn<?, ?> colPDate;
+
+    @FXML
+    private TableColumn<?, ?> colPTherapist;
+
+    @FXML
+    private TableColumn<?, ?> colPPatient;
+
+    @FXML
+    private TableColumn<?, ?> colPTherapyProgram;
+
+    @FXML
+    private TableColumn<?, ?> colPBalance;
+
+    @FXML
+    private TableView<?> tblCompletedAppoinment;
+
+    @FXML
+    private TableColumn<?, ?> colCAppointmentId;
+
+    @FXML
+    private TableColumn<?, ?> colCDate;
+
+    @FXML
+    private TableColumn<?, ?> colCTherapist;
+
+    @FXML
+    private TableColumn<?, ?> colCPatient;
+
+    @FXML
+    private TableColumn<?, ?> colCTheraphyProgram;
+
+    @FXML
+    private TableColumn<?, ?> colCBalance;
+
+    @FXML
+    private TableColumn<?, ?> colCInvoice;
 
     @FXML
     void btnPaymentOnAction(ActionEvent event) {
