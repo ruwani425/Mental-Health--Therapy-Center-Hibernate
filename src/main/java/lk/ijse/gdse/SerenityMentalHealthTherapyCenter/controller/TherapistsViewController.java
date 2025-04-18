@@ -80,7 +80,7 @@ public class TherapistsViewController implements Initializable {
 
     String id;
 
-    private ObservableList<TherapistTM> therapistTMS = FXCollections.observableArrayList();
+    private final ObservableList<TherapistTM> therapistTMS = FXCollections.observableArrayList();
 
 
     private final TherapistsBO therapistsBO = (TherapistsBO) BOFactory.getInstance().getBO(BOFactory.BOType.THERAPIST);
@@ -104,8 +104,8 @@ public class TherapistsViewController implements Initializable {
                         dto.getTherapistId(),
                         dto.getTherapistName(),
                         dto.getEmail(),
-                        dto.getAddress(),
                         dto.getPhone(),
+                        dto.getAddress(),
                         dto.getDateOfBirth(),
                         dto.getStatus()
                 ));
@@ -203,7 +203,8 @@ public class TherapistsViewController implements Initializable {
         String phone = txtTherapistPhone.getText();
         String status = cmbTherapistStatus.getSelectionModel().getSelectedItem();
         Date dob = Date.valueOf(datePickerDob.getValue());
-        TherapistDTO therapistDTO = new TherapistDTO(name, email, phone, address, dob, status);
+        int TherapistsId = Integer.parseInt(id);
+        TherapistDTO therapistDTO = new TherapistDTO(TherapistsId,name, email, phone, address, dob, status);
 
         boolean isUpdated = therapistsBO.updateTherapist(therapistDTO);
 
