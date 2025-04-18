@@ -29,13 +29,13 @@ public class FactoryConfiguration {
         // Build the SessionFactory
         try {
             Configuration configuration = new Configuration().addProperties(properties)
+                    .addAnnotatedClass(TherapySession.class)
                     .addAnnotatedClass(User.class)
                     .addAnnotatedClass(Patient.class)
                     .addAnnotatedClass(Payment.class)
-                    .addAnnotatedClass(Appointment.class)
                     .addAnnotatedClass(Therapist.class)
                     .addAnnotatedClass(TherapyProgram.class)
-                    .addAnnotatedClass(TherapySession.class);
+                    .addAnnotatedClass(Appointment.class);
 
             sessionFactory = configuration.buildSessionFactory();
         } catch (Exception e) {

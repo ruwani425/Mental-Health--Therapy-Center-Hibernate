@@ -6,6 +6,7 @@ import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.dao.custom.PatientsDAO;
 import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.dto.PatientDTO;
 import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.entity.Patient;
 
+import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +21,7 @@ public class PatientsBOImpl implements PatientsBO {
         patient.setName(patientDTO.getName());
         patient.setAddress(patientDTO.getAddress());
         patient.setGender(patientDTO.getGender());
-        patient.setDateOfBirth(patientDTO.getDateOfBirth());
+        patient.setDateOfBirth(String.valueOf(patientDTO.getDateOfBirth()));
         patient.setEmail(patientDTO.getEmail());
         patient.setPhoneNumber(String.valueOf(patientDTO.getPhoneNumber()));
         return patientsDAO.save(patient);
@@ -36,7 +37,7 @@ public class PatientsBOImpl implements PatientsBO {
             patientDTO.setName(patient.getName());
             patientDTO.setAddress(patient.getAddress());
             patientDTO.setGender(patient.getGender());
-            patientDTO.setDateOfBirth(patient.getDateOfBirth());
+            patientDTO.setDateOfBirth(Date.valueOf(patient.getDateOfBirth()));
             patientDTO.setEmail(patient.getEmail());
             patientDTO.setPhoneNumber(patient.getPhoneNumber());
             patientDTO.setPatientId(String.valueOf(patient.getPatientId()));
@@ -59,7 +60,7 @@ public class PatientsBOImpl implements PatientsBO {
         patient.setName(patientDTO.getName());
         patient.setAddress(patientDTO.getAddress());
         patient.setGender(patientDTO.getGender());
-        patient.setDateOfBirth(patientDTO.getDateOfBirth());
+        patient.setDateOfBirth(String.valueOf(patientDTO.getDateOfBirth()));
         patient.setEmail(patientDTO.getEmail());
         patient.setPhoneNumber(patientDTO.getPhoneNumber());
         return patientsDAO.update(patient);

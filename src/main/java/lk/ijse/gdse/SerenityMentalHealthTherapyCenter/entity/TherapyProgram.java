@@ -15,7 +15,7 @@ import java.util.List;
 @Setter
 public class TherapyProgram {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int programId;
     private String programName;
     private String duration;

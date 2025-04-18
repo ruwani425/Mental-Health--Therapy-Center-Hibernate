@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.sql.Date;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -13,7 +15,7 @@ public class PatientTM {
     private String name;
     private String address;
     private String gender;
-    private String dateOfBirth;
+    private Date dateOfBirth;
     private String email;
     private String phoneNumber;
 }

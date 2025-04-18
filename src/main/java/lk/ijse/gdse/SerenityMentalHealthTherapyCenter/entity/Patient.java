@@ -15,7 +15,7 @@ import java.util.List;
 @Setter
 public class Patient {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int patientId;
     private String name;
     private String address;

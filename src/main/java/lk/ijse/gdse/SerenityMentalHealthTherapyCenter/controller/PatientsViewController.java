@@ -102,11 +102,11 @@ public class PatientsViewController implements Initializable {
                 patientList.add(new PatientTM(
                         dto.getPatientId(),
                         dto.getName(),
-                        dto.getEmail(),
-                        dto.getPhoneNumber(),
                         dto.getAddress(),
                         dto.getGender(),
-                        dto.getDateOfBirth()
+                        dto.getDateOfBirth(),
+                        dto.getEmail(),
+                        dto.getPhoneNumber()
                 ));
             }
             tblPatient.setItems(patientList);
@@ -139,9 +139,7 @@ public class PatientsViewController implements Initializable {
         txtPatientEmail.setText(patient.getEmail());
         cmbGender.setValue(patient.getGender());
         id = String.valueOf(patient.getPatientId());
-        if (patient.getDateOfBirth() != null && !patient.getDateOfBirth().isEmpty()) {
-            datePickerDob.setValue(LocalDate.parse(patient.getDateOfBirth()));
-        }
+        datePickerDob.setValue(patient.getDateOfBirth().toLocalDate());
         btnDelete.setDisable(false);
         btnUpdate.setDisable(false);
     }
@@ -181,7 +179,7 @@ public class PatientsViewController implements Initializable {
         String phone = txtPatientPhone.getText();
         String email = txtPatientEmail.getText();
         String gender = cmbGender.getSelectionModel().getSelectedItem().toString();
-        String dateOfBirth = datePickerDob.getValue().toString();
+        Date dateOfBirth = Date.valueOf(datePickerDob.getValue().toString());
 
         PatientDTO patientDTO = new PatientDTO(name, address, gender, dateOfBirth, email, phone);
 
@@ -203,7 +201,7 @@ public class PatientsViewController implements Initializable {
         String phone = txtPatientPhone.getText();
         String email = txtPatientEmail.getText();
         String gender = cmbGender.getSelectionModel().getSelectedItem().toString();
-        String dateOfBirth = datePickerDob.getValue().toString();
+        Date dateOfBirth = Date.valueOf(datePickerDob.getValue().toString());
 
         PatientDTO patientDTO = new PatientDTO(id,name, address, gender, dateOfBirth, email, phone);
 
