@@ -29,4 +29,9 @@ public class AppointmentBOImpl implements AppointmentBO {
     public List<String> getProgramIds() {
         return programDAO.getAllIds();
     }
+
+    @Override
+    public double getProgramFee(String programId) {
+        return programDAO.getFeeById(programId);
+    }
 }

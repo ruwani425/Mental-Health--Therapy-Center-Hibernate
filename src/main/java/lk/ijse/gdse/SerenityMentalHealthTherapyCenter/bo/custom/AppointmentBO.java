@@ -8,4 +8,5 @@ public interface AppointmentBO extends SuperBO {
     List<String> getTherapistIds();
     List<String> getPatientIds();
     List<String> getProgramIds();
+    double getProgramFee(String programId);
 }

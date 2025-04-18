@@ -90,6 +90,21 @@ public class AppointmentViewController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         loadComboBoxes();
+        cmbTherapyProgram.setOnAction(event -> loadProgramFee());
+    }
+
+    private void loadProgramFee() {
+        Object selectedProgram = cmbTherapyProgram.getValue();
+        System.out.println(selectedProgram);
+        if (selectedProgram != null) {
+            try {
+                String programId = String.valueOf(selectedProgram);
+                double fee = appointmentBO.getProgramFee(programId);
+                lblProgramFee.setText(String.format("Rs. %.2f", fee));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     private void loadComboBoxes() {

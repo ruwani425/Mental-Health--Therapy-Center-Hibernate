@@ -108,4 +108,13 @@ public class TheraphyProgramDAOImpl implements TherapyProgramDAO {
         Query<String> query = session.createQuery("SELECT tp.id FROM TherapyProgram tp", String.class);
         return query.list();
     }
+
+    @Override
+    public double getFeeById(String programId) {
+        Session session = FactoryConfiguration.getInstance().getSession();
+        Query<Double> query = session.createQuery(
+                "SELECT tp.programFee FROM TherapyProgram tp WHERE tp.id = :id", Double.class);
+        query.setParameter("id", programId);
+        return query.uniqueResult();
+    }
 }
