@@ -4,25 +4,29 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.fxml.Initializable;
+import javafx.scene.control.*;
+import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.bo.BOFactory;
+import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.bo.custom.AppointmentBO;
+import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.dto.tm.AppointmentTM;
 
-public class AppointmentViewController {
+import java.net.URL;
+import java.sql.Date;
+import java.util.ResourceBundle;
+
+public class AppointmentViewController implements Initializable {
 
     @FXML
     private DatePicker datePickerDate;
 
     @FXML
-    private ComboBox<?> cmbTherapist;
+    private ComboBox<String> cmbTherapist;
 
     @FXML
-    private ComboBox<?> cmbPatient;
+    private ComboBox<String> cmbPatient;
 
     @FXML
-    private ComboBox<?> cmbTherapyProgram;
+    private ComboBox<String> cmbTherapyProgram;
 
     @FXML
     private Label lblProgramFee;
@@ -37,52 +41,71 @@ public class AppointmentViewController {
     private JFXTextField txtAdvance;
 
     @FXML
-    private TableView<?> tblPendingAppointment;
+    private TableView<AppointmentTM> tblPendingAppointment;
 
     @FXML
-    private TableColumn<?, ?> colPAppointmentId;
+    private TableColumn<AppointmentTM, String> colPAppointmentId;
 
     @FXML
-    private TableColumn<?, ?> colPDate;
+    private TableColumn<AppointmentTM, Date> colPDate;
 
     @FXML
-    private TableColumn<?, ?> colPTherapist;
+    private TableColumn<AppointmentTM, String> colPTherapist;
 
     @FXML
-    private TableColumn<?, ?> colPPatient;
+    private TableColumn<AppointmentTM, String> colPPatient;
 
     @FXML
-    private TableColumn<?, ?> colPTherapyProgram;
+    private TableColumn<AppointmentTM, String> colPTherapyProgram;
 
     @FXML
-    private TableColumn<?, ?> colPBalance;
+    private TableColumn<AppointmentTM, Double> colPBalance;
 
     @FXML
-    private TableView<?> tblCompletedAppoinment;
+    private TableView<AppointmentTM> tblCompletedAppoinment;
 
     @FXML
-    private TableColumn<?, ?> colCAppointmentId;
+    private TableColumn<AppointmentTM, String> colCAppointmentId;
 
     @FXML
-    private TableColumn<?, ?> colCDate;
+    private TableColumn<AppointmentTM, Date> colCDate;
 
     @FXML
-    private TableColumn<?, ?> colCTherapist;
+    private TableColumn<AppointmentTM, String> colCTherapist;
 
     @FXML
-    private TableColumn<?, ?> colCPatient;
+    private TableColumn<AppointmentTM, String> colCPatient;
 
     @FXML
-    private TableColumn<?, ?> colCTheraphyProgram;
+    private TableColumn<AppointmentTM, String> colCTheraphyProgram;
 
     @FXML
-    private TableColumn<?, ?> colCBalance;
+    private TableColumn<AppointmentTM, Double> colCBalance;
 
     @FXML
-    private TableColumn<?, ?> colCInvoice;
+    private TableColumn<AppointmentTM, Button> colCInvoice;
+
+    AppointmentBO appointmentBO = (AppointmentBO) BOFactory.getInstance().getBO(BOFactory.BOType.APPOINTMENT);
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        loadComboBoxes();
+    }
+
+    private void loadComboBoxes() {
+        try {
+            cmbTherapist.getItems().addAll(appointmentBO.getTherapistIds());
+            cmbPatient.getItems().addAll(appointmentBO.getPatientIds());
+            cmbTherapyProgram.getItems().addAll(appointmentBO.getProgramIds());
+        } catch (Exception e) {
+            e.printStackTrace();
+            new Alert(Alert.AlertType.ERROR, "Failed to load data").show();
+        }
+    }
 
     @FXML
     void btnPaymentOnAction(ActionEvent event) {
 
     }
+
 }

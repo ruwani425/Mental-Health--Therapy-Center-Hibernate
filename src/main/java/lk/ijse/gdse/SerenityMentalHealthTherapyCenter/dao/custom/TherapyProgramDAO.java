@@ -4,5 +4,8 @@ import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.dao.CrudDAO;
 import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.dao.SuperDAO;
 import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.entity.TherapyProgram;
 
+import java.util.List;
+
 public interface TherapyProgramDAO extends SuperDAO, CrudDAO<TherapyProgram> {
+    List<String> getAllIds();
 }

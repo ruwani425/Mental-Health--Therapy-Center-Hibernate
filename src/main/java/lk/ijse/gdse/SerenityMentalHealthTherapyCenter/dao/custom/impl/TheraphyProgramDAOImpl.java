@@ -5,6 +5,7 @@ import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.dao.custom.TherapyProgramD
 import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.entity.TherapyProgram;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -99,5 +100,12 @@ public class TheraphyProgramDAOImpl implements TherapyProgramDAO {
     @Override
     public TherapyProgram findById(TherapyProgram therapyProgram) throws SQLException {
         return null;
+    }
+
+    @Override
+    public List<String> getAllIds() {
+        Session session = FactoryConfiguration.getInstance().getSession();
+        Query<String> query = session.createQuery("SELECT tp.id FROM TherapyProgram tp", String.class);
+        return query.list();
     }
 }

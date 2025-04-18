@@ -5,6 +5,7 @@ import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.dao.custom.PatientsDAO;
 import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.entity.Patient;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -101,5 +102,12 @@ public class PatientsDAOImpl implements PatientsDAO {
     @Override
     public Patient findById(Patient entity) throws SQLException {
         return null;
+    }
+
+    @Override
+    public List<String> getAllIds() {
+        Session session = FactoryConfiguration.getInstance().getSession();
+        Query<String> query = session.createQuery("SELECT p.id FROM Patient p", String.class);
+        return query.list();
     }
 }
