@@ -9,6 +9,7 @@ module hello.serenitymentalhealththerapycenter {
     requires jakarta.persistence;
     requires java.naming;
     requires java.management;
+    requires jbcrypt;
 
     opens lk.ijse.gdse.SerenityMentalHealthTherapyCenter.config to jakarta.persistence;
     opens lk.ijse.gdse.SerenityMentalHealthTherapyCenter.entity to org.hibernate.orm.core;

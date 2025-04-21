@@ -309,11 +309,18 @@ public class AppointmentViewController implements Initializable {
                 Date date = Date.valueOf(LocalDate.now());
                 String status = (balance == 0 ? "completed" : "pending");
 
+                double payment = 0;
+                if (balance == 0) {
+                    payment = Double.parseDouble(lblProgramFee.getText());
+                } else {
+                    payment = balance;
+                }
+
                 String patientId = cmbPatient.getValue().toString();
                 String therapistId = cmbTherapist.getValue().toString();
                 String programId = cmbTherapyProgram.getValue().toString();
 
-                AppointmentDTO appointmentDTO = new AppointmentDTO(date, balance, status, patientId, therapistId, programId);
+                AppointmentDTO appointmentDTO = new AppointmentDTO(date, payment, status, patientId, therapistId, programId);
                 boolean isSaved = appointmentBO.saveAppointment(appointmentDTO);
 
                 if (isSaved) {
