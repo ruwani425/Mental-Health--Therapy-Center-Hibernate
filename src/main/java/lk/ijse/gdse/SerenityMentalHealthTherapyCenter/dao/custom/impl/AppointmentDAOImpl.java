@@ -3,6 +3,7 @@ package lk.ijse.gdse.SerenityMentalHealthTherapyCenter.dao.custom.impl;
 import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.config.FactoryConfiguration;
 import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.dao.custom.AppointmentDAO;
 import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.entity.Appointment;
+import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.entity.Patient;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -40,8 +41,21 @@ public class AppointmentDAOImpl implements AppointmentDAO {
     }
 
     @Override
-    public boolean update(Appointment Dto) throws SQLException, ClassNotFoundException {
-        return false;
+    public boolean update(Appointment appointment) throws SQLException, ClassNotFoundException {
+        Session session = FactoryConfiguration.getInstance().getSession();
+        Transaction transaction = session.beginTransaction();
+
+        try {
+            session.merge(appointment);
+            transaction.commit();
+            return true;
+        } catch (Exception e) {
+            transaction.rollback();
+            e.printStackTrace();
+            return false;
+        } finally {
+            session.close();
+        }
     }
 
     @Override
@@ -66,6 +80,19 @@ public class AppointmentDAOImpl implements AppointmentDAO {
 
     @Override
     public Appointment findById(Appointment entity) throws SQLException {
-        return null;
+        Session session = FactoryConfiguration.getInstance().getSession();
+        Transaction transaction = session.beginTransaction();
+
+        try {
+            Appointment appointment = session.get(Appointment.class, entity.getAppointmentId());
+            transaction.commit();
+            return appointment;
+        } catch (Exception e) {
+            transaction.rollback();
+            e.printStackTrace();
+            return null;
+        } finally {
+            session.close();
+        }
     }
 }

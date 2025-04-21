@@ -1,12 +1,17 @@
 package lk.ijse.gdse.SerenityMentalHealthTherapyCenter.bo.custom.impl;
 
 import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.bo.custom.AppointmentBO;
+import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.config.FactoryConfiguration;
 import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.dao.DAOFactory;
 import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.dao.custom.*;
 import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.dto.AppointmentDTO;
 import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.entity.*;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 
+import java.sql.Date;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -107,4 +112,41 @@ public class AppointmentBOImpl implements AppointmentBO {
         return dtoList;
     }
 
+    @Override
+    public boolean updateAppointment(AppointmentDTO dto) throws SQLException, ClassNotFoundException {
+
+        Session session = FactoryConfiguration.getInstance().getSession();
+        Transaction transaction = session.beginTransaction();
+
+        try {
+            Appointment appointment = new Appointment();
+            appointment.setAppointmentId(dto.getAppointmentId());
+            appointment = appointmentDAO.findById(appointment);
+            appointment.setDate(dto.getDate());
+            appointment.setBalance(dto.getBalance());
+            appointment.setStatus(dto.getStatus());
+            if (appointmentDAO.update(appointment)) {
+                Payment payment = appointment.getPayment();
+                payment.setPaymentDate(dto.getDate());
+                payment.setAmount(dto.getBalance());
+                payment.setStatus(dto.getStatus());
+                System.out.println(payment);
+                System.out.print("this is payment: ");
+                System.out.println(appointment.getPayment());
+                if (paymentDAO.update(payment)) {
+                    transaction.commit();
+                    return true;
+                } else {
+                    return false;
+                }
+            } else {
+                return false;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        } finally {
+            session.close();
+        }
+    }
 }

@@ -44,4 +44,10 @@ public class Appointment {
         this.therapyProgram = therapyProgram1;
         this.payment = payment;
     }
+
+    public Appointment(int appointmentId, Double balance, String status) {
+        this.appointmentId = appointmentId;
+        this.balance = balance;
+        this.status = status;
+    }
 }

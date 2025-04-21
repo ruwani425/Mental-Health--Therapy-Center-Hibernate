@@ -16,4 +16,5 @@ public interface AppointmentBO extends SuperBO {
 
     List<AppointmentDTO> getAllAppointments() throws SQLException, ClassNotFoundException;
 
+    boolean updateAppointment(AppointmentDTO appointmentDTO) throws SQLException, ClassNotFoundException;
 }

@@ -25,6 +25,12 @@ import java.util.ResourceBundle;
 public class AppointmentViewController implements Initializable {
 
     @FXML
+    public Label lblAdvancePayment;
+
+    @FXML
+    public Label lblBalancePayment;
+
+    @FXML
     private Label lblAppointmentDate;
 
     @FXML
@@ -140,7 +146,64 @@ public class AppointmentViewController implements Initializable {
             }
         });
 
+        tblPendingAppointment.setOnMouseClicked(event -> {
+            if (event.getClickCount() == 1) {
+                AppointmentTM selected = tblPendingAppointment.getSelectionModel().getSelectedItem();
+                if (selected != null) {
+                    setFormDataFromTable(selected);
+                }
+            }
+        });
+
     }
+
+    private void setFormDataFromTable(AppointmentTM appointment) {
+        cmbPatient.setValue(Integer.parseInt(appointment.getPatientId()));
+        cmbTherapist.setValue(Integer.parseInt(appointment.getTherapistId()));
+        cmbTherapyProgram.setValue(Integer.parseInt(appointment.getProgramId()));
+
+        try {
+            double fee = appointmentBO.getProgramFee(appointment.getProgramId());
+            lblProgramFee.setText(String.valueOf(fee));
+
+            double balance = appointment.getBalance();
+
+            // --- Hide balance labels ---
+            lblBalance.setVisible(false);
+            lblBalancePayment.setVisible(false);
+
+            // --- Change label text ---
+            lblAdvancePayment.setText("Balance Payment");
+
+            // --- Set balance as advance ---
+            txtAdvance.setText(String.valueOf(balance));
+            txtAdvance.setEditable(false); // prevent editing
+
+            // --- Change button text ---
+            btnPay.setText("Finish");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void resetForm() {
+        txtAdvance.clear();
+        txtAdvance.setEditable(true);
+
+        lblAdvancePayment.setText("Advance Payment");
+        lblBalance.setVisible(true);
+        lblBalancePayment.setVisible(true);
+        lblBalance.setText("0.00");
+        lblProgramFee.setText("0.00");
+
+        cmbPatient.getSelectionModel().clearSelection();
+        cmbTherapist.getSelectionModel().clearSelection();
+        cmbTherapyProgram.getSelectionModel().clearSelection();
+
+        btnPay.setText("Pay");
+    }
+
 
     private void setCellValueFactory() {
         colPAppointmentId.setCellValueFactory(new PropertyValueFactory<>("appointmentId"));
@@ -239,28 +302,56 @@ public class AppointmentViewController implements Initializable {
 
     @FXML
     void btnPaymentOnAction(ActionEvent event) throws SQLException, ClassNotFoundException {
-        double balance = Double.parseDouble(lblBalance.getText());
+        if (btnPay.getText().equals("Pay")) {
+            double balance = Double.parseDouble(lblBalance.getText());
 
-        if (balance >= 0) {
+            if (balance >= 0) {
+                Date date = Date.valueOf(LocalDate.now());
+                String status = (balance == 0 ? "completed" : "pending");
+
+                String patientId = cmbPatient.getValue().toString();
+                String therapistId = cmbTherapist.getValue().toString();
+                String programId = cmbTherapyProgram.getValue().toString();
+
+                AppointmentDTO appointmentDTO = new AppointmentDTO(date, balance, status, patientId, therapistId, programId);
+                boolean isSaved = appointmentBO.saveAppointment(appointmentDTO);
+
+                if (isSaved) {
+                    loadAppointmentsToTable();
+                    resetForm();
+                    new Alert(Alert.AlertType.INFORMATION, "Appointment saved").show();
+                } else {
+                    new Alert(Alert.AlertType.ERROR, "Failed to save appointment").show();
+                }
+            } else {
+                new Alert(Alert.AlertType.WARNING, "Invalid advance amount. Balance cannot be negative!").show();
+            }
+        } else {
+
+            AppointmentTM selectedAppointment = tblPendingAppointment.getSelectionModel().getSelectedItem();
+
+            if (selectedAppointment == null) {
+                new Alert(Alert.AlertType.WARNING, "Please select an appointment to finish").show();
+                return;
+            }
+
             Date date = Date.valueOf(LocalDate.now());
-            String status = (balance == 0 ? "completed" : "pending");
-
+            String status = "completed";
             String patientId = cmbPatient.getValue().toString();
             String therapistId = cmbTherapist.getValue().toString();
             String programId = cmbTherapyProgram.getValue().toString();
+            double balance = Double.parseDouble(lblProgramFee.getText());
+            AppointmentDTO appointmentDTO = new AppointmentDTO(selectedAppointment.getAppointmentId(), date, balance, status, patientId, therapistId, programId);
+            boolean isUpdated = appointmentBO.updateAppointment(appointmentDTO);
 
-            AppointmentDTO appointmentDTO = new AppointmentDTO(date, balance, status, patientId, therapistId, programId);
-            boolean isSaved = appointmentBO.saveAppointment(appointmentDTO);
-
-            if (isSaved) {
+            if (isUpdated) {
                 loadAppointmentsToTable();
-                new Alert(Alert.AlertType.INFORMATION, "Appointment saved").show();
+                resetForm();
+                new Alert(Alert.AlertType.INFORMATION, "Appointment updated").show();
             } else {
-                new Alert(Alert.AlertType.ERROR, "Failed to save appointment").show();
+                resetForm();
+                new Alert(Alert.AlertType.ERROR, "Failed to update appointment").show();
             }
-        } else {
-            new Alert(Alert.AlertType.WARNING, "Invalid advance amount. Balance cannot be negative!").show();
         }
     }
 }
-
