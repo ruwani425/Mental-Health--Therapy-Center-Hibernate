@@ -99,13 +99,26 @@ public class TheraphyProgramDAOImpl implements TherapyProgramDAO {
 
     @Override
     public TherapyProgram findById(TherapyProgram therapyProgram) throws SQLException {
-        return null;
+        Session session = FactoryConfiguration.getInstance().getSession();
+        Transaction transaction = session.beginTransaction();
+
+        try {
+            TherapyProgram patient = session.get(TherapyProgram.class, therapyProgram.getProgramId());
+            transaction.commit();
+            return patient;
+        } catch (Exception e) {
+            transaction.rollback();
+            e.printStackTrace();
+            return null;
+        } finally {
+            session.close();
+        }
     }
 
     @Override
-    public List<String> getAllIds() {
+    public List<Integer> getAllIds() {
         Session session = FactoryConfiguration.getInstance().getSession();
-        Query<String> query = session.createQuery("SELECT tp.id FROM TherapyProgram tp", String.class);
+        Query<Integer> query = session.createQuery("SELECT tp.id FROM TherapyProgram tp", Integer.class);
         return query.list();
     }
 

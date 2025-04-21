@@ -18,11 +18,11 @@ import java.util.List;
 public class Payment {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private String paymentId;
+    private int paymentId;
     private String status;
     private Double amount;
     private Date paymentDate;
 
-    @OneToMany(mappedBy = "payment", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Appointment> appointmentList;
+    @OneToOne(mappedBy = "payment")
+    private Appointment appointment;
 }

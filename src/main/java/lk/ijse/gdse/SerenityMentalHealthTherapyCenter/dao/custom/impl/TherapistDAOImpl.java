@@ -99,12 +99,26 @@ public class TherapistDAOImpl implements TherapistDAO {
 
     @Override
     public Therapist findById(Therapist entity) throws SQLException {
-        return null;
-    }
-    @Override
-    public List<String> getAllIds() {
         Session session = FactoryConfiguration.getInstance().getSession();
-        Query<String> query = session.createQuery("SELECT t.id FROM Therapist t", String.class);
+        Transaction transaction = session.beginTransaction();
+
+        try {
+            Therapist patient = session.get(Therapist.class, entity.getTherapistId());
+            transaction.commit();
+            return patient;
+        } catch (Exception e) {
+            transaction.rollback();
+            e.printStackTrace();
+            return null;
+        } finally {
+            session.close();
+        }
+    }
+
+    @Override
+    public List<Integer> getAllIds() {
+        Session session = FactoryConfiguration.getInstance().getSession();
+        Query<Integer> query = session.createQuery("SELECT t.id FROM Therapist t", Integer.class);
         return query.list();
     }
 }

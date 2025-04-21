@@ -17,8 +17,10 @@ import java.sql.Date;
 public class Appointment {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private String appointmentId;
+    private int appointmentId;
     private Date date;
+    private Double balance;
+    private String status;
 
     @ManyToOne
     private Therapist therapist;
@@ -29,6 +31,17 @@ public class Appointment {
     @ManyToOne
     private TherapyProgram therapyProgram;
 
-    @ManyToOne
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "paymentId")
     private Payment payment;
+
+    public Appointment(Date date, Double balance, String status, Therapist therapist1, Patient patient1, TherapyProgram therapyProgram1,Payment payment) {
+        this.date = date;
+        this.balance = balance;
+        this.status = status;
+        this.therapist = therapist1;
+        this.patient = patient1;
+        this.therapyProgram = therapyProgram1;
+        this.payment = payment;
+    }
 }

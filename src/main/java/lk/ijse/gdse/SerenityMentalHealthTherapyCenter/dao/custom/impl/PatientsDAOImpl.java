@@ -58,11 +58,11 @@ public class PatientsDAOImpl implements PatientsDAO {
             session.merge(entity);
             transaction.commit();
             return true;
-        }catch (Exception e) {
+        } catch (Exception e) {
             transaction.rollback();
             e.printStackTrace();
             return false;
-        }finally {
+        } finally {
             session.close();
         }
     }
@@ -101,13 +101,26 @@ public class PatientsDAOImpl implements PatientsDAO {
 
     @Override
     public Patient findById(Patient entity) throws SQLException {
-        return null;
+        Session session = FactoryConfiguration.getInstance().getSession();
+        Transaction transaction = session.beginTransaction();
+
+        try {
+            Patient patient = session.get(Patient.class, entity.getPatientId());
+            transaction.commit();
+            return patient;
+        } catch (Exception e) {
+            transaction.rollback();
+            e.printStackTrace();
+            return null;
+        } finally {
+            session.close();
+        }
     }
 
     @Override
-    public List<String> getAllIds() {
+    public List<Integer> getAllIds() {
         Session session = FactoryConfiguration.getInstance().getSession();
-        Query<String> query = session.createQuery("SELECT p.id FROM Patient p", String.class);
+        Query<Integer> query = session.createQuery("SELECT p.id FROM Patient p", Integer.class);
         return query.list();
     }
 }

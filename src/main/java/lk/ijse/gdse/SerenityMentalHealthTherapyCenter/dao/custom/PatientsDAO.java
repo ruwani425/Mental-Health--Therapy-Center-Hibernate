@@ -7,5 +7,5 @@ import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.entity.Patient;
 import java.util.List;
 
 public interface PatientsDAO extends SuperDAO, CrudDAO<Patient> {
-    List<String> getAllIds();
+    List<Integer> getAllIds();
 }

@@ -153,9 +153,10 @@ public class TheraphyProgramViewController implements Initializable {
     void btnUpdateProgramOnAction(ActionEvent event) throws SQLException, ClassNotFoundException {
         String programName = txtProgramName.getText();
         String programDuration = txtProgramDuration.getText();
-        String programFee = txtProgramFee.getText();
+        double programFee = Double.parseDouble(txtProgramFee.getText());
+        int programID = Integer.parseInt(id);
 
-        TherapyProgramDTO therapyProgramDTO = new TherapyProgramDTO(programName, programDuration, programFee);
+        TherapyProgramDTO therapyProgramDTO = new TherapyProgramDTO(programID,programName, programDuration, programFee);
 
         boolean isUpdated = therapyProgramBO.updateProgram(therapyProgramDTO);
 

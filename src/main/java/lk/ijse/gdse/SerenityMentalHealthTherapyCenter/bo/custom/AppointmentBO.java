@@ -1,12 +1,19 @@
 package lk.ijse.gdse.SerenityMentalHealthTherapyCenter.bo.custom;
 
 import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.bo.SuperBO;
+import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.dto.AppointmentDTO;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public interface AppointmentBO extends SuperBO {
-    List<String> getTherapistIds();
-    List<String> getPatientIds();
-    List<String> getProgramIds();
+    List<Integer> getTherapistIds();
+    List<Integer> getPatientIds();
+    List<Integer> getProgramIds();
     double getProgramFee(String programId);
+
+    boolean saveAppointment(AppointmentDTO dto) throws SQLException, ClassNotFoundException;
+
+    List<AppointmentDTO> getAllAppointments() throws SQLException, ClassNotFoundException;
+
 }

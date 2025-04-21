@@ -2,31 +2,39 @@ package lk.ijse.gdse.SerenityMentalHealthTherapyCenter.controller;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.bo.BOFactory;
 import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.bo.custom.AppointmentBO;
+import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.dto.AppointmentDTO;
 import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.dto.tm.AppointmentTM;
 
 import java.net.URL;
 import java.sql.Date;
+import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class AppointmentViewController implements Initializable {
 
     @FXML
-    private DatePicker datePickerDate;
+    private Label lblAppointmentDate;
 
     @FXML
-    private ComboBox<String> cmbTherapist;
+    private ComboBox<Integer> cmbTherapist;
 
     @FXML
-    private ComboBox<String> cmbPatient;
+    private ComboBox<Integer> cmbPatient;
 
     @FXML
-    private ComboBox<String> cmbTherapyProgram;
+    private ComboBox<Integer> cmbTherapyProgram;
 
     @FXML
     private Label lblProgramFee;
@@ -89,8 +97,85 @@ public class AppointmentViewController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        loadAppointmentsToTable();
+        setCellValueFactory();
+
+        LocalDate today = LocalDate.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        String formattedDate = today.format(formatter);
+        lblAppointmentDate.setText(formattedDate);
+
         loadComboBoxes();
         cmbTherapyProgram.setOnAction(event -> loadProgramFee());
+
+        txtAdvance.textProperty().addListener((observable, oldValue, newValue) -> {
+            calculateBalance();
+        });
+
+        //add button in invoice column
+        colCInvoice.setCellFactory(param -> new TableCell<>() {
+            private final Button btn = new Button("Invoice");
+
+            {
+                btn.setOnAction(event -> {
+                    AppointmentTM appointment = getTableView().getItems().get(getIndex());
+                    // ➤ Here you can implement the logic to generate the invoice
+                    System.out.println("Generating invoice for: " + appointment.getAppointmentId());
+                    // Example: openInvoiceWindow(appointment);
+                });
+
+                btn.setStyle("-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-weight: bold;");
+            }
+
+            @Override
+            protected void updateItem(Button item, boolean empty) {
+                super.updateItem(item, empty);
+
+                if (empty || getTableView().getItems().get(getIndex()) == null) {
+                    setGraphic(null);
+                } else {
+                    setGraphic(btn);
+                }
+            }
+        });
+
+    }
+
+    private void setCellValueFactory() {
+        colPAppointmentId.setCellValueFactory(new PropertyValueFactory<>("appointmentId"));
+        colPDate.setCellValueFactory(new PropertyValueFactory<>("date"));
+        colPTherapist.setCellValueFactory(new PropertyValueFactory<>("therapistId"));
+        colPPatient.setCellValueFactory(new PropertyValueFactory<>("patientId"));
+        colPTherapyProgram.setCellValueFactory(new PropertyValueFactory<>("programId"));
+        colPBalance.setCellValueFactory(new PropertyValueFactory<>("balance"));
+
+        colCAppointmentId.setCellValueFactory(new PropertyValueFactory<>("appointmentId"));
+        colCDate.setCellValueFactory(new PropertyValueFactory<>("date"));
+        colCTherapist.setCellValueFactory(new PropertyValueFactory<>("therapistId"));
+        colCPatient.setCellValueFactory(new PropertyValueFactory<>("patientId"));
+        colCTheraphyProgram.setCellValueFactory(new PropertyValueFactory<>("programId"));
+        colCBalance.setCellValueFactory(new PropertyValueFactory<>("balance"));
+    }
+
+    private void calculateBalance() {
+        try {
+            String advanceText = txtAdvance.getText();
+            if (advanceText == null || advanceText.isEmpty()) {
+                lblBalance.setText(String.valueOf(0.00));
+                return;
+            }
+
+            double advance = Double.parseDouble(advanceText);
+
+            String feeText = lblProgramFee.getText();
+            double fee = Double.parseDouble(feeText);
+
+            double balance = fee - advance;
+            lblBalance.setText(String.valueOf(balance));
+        } catch (NumberFormatException e) {
+            lblBalance.setText("Invalid input");
+        }
     }
 
     private void loadProgramFee() {
@@ -100,7 +185,7 @@ public class AppointmentViewController implements Initializable {
             try {
                 String programId = String.valueOf(selectedProgram);
                 double fee = appointmentBO.getProgramFee(programId);
-                lblProgramFee.setText(String.format("Rs. %.2f", fee));
+                lblProgramFee.setText(String.valueOf(fee));
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -118,9 +203,64 @@ public class AppointmentViewController implements Initializable {
         }
     }
 
-    @FXML
-    void btnPaymentOnAction(ActionEvent event) {
+    private void loadAppointmentsToTable() {
+        try {
+            List<AppointmentDTO> appointmentList = appointmentBO.getAllAppointments();
 
+            ObservableList<AppointmentTM> pendingList = FXCollections.observableArrayList();
+            ObservableList<AppointmentTM> completedList = FXCollections.observableArrayList();
+
+            for (AppointmentDTO dto : appointmentList) {
+                AppointmentTM tm = new AppointmentTM(
+                        dto.getAppointmentId(),
+                        dto.getDate(),
+                        dto.getBalance(),
+                        dto.getStatus(),
+                        dto.getPatientId(),
+                        dto.getTherapistId(),
+                        dto.getProgramId()
+                );
+
+                if ("completed".equalsIgnoreCase(dto.getStatus())) {
+                    completedList.add(tm);
+                } else {
+                    pendingList.add(tm);
+                }
+            }
+
+            tblPendingAppointment.setItems(pendingList);
+            tblCompletedAppoinment.setItems(completedList);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
+
+    @FXML
+    void btnPaymentOnAction(ActionEvent event) throws SQLException, ClassNotFoundException {
+        double balance = Double.parseDouble(lblBalance.getText());
+
+        if (balance >= 0) {
+            Date date = Date.valueOf(LocalDate.now());
+            String status = (balance == 0 ? "completed" : "pending");
+
+            String patientId = cmbPatient.getValue().toString();
+            String therapistId = cmbTherapist.getValue().toString();
+            String programId = cmbTherapyProgram.getValue().toString();
+
+            AppointmentDTO appointmentDTO = new AppointmentDTO(date, balance, status, patientId, therapistId, programId);
+            boolean isSaved = appointmentBO.saveAppointment(appointmentDTO);
+
+            if (isSaved) {
+                loadAppointmentsToTable();
+                new Alert(Alert.AlertType.INFORMATION, "Appointment saved").show();
+            } else {
+                new Alert(Alert.AlertType.ERROR, "Failed to save appointment").show();
+            }
+        } else {
+            new Alert(Alert.AlertType.WARNING, "Invalid advance amount. Balance cannot be negative!").show();
+        }
+    }
 }
+

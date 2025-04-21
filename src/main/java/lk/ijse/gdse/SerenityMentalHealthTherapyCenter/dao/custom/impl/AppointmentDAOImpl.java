@@ -1,20 +1,42 @@
 package lk.ijse.gdse.SerenityMentalHealthTherapyCenter.dao.custom.impl;
 
+import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.config.FactoryConfiguration;
 import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.dao.custom.AppointmentDAO;
 import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.entity.Appointment;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class AppointmentDAOImpl implements AppointmentDAO {
+
     @Override
     public ArrayList<Appointment> getAllData() throws SQLException, ClassNotFoundException {
-        return null;
+        Session session = FactoryConfiguration.getInstance().getSession();
+        try {
+            return (ArrayList<Appointment>) session.createQuery("FROM Appointment", Appointment.class).list();
+        } finally {
+            session.close();
+        }
     }
 
     @Override
-    public boolean save(Appointment Dto) throws SQLException, ClassNotFoundException {
-        return false;
+    public boolean save(Appointment entity) throws SQLException, ClassNotFoundException {
+        Session session = FactoryConfiguration.getInstance().getSession();
+        Transaction transaction = session.beginTransaction();
+
+        try {
+            session.persist(entity);
+            transaction.commit();
+            return true;
+        } catch (Exception e) {
+            transaction.rollback();
+            e.printStackTrace();
+            return false;
+        } finally {
+            session.close();
+        }
     }
 
     @Override
