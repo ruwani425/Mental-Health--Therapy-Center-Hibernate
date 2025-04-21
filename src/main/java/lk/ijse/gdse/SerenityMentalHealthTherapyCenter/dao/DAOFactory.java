@@ -33,8 +33,6 @@ public class DAOFactory {
                 return new TheraphyProgramDAOImpl();
             case USER:
                 return new UserDAOImpl();
-            case THERAPYSESSION:
-                return new TherapySessionDAOImpl();
             case PAYMENT:
                 return new PaymentDAOImpl();
             default:

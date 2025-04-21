@@ -1,6 +1,7 @@
 package lk.ijse.gdse.SerenityMentalHealthTherapyCenter.dao.custom.impl;
 
 import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.config.FactoryConfiguration;
+import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.customexception.PatientPersistException;
 import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.dao.custom.PatientsDAO;
 import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.entity.Patient;
 import org.hibernate.Session;
@@ -32,7 +33,7 @@ public class PatientsDAOImpl implements PatientsDAO {
     }
 
     @Override
-    public boolean save(Patient patientEntity) throws SQLException, ClassNotFoundException {
+    public boolean save(Patient patientEntity) throws SQLException, ClassNotFoundException, PatientPersistException {
         Session session = FactoryConfiguration.getInstance().getSession();
         Transaction transaction = session.beginTransaction();
 
@@ -42,8 +43,7 @@ public class PatientsDAOImpl implements PatientsDAO {
             return true;
         } catch (Exception e) {
             transaction.rollback();
-            e.printStackTrace();
-            return false;
+            throw new PatientPersistException(e.getMessage());
         } finally {
             session.close();
         }

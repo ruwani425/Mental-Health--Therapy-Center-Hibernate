@@ -1,6 +1,5 @@
 package lk.ijse.gdse.SerenityMentalHealthTherapyCenter.bo;
 
-import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.bo.custom.TherapySessionBO;
 import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.bo.custom.impl.*;
 
 public class BOFactory {
@@ -15,7 +14,7 @@ public class BOFactory {
     }
 
     public enum BOType {
-        PATIENT, THERAPIST, APPOINTMENT, THERAPYPROGRAM, USER, THERAPYSESSION, PAYMENT
+        PATIENT, THERAPIST, APPOINTMENT, THERAPYPROGRAM, USER, PAYMENT
     }
 
     public SuperBO getBO(BOType type) {
@@ -30,8 +29,6 @@ public class BOFactory {
                 return new TherapyProgramBOImpl();
             case USER:
                 return new UserBOImpl();
-            case THERAPYSESSION:
-                return new TherapySessionBOImpl();
             case PAYMENT:
                 return new PaymentBOImpl();
             default:

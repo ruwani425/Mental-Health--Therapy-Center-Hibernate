@@ -29,7 +29,6 @@ public class FactoryConfiguration {
         // Build the SessionFactory
         try {
             Configuration configuration = new Configuration().addProperties(properties)
-                    .addAnnotatedClass(TherapySession.class)
                     .addAnnotatedClass(User.class)
                     .addAnnotatedClass(Patient.class)
                     .addAnnotatedClass(Payment.class)

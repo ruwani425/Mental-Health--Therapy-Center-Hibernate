@@ -2,6 +2,7 @@ package lk.ijse.gdse.SerenityMentalHealthTherapyCenter.bo.custom.impl;
 
 import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.bo.custom.AppointmentBO;
 import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.config.FactoryConfiguration;
+import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.customexception.PatientPersistException;
 import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.dao.DAOFactory;
 import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.dao.custom.*;
 import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.dto.AppointmentDTO;
@@ -89,6 +90,8 @@ public class AppointmentBOImpl implements AppointmentBO {
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
             return false;
+        } catch (PatientPersistException e) {
+            throw new RuntimeException(e);
         }
     }
 

@@ -13,6 +13,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.bo.BOFactory;
 import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.bo.custom.TherapyProgramBO;
+import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.customexception.PatientPersistException;
 import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.dto.TherapyProgramDTO;
 import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.dto.tm.TherapyProgramTM;
 
@@ -131,7 +132,7 @@ public class TheraphyProgramViewController implements Initializable {
     }
 
     @FXML
-    void btnSaveProgramOnAction(ActionEvent event) throws SQLException, ClassNotFoundException {
+    void btnSaveProgramOnAction(ActionEvent event) throws SQLException, ClassNotFoundException, PatientPersistException {
         String programName = txtProgramName.getText();
         String programDuration = txtProgramDuration.getText();
         String programFee = txtProgramFee.getText();

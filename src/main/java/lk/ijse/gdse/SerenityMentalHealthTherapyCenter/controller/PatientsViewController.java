@@ -12,6 +12,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.bo.BOFactory;
 import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.bo.custom.PatientsBO;
+import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.customexception.MissingFeildException;
+import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.customexception.PatientPersistException;
 import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.dto.PatientDTO;
 import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.dto.tm.PatientTM;
 
@@ -183,13 +185,20 @@ public class PatientsViewController implements Initializable {
 
         PatientDTO patientDTO = new PatientDTO(name, address, gender, dateOfBirth, email, phone);
 
-        boolean isSaved = patientsBO.savePatient(patientDTO);
+        boolean isSaved = false;
+        try {
+            isSaved = patientsBO.savePatient(patientDTO);
+        } catch (MissingFeildException e) {
+            new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
+        } catch (PatientPersistException e) {
+            new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
+        }
 
         if (isSaved) {
             new Alert(Alert.AlertType.INFORMATION, "Patient saved successfully!").show();
             clearFields();
             loadPatientData();
-        }else {
+        } else {
             new Alert(Alert.AlertType.ERROR, "Failed to save patient!").show();
         }
     }
@@ -203,16 +212,16 @@ public class PatientsViewController implements Initializable {
         String gender = cmbGender.getSelectionModel().getSelectedItem().toString();
         Date dateOfBirth = Date.valueOf(datePickerDob.getValue().toString());
 
-        PatientDTO patientDTO = new PatientDTO(id,name, address, gender, dateOfBirth, email, phone);
+        PatientDTO patientDTO = new PatientDTO(id, name, address, gender, dateOfBirth, email, phone);
 
         boolean isUpdate = patientsBO.UpdatePatient(patientDTO);
 
-        if (isUpdate){
+        if (isUpdate) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION, "Patient updated successfully!");
             clearFields();
             loadPatientData();
             btnUpdate.setDisable(true);
-        }else {
+        } else {
             Alert alert = new Alert(Alert.AlertType.INFORMATION, "Failed to update patient!");
         }
     }

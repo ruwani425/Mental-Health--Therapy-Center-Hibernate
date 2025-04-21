@@ -12,6 +12,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.bo.BOFactory;
 import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.bo.custom.TherapistsBO;
+import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.customexception.PatientPersistException;
 import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.dto.PatientDTO;
 import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.dto.TherapistDTO;
 import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.dto.tm.PatientTM;
@@ -167,7 +168,7 @@ public class TherapistsViewController implements Initializable {
     }
 
     @FXML
-    void btnSaveTherapistOnAction(ActionEvent event) throws SQLException, ClassNotFoundException {
+    void btnSaveTherapistOnAction(ActionEvent event) throws SQLException, ClassNotFoundException, PatientPersistException {
         String name = txtTherapistName.getText();
         String address = txtTherapistAddress.getText();
         String email = txtTherapistEmail.getText();

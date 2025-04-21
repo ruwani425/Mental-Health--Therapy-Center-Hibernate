@@ -1,6 +1,7 @@
 package lk.ijse.gdse.SerenityMentalHealthTherapyCenter.bo.custom.impl;
 
 import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.bo.custom.TherapyProgramBO;
+import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.customexception.PatientPersistException;
 import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.dao.DAOFactory;
 import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.dao.custom.TherapyProgramDAO;
 import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.dto.TherapyProgramDTO;
@@ -15,7 +16,7 @@ public class TherapyProgramBOImpl implements TherapyProgramBO {
     private final TherapyProgramDAO therapyProgramDAO = (TherapyProgramDAO) DAOFactory.getInstance().getDAO(DAOFactory.DAOType.THERAPYPROGRAM);
 
     @Override
-    public boolean saveProgram(TherapyProgramDTO therapyProgramDTO) throws SQLException, ClassNotFoundException {
+    public boolean saveProgram(TherapyProgramDTO therapyProgramDTO) throws SQLException, ClassNotFoundException, PatientPersistException {
         TherapyProgram therapyProgram = new TherapyProgram();
         therapyProgram.setProgramName(therapyProgramDTO.getProgramName());
         therapyProgram.setProgramFee(therapyProgramDTO.getProgramFee());
