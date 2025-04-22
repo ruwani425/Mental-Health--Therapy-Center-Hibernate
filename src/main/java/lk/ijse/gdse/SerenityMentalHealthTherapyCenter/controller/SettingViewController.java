@@ -99,7 +99,7 @@ public class SettingViewController implements Initializable {
 
         String finalUserName;
         boolean isValid = userBO.isUserExists(currentUserName, currentPassword);
-        int userId = userBO.getUserIdByUsername(currentUserName);
+        UserDTO currentUserDTO = userBO.getUserByUsername(currentUserName);
 
         if (checkBoxUserName.isSelected()) {
             finalUserName = txtNewUserName.getText();
@@ -111,9 +111,15 @@ public class SettingViewController implements Initializable {
             finalUserName = lblUserName.getText();
         }
 
-        if (isValid) {
+        if (isValid && currentUserDTO != null) {
             if (newPassword.equals(conformNewPassword)) {
-                UserDTO userDTO = new UserDTO(userId,"receptionist", finalUserName, newPassword);
+                UserDTO userDTO = new UserDTO(
+                        currentUserDTO.getUserId(),
+                        currentUserDTO.getRole(),
+                        finalUserName,
+                        newPassword
+                );
+
                 boolean isUpdated = userBO.update(userDTO);
 
                 if (isUpdated) {
@@ -122,12 +128,13 @@ public class SettingViewController implements Initializable {
                     new Alert(Alert.AlertType.ERROR, "User could not be updated").show();
                 }
             } else {
-                new Alert(Alert.AlertType.ERROR, "conform password do not match").show();
+                new Alert(Alert.AlertType.ERROR, "Confirm password does not match").show();
             }
         } else {
             new Alert(Alert.AlertType.ERROR, "Password is incorrect").show();
         }
     }
+
 
     void clearFields() {
         txtUserName.clear();
