@@ -19,6 +19,13 @@ import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class SettingViewController implements Initializable {
+
+    @FXML
+    public Label lblPassword;
+
+    @FXML
+    public Label lblNewUserName;
+
     @FXML
     private CheckBox checkBoxUserName;
 
@@ -62,6 +69,19 @@ public class SettingViewController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         lblUserName.setText(currentUserName);
+        txtUPassword.setVisible(false);
+        txtNewUserName.setVisible(false);
+        lblNewUserName.setVisible(false);
+        lblPassword.setVisible(false);
+
+        checkBoxUserName.setOnAction(e -> {
+            boolean isSelected = checkBoxUserName.isSelected();
+            txtUPassword.setVisible(isSelected);
+            txtNewUserName.setVisible(isSelected);
+            lblNewUserName.setVisible(isSelected);
+            lblPassword.setVisible(isSelected);
+        });
+
     }
 
     @FXML

@@ -22,8 +22,8 @@
                         <Label layoutX="204.0" layoutY="185.0" text="New Password" />
                         <Label layoutX="204.0" layoutY="246.0" text="Conform Password" />
                         <CheckBox fx:id="checkBoxUserName" layoutX="207.0" layoutY="315.0" mnemonicParsing="false" text="Do you want to change user name ?" />
-                        <Label layoutX="205.0" layoutY="390.0" prefHeight="18.0" prefWidth="69.0" text="Password" />
-                        <Label layoutX="204.0" layoutY="460.0" prefHeight="18.0" prefWidth="109.0" text="New User Name" />
+                        <Label fx:id="lblPassword" layoutX="205.0" layoutY="390.0" prefHeight="18.0" prefWidth="69.0" text="Password" />
+                        <Label fx:id="lblNewUserName" layoutX="204.0" layoutY="460.0" prefHeight="18.0" prefWidth="109.0" text="New User Name" />
                         <JFXPasswordField fx:id="txtCurrentPassword" layoutX="386.0" layoutY="106.0" prefHeight="28.0" prefWidth="266.0" />
                         <JFXPasswordField fx:id="txtNewPassword" layoutX="388.0" layoutY="162.0" prefHeight="28.0" prefWidth="266.0" />
                         <JFXPasswordField fx:id="txtConformNewPassword" layoutX="389.0" layoutY="227.0" prefHeight="28.0" prefWidth="266.0" />
