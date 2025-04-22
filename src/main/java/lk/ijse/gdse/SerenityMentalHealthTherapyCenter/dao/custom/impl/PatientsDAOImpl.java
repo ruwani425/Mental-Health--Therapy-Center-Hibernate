@@ -33,7 +33,7 @@ public class PatientsDAOImpl implements PatientsDAO {
     }
 
     @Override
-    public boolean save(Patient patientEntity) throws SQLException, ClassNotFoundException, PatientPersistException {
+    public boolean save(Patient patientEntity) throws ClassNotFoundException, SQLException {
         Session session = FactoryConfiguration.getInstance().getSession();
         Transaction transaction = session.beginTransaction();
 
@@ -43,7 +43,7 @@ public class PatientsDAOImpl implements PatientsDAO {
             return true;
         } catch (Exception e) {
             transaction.rollback();
-            throw new PatientPersistException(e.getMessage());
+            throw new SQLException(e.getMessage());
         } finally {
             session.close();
         }

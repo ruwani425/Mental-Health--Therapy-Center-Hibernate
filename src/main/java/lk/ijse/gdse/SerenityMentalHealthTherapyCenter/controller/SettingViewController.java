@@ -5,6 +5,7 @@ import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
@@ -13,9 +14,11 @@ import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.bo.custom.UserBO;
 import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.customexception.PatientPersistException;
 import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.dto.UserDTO;
 
+import java.net.URL;
 import java.sql.SQLException;
+import java.util.ResourceBundle;
 
-public class SettingViewController {
+public class SettingViewController implements Initializable {
     @FXML
     private CheckBox checkBoxUserName;
 
@@ -52,7 +55,14 @@ public class SettingViewController {
     @FXML
     private JFXButton btnAddUser;
 
+    public static String currentUserName;
+
     private final UserBO userBO = (UserBO) BOFactory.getInstance().getBO(BOFactory.BOType.USER);
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        lblUserName.setText(currentUserName);
+    }
 
     @FXML
     void btnAddUserOnAction(ActionEvent event) throws PatientPersistException, SQLException, ClassNotFoundException {

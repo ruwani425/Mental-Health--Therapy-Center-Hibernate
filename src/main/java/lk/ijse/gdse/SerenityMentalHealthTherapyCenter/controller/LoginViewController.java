@@ -1,6 +1,7 @@
 package lk.ijse.gdse.SerenityMentalHealthTherapyCenter.controller;
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -22,7 +23,7 @@ public class LoginViewController {
     @FXML
     private JFXTextField txtUserName;
     @FXML
-    private JFXTextField txtPassword;
+    private JFXPasswordField txtPassword;
     @FXML
     private JFXButton loginBtn;
 
@@ -36,6 +37,7 @@ public class LoginViewController {
         txtPassword.setStyle("-fx-border-color: transparent;");
 
         if (userBO.isUserExists(username, password)) {
+            SettingViewController.currentUserName = username;
             loadDashboard("dashboard-view.fxml");
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
