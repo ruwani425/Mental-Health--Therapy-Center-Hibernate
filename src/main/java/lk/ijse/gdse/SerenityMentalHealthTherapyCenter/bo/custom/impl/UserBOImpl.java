@@ -30,4 +30,18 @@ public class UserBOImpl implements UserBO {
         User user = new User(userDTO.getUsername(),hashedPassword,userDTO.getRole());
         return userDAO.save(user);
     }
+
+    @Override
+    public boolean update(UserDTO userDTO) throws SQLException, ClassNotFoundException {
+        String hashedPassword = BCrypt.hashpw(userDTO.getPassword(), BCrypt.gensalt());
+        User user = new User(userDTO.getUserId(),userDTO.getRole(),userDTO.getUsername(),hashedPassword);
+        return userDAO.update(user);
+    }
+    public int getUserIdByUsername(String username) {
+        User user = userDAO.findByUsername(username);
+        if (user != null) {
+            return user.getUserId();
+        }
+        return -1;
+    }
 }

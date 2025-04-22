@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserDTO {
-    private String userId;
+    private int userId;
     private String role;
     private String username;
     private String password;
@@ -17,5 +17,11 @@ public class UserDTO {
         this.username = username;
         this.password = password;
         this.role = role;
+    }
+
+    public UserDTO(int userId,String finalUserName, String newPassword) {
+        this.userId = userId;
+        this.username = finalUserName;
+        this.password = newPassword;
     }
 }

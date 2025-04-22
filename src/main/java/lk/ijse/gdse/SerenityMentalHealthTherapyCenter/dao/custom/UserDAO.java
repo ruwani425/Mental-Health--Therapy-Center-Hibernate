@@ -8,4 +8,6 @@ public interface UserDAO extends SuperDAO, CrudDAO<User> {
     void initializeAdmin();
 
     boolean validateUser(String username, String password);
+
+    User findByUsername(String username);
 }

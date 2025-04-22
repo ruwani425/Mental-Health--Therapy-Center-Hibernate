@@ -21,9 +21,6 @@ import java.util.ResourceBundle;
 public class SettingViewController implements Initializable {
 
     @FXML
-    public Label lblPassword;
-
-    @FXML
     public Label lblNewUserName;
 
     @FXML
@@ -40,9 +37,6 @@ public class SettingViewController implements Initializable {
 
     @FXML
     private JFXTextField txtNewUserName;
-
-    @FXML
-    private JFXPasswordField txtUPassword;
 
     @FXML
     private Label lblUserName;
@@ -69,17 +63,13 @@ public class SettingViewController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         lblUserName.setText(currentUserName);
-        txtUPassword.setVisible(false);
-        txtNewUserName.setVisible(false);
         lblNewUserName.setVisible(false);
-        lblPassword.setVisible(false);
+        txtNewUserName.setVisible(false);
 
         checkBoxUserName.setOnAction(e -> {
             boolean isSelected = checkBoxUserName.isSelected();
-            txtUPassword.setVisible(isSelected);
             txtNewUserName.setVisible(isSelected);
             lblNewUserName.setVisible(isSelected);
-            lblPassword.setVisible(isSelected);
         });
 
     }
@@ -102,8 +92,41 @@ public class SettingViewController implements Initializable {
     }
 
     @FXML
-    void btnSubmitUserOnAction(ActionEvent event) {
+    void btnSubmitUserOnAction(ActionEvent event) throws SQLException, ClassNotFoundException {
+        String currentPassword = txtCurrentPassword.getText();
+        String newPassword = txtNewPassword.getText();
+        String conformNewPassword = txtConformNewPassword.getText();
 
+        String finalUserName;
+        boolean isValid = userBO.isUserExists(currentUserName, currentPassword);
+        int userId = userBO.getUserIdByUsername(currentUserName);
+
+        if (checkBoxUserName.isSelected()) {
+            finalUserName = txtNewUserName.getText();
+            if (finalUserName == null || finalUserName.trim().isEmpty()) {
+                new Alert(Alert.AlertType.ERROR, "Please Enter new user name").show();
+                return;
+            }
+        } else {
+            finalUserName = lblUserName.getText();
+        }
+
+        if (isValid) {
+            if (newPassword.equals(conformNewPassword)) {
+                UserDTO userDTO = new UserDTO(userId,"receptionist", finalUserName, newPassword);
+                boolean isUpdated = userBO.update(userDTO);
+
+                if (isUpdated) {
+                    new Alert(Alert.AlertType.INFORMATION, "User updated successfully").show();
+                } else {
+                    new Alert(Alert.AlertType.ERROR, "User could not be updated").show();
+                }
+            } else {
+                new Alert(Alert.AlertType.ERROR, "conform password do not match").show();
+            }
+        } else {
+            new Alert(Alert.AlertType.ERROR, "Password is incorrect").show();
+        }
     }
 
     void clearFields() {

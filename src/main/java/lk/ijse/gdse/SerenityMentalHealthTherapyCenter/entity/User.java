@@ -30,4 +30,15 @@ public class User {
         this.password = password;
         this.role = role;
     }
+
+    public User(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
+
+    public User(int userId, String username, String password) {
+        this.userId = userId;
+        this.username = username;
+        this.password = password;
+    }
 }

@@ -57,6 +57,19 @@ public class UserDAOImpl implements UserDAO {
         }
     }
 
+    public User findByUsername(String username) {
+        try (Session session = FactoryConfiguration.getInstance().getSession()) {
+            String hql = "FROM User WHERE username = :username";
+            Query<User> query = session.createQuery(hql, User.class);
+            query.setParameter("username", username);
+
+            return query.uniqueResult(); // null nam user naha
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
 
     @Override
     public ArrayList<User> getAllData() throws SQLException, ClassNotFoundException {
@@ -69,7 +82,7 @@ public class UserDAOImpl implements UserDAO {
         Transaction transaction = session.beginTransaction();
 
         try {
-            session.save(user);
+            session.persist(user);
             transaction.commit();
             return true;
         } catch (Exception e) {
@@ -81,8 +94,21 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public boolean update(User Dto) throws SQLException, ClassNotFoundException {
-        return false;
+    public boolean update(User user) throws SQLException, ClassNotFoundException {
+        Session session = FactoryConfiguration.getInstance().getSession();
+        Transaction transaction = session.beginTransaction();
+
+        try {
+            session.merge(user);
+            transaction.commit();
+            return true;
+        } catch (Exception e) {
+            transaction.rollback();
+            e.printStackTrace();
+            return false;
+        } finally {
+            session.close();
+        }
     }
 
     @Override
