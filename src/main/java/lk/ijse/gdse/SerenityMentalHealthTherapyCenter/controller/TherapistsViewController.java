@@ -155,7 +155,6 @@ public class TherapistsViewController implements Initializable {
         return isValid;
     }
 
-
     private void loadTherapistData() {
         therapistTMS.clear();
         try {

@@ -74,6 +74,14 @@ public class SettingViewController implements Initializable {
 
     }
 
+    private void setFieldBorderColorRed(JFXPasswordField passwordField) {
+        passwordField.setStyle("-fx-border-color: red;");
+    }
+
+    private void resetFieldBorderColor(JFXPasswordField passwordField) {
+        passwordField.setStyle("-fx-border-color: transparent;");
+    }
+
     @FXML
     void btnAddUserOnAction(ActionEvent event) throws PatientPersistException, SQLException, ClassNotFoundException {
         if (txtPassword.getText().equals(txtConformPassword.getText())) {
@@ -87,6 +95,8 @@ public class SettingViewController implements Initializable {
                 new Alert(Alert.AlertType.ERROR, "User could not be added").show();
             }
         } else {
+            setFieldBorderColorRed(txtPassword);
+            setFieldBorderColorRed(txtConformPassword);
             new Alert(Alert.AlertType.ERROR, "Passwords do not match").show();
         }
     }
@@ -123,14 +133,19 @@ public class SettingViewController implements Initializable {
                 boolean isUpdated = userBO.update(userDTO);
 
                 if (isUpdated) {
+                    clearFields();
                     new Alert(Alert.AlertType.INFORMATION, "User updated successfully").show();
                 } else {
+                    clearFields();
                     new Alert(Alert.AlertType.ERROR, "User could not be updated").show();
                 }
             } else {
+                setFieldBorderColorRed(txtNewPassword);
+                setFieldBorderColorRed(txtConformNewPassword);
                 new Alert(Alert.AlertType.ERROR, "Confirm password does not match").show();
             }
         } else {
+            setFieldBorderColorRed(txtCurrentPassword);
             new Alert(Alert.AlertType.ERROR, "Password is incorrect").show();
         }
     }
@@ -140,5 +155,10 @@ public class SettingViewController implements Initializable {
         txtUserName.clear();
         txtPassword.clear();
         txtConformPassword.clear();
+        resetFieldBorderColor(txtPassword);
+        resetFieldBorderColor(txtConformPassword);
+        resetFieldBorderColor(txtNewPassword);
+        resetFieldBorderColor(txtConformNewPassword);
+        resetFieldBorderColor(txtCurrentPassword);
     }
 }
