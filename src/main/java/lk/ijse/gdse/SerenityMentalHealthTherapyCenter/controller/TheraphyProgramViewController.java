@@ -131,8 +131,59 @@ public class TheraphyProgramViewController implements Initializable {
         id = null;
     }
 
+    private boolean validateFields() {
+        String programName = txtProgramName.getText();
+        String programDuration = txtProgramDuration.getText();
+        String programFeeText = txtProgramFee.getText();
+
+        boolean isValid = true;
+
+        // Reset field styles
+        txtProgramName.setStyle("-fx-border-color: transparent;");
+        txtProgramDuration.setStyle("-fx-border-color: transparent;");
+        txtProgramFee.setStyle("-fx-border-color: transparent;");
+
+        // Validate program name
+        if (programName.isEmpty()) {
+            txtProgramName.setStyle("-fx-border-color: red;");
+            isValid = false;
+        }
+
+        // Validate program duration
+        if (programDuration.isEmpty()) {
+            txtProgramDuration.setStyle("-fx-border-color: red;");
+            isValid = false;
+        }
+
+        // Validate program fee
+        double programFee = 0.0;
+        if (programFeeText.isEmpty()) {
+            txtProgramFee.setStyle("-fx-border-color: red;");
+            isValid = false;
+        } else {
+            try {
+                programFee = Double.parseDouble(programFeeText);
+            } catch (NumberFormatException e) {
+                txtProgramFee.setStyle("-fx-border-color: red;");
+                isValid = false;
+            }
+        }
+
+        if (!isValid) {
+            new Alert(Alert.AlertType.WARNING, "Please fill in all fields correctly!").show();
+        }
+
+        return isValid;
+    }
+
+
     @FXML
     void btnSaveProgramOnAction(ActionEvent event) throws SQLException, ClassNotFoundException, PatientPersistException {
+
+        if (!validateFields()) {
+            return;
+        }
+
         String programName = txtProgramName.getText();
         String programDuration = txtProgramDuration.getText();
         String programFee = txtProgramFee.getText();
@@ -152,12 +203,17 @@ public class TheraphyProgramViewController implements Initializable {
 
     @FXML
     void btnUpdateProgramOnAction(ActionEvent event) throws SQLException, ClassNotFoundException {
+
+        if (!validateFields()) {
+            return;
+        }
+
         String programName = txtProgramName.getText();
         String programDuration = txtProgramDuration.getText();
         double programFee = Double.parseDouble(txtProgramFee.getText());
         int programID = Integer.parseInt(id);
 
-        TherapyProgramDTO therapyProgramDTO = new TherapyProgramDTO(programID,programName, programDuration, programFee);
+        TherapyProgramDTO therapyProgramDTO = new TherapyProgramDTO(programID, programName, programDuration, programFee);
 
         boolean isUpdated = therapyProgramBO.updateProgram(therapyProgramDTO);
 

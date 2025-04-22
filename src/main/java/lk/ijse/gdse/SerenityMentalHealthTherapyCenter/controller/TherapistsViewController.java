@@ -96,6 +96,66 @@ public class TherapistsViewController implements Initializable {
         btnUpdate.setDisable(true);
     }
 
+    private boolean validateFields() {
+        String name = txtTherapistName.getText();
+        String address = txtTherapistAddress.getText();
+        String email = txtTherapistEmail.getText();
+        String phone = txtTherapistPhone.getText();
+        String status = cmbTherapistStatus.getSelectionModel().getSelectedItem();
+        boolean isValid = true;
+
+        // Reset field styles
+        txtTherapistName.setStyle("-fx-border-color: transparent;");
+        txtTherapistAddress.setStyle("-fx-border-color: transparent;");
+        txtTherapistEmail.setStyle("-fx-border-color: transparent;");
+        txtTherapistPhone.setStyle("-fx-border-color: transparent;");
+        cmbTherapistStatus.setStyle("-fx-border-color: transparent;");
+        datePickerDob.setStyle("-fx-border-color: transparent;");
+
+        // Validate name
+        if (name.isEmpty()) {
+            txtTherapistName.setStyle("-fx-border-color: red;");
+            isValid = false;
+        }
+
+        // Validate address
+        if (address.isEmpty()) {
+            txtTherapistAddress.setStyle("-fx-border-color: red;");
+            isValid = false;
+        }
+
+        // Validate email (basic check)
+        if (email.isEmpty() || !email.contains("@")) {
+            txtTherapistEmail.setStyle("-fx-border-color: red;");
+            isValid = false;
+        }
+
+        // Validate phone (basic check)
+        if (phone.isEmpty() || !phone.matches("\\d{10}")) {
+            txtTherapistPhone.setStyle("-fx-border-color: red;");
+            isValid = false;
+        }
+
+        // Validate status
+        if (status == null || status.isEmpty()) {
+            cmbTherapistStatus.setStyle("-fx-border-color: red;");
+            isValid = false;
+        }
+
+        // Validate date of birth
+        if (datePickerDob.getValue() == null) {
+            datePickerDob.setStyle("-fx-border-color: red;");
+            isValid = false;
+        }
+
+        if (!isValid) {
+            new Alert(Alert.AlertType.WARNING, "Please fill in all fields correctly!").show();
+        }
+
+        return isValid;
+    }
+
+
     private void loadTherapistData() {
         therapistTMS.clear();
         try {
@@ -169,12 +229,18 @@ public class TherapistsViewController implements Initializable {
 
     @FXML
     void btnSaveTherapistOnAction(ActionEvent event) throws SQLException, ClassNotFoundException, PatientPersistException {
+
+        if (!validateFields()) {
+            return;
+        }
+
         String name = txtTherapistName.getText();
         String address = txtTherapistAddress.getText();
         String email = txtTherapistEmail.getText();
         String phone = txtTherapistPhone.getText();
         String status = cmbTherapistStatus.getSelectionModel().getSelectedItem();
         Date dob = Date.valueOf(datePickerDob.getValue());
+
         TherapistDTO therapistDTO = new TherapistDTO(name, email, phone, address, dob, status);
 
         boolean isSaved = therapistsBO.saveTherapist(therapistDTO);
@@ -187,25 +253,22 @@ public class TherapistsViewController implements Initializable {
         }
     }
 
-    private void clearFields() {
-        txtTherapistName.clear();
-        txtTherapistAddress.clear();
-        txtTherapistEmail.clear();
-        txtTherapistPhone.clear();
-        cmbTherapistStatus.setValue(null);
-        datePickerDob.setValue(null);
-    }
-
     @FXML
     void btnUpdateTherapistOnAction(ActionEvent event) throws SQLException, ClassNotFoundException {
+
+        if (!validateFields()) {
+            return;
+        }
+
         String name = txtTherapistName.getText();
         String address = txtTherapistAddress.getText();
         String email = txtTherapistEmail.getText();
         String phone = txtTherapistPhone.getText();
         String status = cmbTherapistStatus.getSelectionModel().getSelectedItem();
         Date dob = Date.valueOf(datePickerDob.getValue());
-        int TherapistsId = Integer.parseInt(id);
-        TherapistDTO therapistDTO = new TherapistDTO(TherapistsId, name, email, phone, address, dob, status);
+        int therapistId = Integer.parseInt(id);
+
+        TherapistDTO therapistDTO = new TherapistDTO(therapistId, name, email, phone, address, dob, status);
 
         boolean isUpdated = therapistsBO.updateTherapist(therapistDTO);
 
@@ -214,7 +277,16 @@ public class TherapistsViewController implements Initializable {
             clearFields();
             new Alert(Alert.AlertType.INFORMATION, "Therapist updated Successfully").show();
         } else {
-            new Alert(Alert.AlertType.ERROR, "Therapist could not be update").show();
+            new Alert(Alert.AlertType.ERROR, "Therapist could not be updated").show();
         }
+    }
+
+    private void clearFields() {
+        txtTherapistName.clear();
+        txtTherapistAddress.clear();
+        txtTherapistEmail.clear();
+        txtTherapistPhone.clear();
+        cmbTherapistStatus.setValue(null);
+        datePickerDob.setValue(null);
     }
 }

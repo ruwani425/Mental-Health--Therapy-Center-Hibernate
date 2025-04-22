@@ -82,6 +82,7 @@ public class PatientsViewController implements Initializable {
 
     String id;
 
+
     private ObservableList<PatientTM> patientList = FXCollections.observableArrayList();
 
     private final PatientsBO patientsBO = (PatientsBO) BOFactory.getInstance().getBO(BOFactory.BOType.PATIENT);
@@ -95,6 +96,61 @@ public class PatientsViewController implements Initializable {
         btnDelete.setDisable(true);
         btnUpdate.setDisable(true);
     }
+
+    private boolean validateForm() {
+        boolean isValid = true;
+
+        // Name
+        if (txtPatientName.getText().trim().isEmpty()) {
+            txtPatientName.setStyle("-fx-border-color: red;");
+            isValid = false;
+        } else {
+            txtPatientName.setStyle(null);
+        }
+
+        // Address
+        if (txtPatientAddress.getText().trim().isEmpty()) {
+            txtPatientAddress.setStyle("-fx-border-color: red;");
+            isValid = false;
+        } else {
+            txtPatientAddress.setStyle(null);
+        }
+
+        // Phone (only digits, 10 characters)
+        if (!txtPatientPhone.getText().matches("\\d{10}")) {
+            txtPatientPhone.setStyle("-fx-border-color: red;");
+            isValid = false;
+        } else {
+            txtPatientPhone.setStyle(null);
+        }
+
+        // Email (simple pattern)
+        if (!txtPatientEmail.getText().matches("^[\\w.-]+@[\\w.-]+\\.\\w{2,}$")) {
+            txtPatientEmail.setStyle("-fx-border-color: red;");
+            isValid = false;
+        } else {
+            txtPatientEmail.setStyle(null);
+        }
+
+        // Gender
+        if (cmbGender.getSelectionModel().getSelectedItem() == null) {
+            cmbGender.setStyle("-fx-border-color: red;");
+            isValid = false;
+        } else {
+            cmbGender.setStyle(null);
+        }
+
+        // Date of Birth
+        if (datePickerDob.getValue() == null) {
+            datePickerDob.setStyle("-fx-border-color: red;");
+            isValid = false;
+        } else {
+            datePickerDob.setStyle(null);
+        }
+
+        return isValid;
+    }
+
 
     private void loadPatientData() {
         patientList.clear();
@@ -176,53 +232,58 @@ public class PatientsViewController implements Initializable {
 
     @FXML
     void btnSavePatientOnAction(ActionEvent event) throws SQLException, ClassNotFoundException {
+        if (!validateForm()) {
+            new Alert(Alert.AlertType.ERROR, "Please correct the highlighted fields!").show();
+            return;
+        }
+
         String name = txtPatientName.getText();
         String address = txtPatientAddress.getText();
         String phone = txtPatientPhone.getText();
         String email = txtPatientEmail.getText();
         String gender = cmbGender.getSelectionModel().getSelectedItem().toString();
-        Date dateOfBirth = Date.valueOf(datePickerDob.getValue().toString());
+        Date dateOfBirth = Date.valueOf(datePickerDob.getValue());
 
         PatientDTO patientDTO = new PatientDTO(name, address, gender, dateOfBirth, email, phone);
 
-        boolean isSaved = false;
         try {
-            isSaved = patientsBO.savePatient(patientDTO);
-        } catch (MissingFeildException e) {
+            boolean isSaved = patientsBO.savePatient(patientDTO);
+            if (isSaved) {
+                new Alert(Alert.AlertType.INFORMATION, "Patient saved successfully!").show();
+                clearFields();
+                loadPatientData();
+            } else {
+                new Alert(Alert.AlertType.ERROR, "Failed to save patient!").show();
+            }
+        } catch (MissingFeildException | PatientPersistException e) {
             new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
-        } catch (PatientPersistException e) {
-            new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
-        }
-
-        if (isSaved) {
-            new Alert(Alert.AlertType.INFORMATION, "Patient saved successfully!").show();
-            clearFields();
-            loadPatientData();
-        } else {
-            new Alert(Alert.AlertType.ERROR, "Failed to save patient!").show();
         }
     }
 
     @FXML
     void btnUpdatePatientOnAction(ActionEvent event) throws SQLException, ClassNotFoundException {
+        if (!validateForm()) {
+            new Alert(Alert.AlertType.ERROR, "Please correct the highlighted fields!").show();
+            return;
+        }
+
         String name = txtPatientName.getText();
         String address = txtPatientAddress.getText();
         String phone = txtPatientPhone.getText();
         String email = txtPatientEmail.getText();
         String gender = cmbGender.getSelectionModel().getSelectedItem().toString();
-        Date dateOfBirth = Date.valueOf(datePickerDob.getValue().toString());
+        Date dateOfBirth = Date.valueOf(datePickerDob.getValue());
 
         PatientDTO patientDTO = new PatientDTO(id, name, address, gender, dateOfBirth, email, phone);
 
         boolean isUpdate = patientsBO.UpdatePatient(patientDTO);
-
         if (isUpdate) {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION, "Patient updated successfully!");
+            new Alert(Alert.AlertType.INFORMATION, "Patient updated successfully!").show();
             clearFields();
             loadPatientData();
             btnUpdate.setDisable(true);
         } else {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION, "Failed to update patient!");
+            new Alert(Alert.AlertType.ERROR, "Failed to update patient!").show();
         }
     }
 
@@ -230,4 +291,5 @@ public class PatientsViewController implements Initializable {
     void txtSearchOnAction(KeyEvent event) {
 
     }
+
 }

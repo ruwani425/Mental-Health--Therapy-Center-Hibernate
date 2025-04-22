@@ -153,6 +153,51 @@ public class AppointmentViewController implements Initializable {
         });
     }
 
+    private boolean isValidForm() {
+        if (cmbPatient.getValue() == null) {
+            new Alert(Alert.AlertType.WARNING, "Please select a patient!").show();
+            return false;
+        }
+
+        if (cmbTherapist.getValue() == null) {
+            new Alert(Alert.AlertType.WARNING, "Please select a therapist!").show();
+            return false;
+        }
+
+        if (cmbTherapyProgram.getValue() == null) {
+            new Alert(Alert.AlertType.WARNING, "Please select a therapy program!").show();
+            return false;
+        }
+
+        String advanceText = txtAdvance.getText();
+        if (advanceText == null || advanceText.isEmpty()) {
+            new Alert(Alert.AlertType.WARNING, "Advance amount cannot be empty!").show();
+            return false;
+        }
+
+        try {
+            double advance = Double.parseDouble(advanceText);
+            double fee = Double.parseDouble(lblProgramFee.getText());
+
+            if (advance < 0) {
+                new Alert(Alert.AlertType.WARNING, "Advance amount cannot be negative!").show();
+                return false;
+            }
+
+            if (advance > fee) {
+                new Alert(Alert.AlertType.WARNING, "Advance cannot exceed program fee!").show();
+                return false;
+            }
+
+        } catch (NumberFormatException e) {
+            new Alert(Alert.AlertType.ERROR, "Advance must be a valid number!").show();
+            return false;
+        }
+
+        return true;
+    }
+
+
     private void setFormDataFromTable(AppointmentTM appointment) {
         cmbPatient.setValue(Integer.parseInt(appointment.getPatientId()));
         cmbTherapist.setValue(Integer.parseInt(appointment.getTherapistId()));
@@ -295,38 +340,31 @@ public class AppointmentViewController implements Initializable {
     @FXML
     void btnPaymentOnAction(ActionEvent event) throws SQLException, ClassNotFoundException {
         if (btnPay.getText().equals("Pay")) {
+
+            if (!isValidForm()) return;
+
             double balance = Double.parseDouble(lblBalance.getText());
+            Date date = Date.valueOf(LocalDate.now());
+            String status = (balance == 0 ? "completed" : "pending");
 
-            if (balance >= 0) {
-                Date date = Date.valueOf(LocalDate.now());
-                String status = (balance == 0 ? "completed" : "pending");
+            double payment = (balance == 0) ? Double.parseDouble(lblProgramFee.getText()) : balance;
 
-                double payment = 0;
-                if (balance == 0) {
-                    payment = Double.parseDouble(lblProgramFee.getText());
-                } else {
-                    payment = balance;
-                }
+            String patientId = cmbPatient.getValue().toString();
+            String therapistId = cmbTherapist.getValue().toString();
+            String programId = cmbTherapyProgram.getValue().toString();
 
-                String patientId = cmbPatient.getValue().toString();
-                String therapistId = cmbTherapist.getValue().toString();
-                String programId = cmbTherapyProgram.getValue().toString();
+            AppointmentDTO appointmentDTO = new AppointmentDTO(date, payment, status, patientId, therapistId, programId);
+            boolean isSaved = appointmentBO.saveAppointment(appointmentDTO);
 
-                AppointmentDTO appointmentDTO = new AppointmentDTO(date, payment, status, patientId, therapistId, programId);
-                boolean isSaved = appointmentBO.saveAppointment(appointmentDTO);
-
-                if (isSaved) {
-                    loadAppointmentsToTable();
-                    resetForm();
-                    new Alert(Alert.AlertType.INFORMATION, "Appointment saved").show();
-                } else {
-                    new Alert(Alert.AlertType.ERROR, "Failed to save appointment").show();
-                }
+            if (isSaved) {
+                loadAppointmentsToTable();
+                resetForm();
+                new Alert(Alert.AlertType.INFORMATION, "Appointment saved").show();
             } else {
-                new Alert(Alert.AlertType.WARNING, "Invalid advance amount. Balance cannot be negative!").show();
+                new Alert(Alert.AlertType.ERROR, "Failed to save appointment").show();
             }
-        } else {
 
+        } else {
             AppointmentTM selectedAppointment = tblPendingAppointment.getSelectionModel().getSelectedItem();
 
             if (selectedAppointment == null) {
@@ -340,6 +378,7 @@ public class AppointmentViewController implements Initializable {
             String therapistId = cmbTherapist.getValue().toString();
             String programId = cmbTherapyProgram.getValue().toString();
             double balance = Double.parseDouble(lblProgramFee.getText());
+
             AppointmentDTO appointmentDTO = new AppointmentDTO(selectedAppointment.getAppointmentId(), date, balance, status, patientId, therapistId, programId);
             boolean isUpdated = appointmentBO.updateAppointment(appointmentDTO);
 
