@@ -37,22 +37,26 @@ public class UserDAOImpl implements UserDAO {
         session.close();
     }
 
+
     @Override
     public boolean validateUser(String username, String password) {
         try (Session session = FactoryConfiguration.getInstance().getSession()) {
-            String hql = "FROM User WHERE username = :username AND password = :password";
+            String hql = "FROM User WHERE username = :username";
             Query<User> query = session.createQuery(hql, User.class);
             query.setParameter("username", username);
-            query.setParameter("password", password);
 
             User user = query.uniqueResult();
 
-            return user != null;
+            if (user != null && BCrypt.checkpw(password, user.getPassword())) {
+                return true;
+            }
+            return false;
         } catch (Exception e) {
             e.printStackTrace();
             return false;
         }
     }
+
 
     @Override
     public ArrayList<User> getAllData() throws SQLException, ClassNotFoundException {
