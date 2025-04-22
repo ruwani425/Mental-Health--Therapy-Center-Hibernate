@@ -119,16 +119,13 @@ public class AppointmentViewController implements Initializable {
             calculateBalance();
         });
 
-        //add button in invoice column
         colCInvoice.setCellFactory(param -> new TableCell<>() {
             private final Button btn = new Button("Invoice");
 
             {
                 btn.setOnAction(event -> {
                     AppointmentTM appointment = getTableView().getItems().get(getIndex());
-                    // ➤ Here you can implement the logic to generate the invoice
                     System.out.println("Generating invoice for: " + appointment.getAppointmentId());
-                    // Example: openInvoiceWindow(appointment);
                 });
 
                 btn.setStyle("-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-weight: bold;");
@@ -154,7 +151,6 @@ public class AppointmentViewController implements Initializable {
                 }
             }
         });
-
     }
 
     private void setFormDataFromTable(AppointmentTM appointment) {
@@ -168,18 +164,14 @@ public class AppointmentViewController implements Initializable {
 
             double balance = appointment.getBalance();
 
-            // --- Hide balance labels ---
             lblBalance.setVisible(false);
             lblBalancePayment.setVisible(false);
 
-            // --- Change label text ---
             lblAdvancePayment.setText("Balance Payment");
 
-            // --- Set balance as advance ---
             txtAdvance.setText(String.valueOf(balance));
-            txtAdvance.setEditable(false); // prevent editing
+            txtAdvance.setEditable(false);
 
-            // --- Change button text ---
             btnPay.setText("Finish");
 
         } catch (Exception e) {

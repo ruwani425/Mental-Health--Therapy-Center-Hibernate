@@ -6,6 +6,8 @@ import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.config.FactoryConfiguratio
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
+import org.mindrot.jbcrypt.BCrypt;
+
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -22,7 +24,8 @@ public class UserDAOImpl implements UserDAO {
         if (adminUser == null) {
             User newAdmin = new User();
             newAdmin.setUsername("admin");
-            newAdmin.setPassword("admin123");
+            String hashedPassword = BCrypt.hashpw("admin123", BCrypt.gensalt());
+            newAdmin.setPassword(hashedPassword);
             newAdmin.setRole("admin");
             session.persist(newAdmin);
             System.out.println("Admin user created.");
@@ -57,8 +60,20 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public boolean save(User Dto) throws SQLException, ClassNotFoundException {
-        return false;
+    public boolean save(User user) throws SQLException, ClassNotFoundException {
+        Session session = FactoryConfiguration.getInstance().getSession();
+        Transaction transaction = session.beginTransaction();
+
+        try {
+            session.save(user);
+            transaction.commit();
+            return true;
+        } catch (Exception e) {
+            transaction.rollback();
+            return false;
+        } finally {
+            session.close();
+        }
     }
 
     @Override

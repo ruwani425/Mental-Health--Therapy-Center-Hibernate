@@ -5,8 +5,15 @@ import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
+import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.bo.BOFactory;
+import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.bo.custom.UserBO;
+import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.customexception.PatientPersistException;
+import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.dto.UserDTO;
+
+import java.sql.SQLException;
 
 public class SettingViewController {
     @FXML
@@ -45,9 +52,23 @@ public class SettingViewController {
     @FXML
     private JFXButton btnAddUser;
 
-    @FXML
-    void btnAddUserOnAction(ActionEvent event) {
+    private final UserBO userBO = (UserBO) BOFactory.getInstance().getBO(BOFactory.BOType.USER);
 
+    @FXML
+    void btnAddUserOnAction(ActionEvent event) throws PatientPersistException, SQLException, ClassNotFoundException {
+        if (txtPassword.getText().equals(txtConformPassword.getText())) {
+            UserDTO userDTO = new UserDTO(txtUserName.getText(), txtPassword.getText(), "Receptionist");
+            boolean isSaved = userBO.saveUser(userDTO);
+
+            if (isSaved) {
+                clearFields();
+                new Alert(Alert.AlertType.INFORMATION, "User added successfully").show();
+            } else {
+                new Alert(Alert.AlertType.ERROR, "User could not be added").show();
+            }
+        } else {
+            new Alert(Alert.AlertType.ERROR, "Passwords do not match").show();
+        }
     }
 
     @FXML
@@ -55,4 +76,9 @@ public class SettingViewController {
 
     }
 
+    void clearFields() {
+        txtUserName.clear();
+        txtPassword.clear();
+        txtConformPassword.clear();
+    }
 }

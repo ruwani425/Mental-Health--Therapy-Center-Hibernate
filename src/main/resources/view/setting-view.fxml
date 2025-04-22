@@ -29,7 +29,7 @@
                         <JFXPasswordField fx:id="txtConformNewPassword" layoutX="389.0" layoutY="227.0" prefHeight="28.0" prefWidth="266.0" />
                         <JFXTextField fx:id="txtNewUserName" layoutX="386.0" layoutY="442.0" prefHeight="28.0" prefWidth="275.0" />
                         <JFXPasswordField fx:id="txtUPassword" layoutX="388.0" layoutY="383.0" prefHeight="28.0" prefWidth="266.0" />
-                        <Label layoutX="205.0" layoutY="60.0" text="Current User Name " />
+                        <Label layoutX="203.0" layoutY="60.0" text="Current User Name " />
                         <Label fx:id="lblUserName" layoutX="383.0" layoutY="58.0" prefHeight="30.0" prefWidth="200.0" />
                         <JFXButton id="bevel" fx:id="btnSubmit" layoutX="804.0" layoutY="504.0" minHeight="28.0" minWidth="71.0" onAction="#btnSubmitUserOnAction" prefHeight="28.0" prefWidth="71.0" stylesheets="@../styleSheets/buttons.css" text="Submit" textAlignment="JUSTIFY" textFill="#4f91fc" wrapText="true" />
                      </children></AnchorPane>
