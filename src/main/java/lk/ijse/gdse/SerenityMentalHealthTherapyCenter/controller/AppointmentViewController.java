@@ -117,6 +117,7 @@ public class AppointmentViewController implements Initializable {
 
         loadAppointmentsToTable();
         setCellValueFactory();
+        cmbTherapist.setDisable(true);
 
         LocalDate today = LocalDate.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
@@ -124,7 +125,10 @@ public class AppointmentViewController implements Initializable {
         lblAppointmentDate.setText(formattedDate);
 
         loadComboBoxes();
-        cmbTherapyProgram.setOnAction(event -> loadProgramFee());
+        cmbTherapyProgram.setOnAction(event -> {
+            loadProgramFee();
+            cmbTherapist.setDisable(false);
+        });
 
         txtAdvance.textProperty().addListener((observable, oldValue, newValue) -> {
             calculateBalance();
