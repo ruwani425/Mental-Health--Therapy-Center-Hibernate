@@ -23,6 +23,7 @@ public class Therapist {
     private String address;
     private String dateOfBirth;
     private String status;
+    private int programID;
 
     @OneToMany(mappedBy = "therapist", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Appointment> appointmentList;

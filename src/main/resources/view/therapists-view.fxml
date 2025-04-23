@@ -14,15 +14,16 @@
 
 <AnchorPane prefHeight="660.0" prefWidth="990.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.gdse.SerenityMentalHealthTherapyCenter.controller.TherapistsViewController">
    <children>
-      <TableView fx:id="tblTherapist" layoutX="50.0" layoutY="381.0" prefHeight="255.0" prefWidth="900.0">
+      <TableView fx:id="tblTherapist" layoutX="31.0" layoutY="381.0" prefHeight="255.0" prefWidth="935.0">
         <columns>
-          <TableColumn fx:id="colTherapistId" prefWidth="129.66666412353516" text="Therapist Id" />
-          <TableColumn fx:id="colTherapistName" prefWidth="135.0" text="Name" />
-            <TableColumn fx:id="colTherapistAddress" prefWidth="126.0" text="Address" />
-            <TableColumn fx:id="colTherapistEmail" prefWidth="122.66665649414062" text="E mail" />
-            <TableColumn fx:id="colTherapistStatus" prefWidth="128.66668701171875" text="Status" />
-            <TableColumn fx:id="colTherapistDob" prefWidth="143.0" text="Date of birth" />
-            <TableColumn fx:id="colTherapistPhone" prefWidth="120.0" text="Phone" />
+          <TableColumn fx:id="colTherapistId" prefWidth="98.0" text="Therapist Id" />
+          <TableColumn fx:id="colTherapistName" prefWidth="109.0" text="Name" />
+            <TableColumn fx:id="colTherapistAddress" prefWidth="113.33331298828125" text="Address" />
+            <TableColumn fx:id="colTherapistEmail" prefWidth="131.0" text="E mail" />
+            <TableColumn fx:id="colTherapistStatus" prefWidth="109.6666259765625" text="Status" />
+            <TableColumn fx:id="colTherapistDob" prefWidth="134.33331298828125" text="Date of birth" />
+            <TableColumn fx:id="colTherapistPhone" prefWidth="123.33331298828125" text="Phone" />
+            <TableColumn fx:id="colProgram" prefWidth="113.0" text="Program" />
         </columns>
       </TableView>
       <VBox layoutX="51.0" layoutY="100.0" prefHeight="145.0" prefWidth="100.0" spacing="33.0">
@@ -32,11 +33,12 @@
             <Label text="E mail" />
          </children>
       </VBox>
-      <VBox layoutX="606.0" layoutY="100.0" prefHeight="167.0" prefWidth="100.0" spacing="33.0">
+      <VBox layoutX="583.0" layoutY="100.0" prefHeight="192.0" prefWidth="113.0" spacing="33.0">
          <children>
             <Label text="Status" />
             <Label text="Date of birth" />
             <Label text="Phone" />
+            <Label prefHeight="18.0" prefWidth="121.0" text="Therapy Program" />
          </children>
       </VBox>
       <JFXTextField fx:id="txtTherapistName" layoutX="161.0" layoutY="91.0" prefHeight="28.0" prefWidth="224.0" />
@@ -54,5 +56,6 @@
       </HBox>
       <Label layoutX="54.0" layoutY="35.0" text="Search" />
       <TextField fx:id="txtTherapistSearch" layoutX="158.0" layoutY="30.0" promptText="type here.." />
+      <ComboBox fx:id="comboBoxTherapyProgram" layoutX="709.0" layoutY="249.0" prefHeight="28.0" prefWidth="137.0" />
    </children>
 </AnchorPane>

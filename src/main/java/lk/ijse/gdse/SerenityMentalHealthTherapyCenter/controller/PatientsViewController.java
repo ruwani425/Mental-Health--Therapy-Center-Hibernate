@@ -20,11 +20,13 @@ import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.dto.tm.PatientTM;
 import java.net.URL;
 import java.sql.Date;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.util.List;
 import java.util.ResourceBundle;
 
 public class PatientsViewController implements Initializable {
+
+    @FXML
+    private JFXTextField txtnicNumber;
 
     @FXML
     private ComboBox cmbGender;
@@ -34,6 +36,9 @@ public class PatientsViewController implements Initializable {
 
     @FXML
     private TableColumn<PatientTM, Integer> colPatientId;
+
+    @FXML
+    private TableColumn<PatientTM, String> colNic;
 
     @FXML
     private TableColumn<PatientTM, String> colName;
@@ -159,6 +164,7 @@ public class PatientsViewController implements Initializable {
             for (PatientDTO dto : patients) {
                 patientList.add(new PatientTM(
                         dto.getPatientId(),
+                        dto.getNic(),
                         dto.getName(),
                         dto.getAddress(),
                         dto.getGender(),
@@ -175,6 +181,7 @@ public class PatientsViewController implements Initializable {
 
     private void setCellValueFactory() {
         colPatientId.setCellValueFactory(new PropertyValueFactory<>("patientId"));
+        colNic.setCellValueFactory(new PropertyValueFactory<>("nic"));
         colName.setCellValueFactory(new PropertyValueFactory<>("name"));
         colAddress.setCellValueFactory(new PropertyValueFactory<>("address"));
         colDateOfBirth.setCellValueFactory(new PropertyValueFactory<>("dateOfBirth"));
@@ -195,6 +202,7 @@ public class PatientsViewController implements Initializable {
         txtPatientAddress.setText(patient.getAddress());
         txtPatientPhone.setText(patient.getPhoneNumber());
         txtPatientEmail.setText(patient.getEmail());
+        txtnicNumber.setText(patient.getNic());
         cmbGender.setValue(patient.getGender());
         id = String.valueOf(patient.getPatientId());
         datePickerDob.setValue(patient.getDateOfBirth().toLocalDate());
@@ -222,6 +230,7 @@ public class PatientsViewController implements Initializable {
 
     private void clearFields() {
         txtPatientName.clear();
+        txtnicNumber.clear();
         txtPatientAddress.clear();
         txtPatientPhone.clear();
         txtPatientEmail.clear();
@@ -243,8 +252,9 @@ public class PatientsViewController implements Initializable {
         String email = txtPatientEmail.getText();
         String gender = cmbGender.getSelectionModel().getSelectedItem().toString();
         Date dateOfBirth = Date.valueOf(datePickerDob.getValue());
+        String nic = txtnicNumber.getText();
 
-        PatientDTO patientDTO = new PatientDTO(name, address, gender, dateOfBirth, email, phone);
+        PatientDTO patientDTO = new PatientDTO(nic, name, address, gender, dateOfBirth, email, phone);
 
         try {
             boolean isSaved = patientsBO.savePatient(patientDTO);
@@ -273,8 +283,9 @@ public class PatientsViewController implements Initializable {
         String email = txtPatientEmail.getText();
         String gender = cmbGender.getSelectionModel().getSelectedItem().toString();
         Date dateOfBirth = Date.valueOf(datePickerDob.getValue());
+        String nic = txtnicNumber.getText();
 
-        PatientDTO patientDTO = new PatientDTO(id, name, address, gender, dateOfBirth, email, phone);
+        PatientDTO patientDTO = new PatientDTO(id, nic, name, address, gender, dateOfBirth, email, phone);
 
         boolean isUpdate = patientsBO.UpdatePatient(patientDTO);
         if (isUpdate) {

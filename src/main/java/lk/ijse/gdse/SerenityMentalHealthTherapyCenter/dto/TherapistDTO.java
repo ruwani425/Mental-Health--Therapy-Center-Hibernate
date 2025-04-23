@@ -17,13 +17,15 @@ public class TherapistDTO {
     private String address;
     private Date dateOfBirth;
     private String status;
+    private int programID;
 
-    public TherapistDTO(String name, String email, String phone, String address, Date dob, String status) {
+    public TherapistDTO(String name, String email, String phone, String address, Date dob, String status, int programID) {
         this.therapistName = name;
         this.email = email;
         this.phone = phone;
         this.address = address;
         this.dateOfBirth = dob;
         this.status = status;
+        this.programID = programID;
     }
 }

@@ -18,4 +18,5 @@ public class TherapistTM {
     private String address;
     private Date dateOfBirth;
     private String status;
+    private int programID;
 }

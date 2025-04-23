@@ -25,6 +25,7 @@ public class PatientsBOImpl implements PatientsBO {
         }
 
         Patient patient = new Patient();
+        patient.setNic(patientDTO.getNic());
         patient.setName(patientDTO.getName());
         patient.setAddress(patientDTO.getAddress());
         patient.setGender(patientDTO.getGender());
@@ -41,6 +42,7 @@ public class PatientsBOImpl implements PatientsBO {
 
         for (Patient patient : patients) {
             PatientDTO patientDTO = new PatientDTO();
+            patientDTO.setNic(patient.getNic());
             patientDTO.setName(patient.getName());
             patientDTO.setAddress(patient.getAddress());
             patientDTO.setGender(patient.getGender());
@@ -64,6 +66,7 @@ public class PatientsBOImpl implements PatientsBO {
     public boolean UpdatePatient(PatientDTO patientDTO) throws SQLException, ClassNotFoundException {
         Patient patient = new Patient();
         patient.setPatientId(Integer.parseInt(patientDTO.getPatientId()));
+        patient.setNic(patientDTO.getNic());
         patient.setName(patientDTO.getName());
         patient.setAddress(patientDTO.getAddress());
         patient.setGender(patientDTO.getGender());

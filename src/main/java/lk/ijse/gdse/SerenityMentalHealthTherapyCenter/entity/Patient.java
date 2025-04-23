@@ -17,6 +17,10 @@ public class Patient {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int patientId;
+
+    @Column(unique = true)
+    private String nic;
+
     private String name;
     private String address;
     private String gender;

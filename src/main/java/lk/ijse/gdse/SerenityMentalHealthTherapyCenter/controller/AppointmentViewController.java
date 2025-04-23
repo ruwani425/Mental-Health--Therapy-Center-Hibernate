@@ -33,10 +33,13 @@ import java.util.ResourceBundle;
 public class AppointmentViewController implements Initializable {
 
     @FXML
-    public Label lblAdvancePayment;
+    private Label lblAdvancePayment;
 
     @FXML
-    public Label lblBalancePayment;
+    private Label lblBalancePayment;
+
+    @FXML
+    private TextField txtSearch;
 
     @FXML
     private Label lblAppointmentDate;

@@ -4,6 +4,7 @@ import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.bo.custom.TherapistsBO;
 import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.customexception.PatientPersistException;
 import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.dao.DAOFactory;
 import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.dao.custom.TherapistDAO;
+import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.dao.custom.TherapyProgramDAO;
 import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.dto.PatientDTO;
 import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.dto.TherapistDTO;
 import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.entity.Patient;
@@ -17,6 +18,7 @@ import java.util.List;
 public class TherapistsBOImpl implements TherapistsBO {
 
     private final TherapistDAO therapistDAO = (TherapistDAO) DAOFactory.getInstance().getDAO(DAOFactory.DAOType.THERAPIST);
+    private final TherapyProgramDAO therapyProgramDAO = (TherapyProgramDAO) DAOFactory.getInstance().getDAO(DAOFactory.DAOType.THERAPYPROGRAM);
 
     @Override
     public boolean saveTherapist(TherapistDTO therapistDTO) throws SQLException, ClassNotFoundException, PatientPersistException {
@@ -29,6 +31,7 @@ public class TherapistsBOImpl implements TherapistsBO {
         therapist.setAddress(therapistDTO.getAddress());
         therapist.setDateOfBirth(therapistDTO.getDateOfBirth().toString());
         therapist.setStatus(therapistDTO.getStatus());
+        therapist.setProgramID(therapistDTO.getProgramID());
 
         return therapistDAO.save(therapist);
     }
@@ -36,7 +39,7 @@ public class TherapistsBOImpl implements TherapistsBO {
     @Override
     public List<TherapistDTO> getAllTherapists() throws SQLException, ClassNotFoundException {
         ArrayList<TherapistDTO> therapistDTOArrayList = new ArrayList<>();
-        ArrayList<Therapist>therapists=therapistDAO.getAllData();
+        ArrayList<Therapist> therapists = therapistDAO.getAllData();
 
         for (Therapist therapist : therapists) {
             TherapistDTO therapistDTO = new TherapistDTO();
@@ -47,6 +50,7 @@ public class TherapistsBOImpl implements TherapistsBO {
             therapistDTO.setPhone(therapist.getPhone());
             therapistDTO.setTherapistId(Integer.parseInt(String.valueOf(therapist.getTherapistId())));
             therapistDTO.setStatus(therapist.getStatus());
+            therapistDTO.setProgramID(therapist.getProgramID());
             therapistDTOArrayList.add(therapistDTO);
         }
         return therapistDTOArrayList;
@@ -69,7 +73,13 @@ public class TherapistsBOImpl implements TherapistsBO {
         therapist.setAddress(therapistDTO.getAddress());
         therapist.setDateOfBirth(therapistDTO.getDateOfBirth().toString());
         therapist.setStatus(therapistDTO.getStatus());
+        therapist.setProgramID(therapistDTO.getProgramID());
 
         return therapistDAO.update(therapist);
+    }
+
+    @Override
+    public List<Integer> getAllTherapyProgramIds() {
+        return therapyProgramDAO.getAllIds();
     }
 }

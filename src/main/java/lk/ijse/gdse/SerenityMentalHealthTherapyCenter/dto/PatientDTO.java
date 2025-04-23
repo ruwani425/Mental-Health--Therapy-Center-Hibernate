@@ -18,8 +18,21 @@ public class PatientDTO {
     private Date dateOfBirth;
     private String email;
     private String phoneNumber;
+    private String nic;
 
-    public PatientDTO(String name, String address, String gender, Date dateOfBirth, String email, String phone) {
+    public PatientDTO(String nic, String name, String address, String gender, Date dateOfBirth, String email, String phone) {
+        this.nic = nic;
+        this.name = name;
+        this.address = address;
+        this.gender = gender;
+        this.dateOfBirth = dateOfBirth;
+        this.email = email;
+        this.phoneNumber = phone;
+    }
+
+    public PatientDTO(String id, String nic, String name, String address, String gender, Date dateOfBirth, String email, String phone) {
+        this.patientId = id;
+        this.nic = nic;
         this.name = name;
         this.address = address;
         this.gender = gender;

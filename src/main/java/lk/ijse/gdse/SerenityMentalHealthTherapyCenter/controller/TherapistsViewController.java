@@ -25,6 +25,13 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 public class TherapistsViewController implements Initializable {
+
+    @FXML
+    private TableColumn<TherapistTM, Integer> colProgram;
+
+    @FXML
+    private ComboBox<Integer> comboBoxTherapyProgram;
+
     @FXML
     private TableView<TherapistTM> tblTherapist;
 
@@ -89,11 +96,17 @@ public class TherapistsViewController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         populateStatus();
+        populatePrograms();
         setTableListener();
         loadTherapistData();
         setCellValueFactory();
         btnDelete.setDisable(true);
         btnUpdate.setDisable(true);
+    }
+
+    private void populatePrograms() {
+        List<Integer> programIds = therapistsBO.getAllTherapyProgramIds();
+        comboBoxTherapyProgram.getItems().addAll(programIds);
     }
 
     private boolean validateFields() {
@@ -167,7 +180,8 @@ public class TherapistsViewController implements Initializable {
                         dto.getPhone(),
                         dto.getAddress(),
                         dto.getDateOfBirth(),
-                        dto.getStatus()
+                        dto.getStatus(),
+                        dto.getProgramID()
                 ));
             }
             tblTherapist.setItems(therapistTMS);
@@ -184,6 +198,7 @@ public class TherapistsViewController implements Initializable {
         colTherapistDob.setCellValueFactory(new PropertyValueFactory<>("dateOfBirth"));
         colTherapistPhone.setCellValueFactory(new PropertyValueFactory<>("phone"));
         colTherapistStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
+        colProgram.setCellValueFactory(new PropertyValueFactory<>("programID"));
     }
 
 
@@ -199,6 +214,7 @@ public class TherapistsViewController implements Initializable {
                 txtTherapistEmail.setText(newSelection.getEmail());
                 txtTherapistPhone.setText(newSelection.getPhone());
                 cmbTherapistStatus.setValue(newSelection.getStatus());
+                comboBoxTherapyProgram.setValue(newSelection.getProgramID());
                 datePickerDob.setValue(newSelection.getDateOfBirth().toLocalDate());
                 id = String.valueOf(newSelection.getTherapistId());
 
@@ -239,8 +255,11 @@ public class TherapistsViewController implements Initializable {
         String phone = txtTherapistPhone.getText();
         String status = cmbTherapistStatus.getSelectionModel().getSelectedItem();
         Date dob = Date.valueOf(datePickerDob.getValue());
+        int programID = comboBoxTherapyProgram.getSelectionModel().getSelectedItem();
 
-        TherapistDTO therapistDTO = new TherapistDTO(name, email, phone, address, dob, status);
+        System.out.println(programID);
+
+        TherapistDTO therapistDTO = new TherapistDTO(name, email, phone, address, dob, status, programID);
 
         boolean isSaved = therapistsBO.saveTherapist(therapistDTO);
         if (isSaved) {
@@ -266,8 +285,11 @@ public class TherapistsViewController implements Initializable {
         String status = cmbTherapistStatus.getSelectionModel().getSelectedItem();
         Date dob = Date.valueOf(datePickerDob.getValue());
         int therapistId = Integer.parseInt(id);
+        int programID = comboBoxTherapyProgram.getSelectionModel().getSelectedItem();
 
-        TherapistDTO therapistDTO = new TherapistDTO(therapistId, name, email, phone, address, dob, status);
+        System.out.println(programID);
+
+        TherapistDTO therapistDTO = new TherapistDTO(therapistId, name, email, phone, address, dob, status, programID);
 
         boolean isUpdated = therapistsBO.updateTherapist(therapistDTO);
 
@@ -287,5 +309,6 @@ public class TherapistsViewController implements Initializable {
         txtTherapistPhone.clear();
         cmbTherapistStatus.setValue(null);
         datePickerDob.setValue(null);
+        comboBoxTherapyProgram.setValue(null);
     }
 }
