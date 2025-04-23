@@ -152,4 +152,9 @@ public class AppointmentBOImpl implements AppointmentBO {
             session.close();
         }
     }
+
+    @Override
+    public List<Integer> getTherapistIdsByProgram(Integer selectedProgramId) {
+        return therapistDAO.getTherapistsByProgramId(selectedProgramId);
+    }
 }

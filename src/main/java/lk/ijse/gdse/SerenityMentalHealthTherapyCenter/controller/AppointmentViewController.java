@@ -127,7 +127,14 @@ public class AppointmentViewController implements Initializable {
         loadComboBoxes();
         cmbTherapyProgram.setOnAction(event -> {
             loadProgramFee();
-            cmbTherapist.setDisable(false);
+
+            Integer selectedProgramId = cmbTherapyProgram.getValue();
+            if (selectedProgramId != null) {
+                List<Integer> therapistIds = appointmentBO.getTherapistIdsByProgram(selectedProgramId);
+                cmbTherapist.getItems().clear();
+                cmbTherapist.getItems().addAll(therapistIds);
+                cmbTherapist.setDisable(false);
+            }
         });
 
         txtAdvance.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -249,8 +256,12 @@ public class AppointmentViewController implements Initializable {
 
     private void setFormDataFromTable(AppointmentTM appointment) {
         cmbPatient.setValue(Integer.parseInt(appointment.getPatientId()));
-        cmbTherapist.setValue(Integer.parseInt(appointment.getTherapistId()));
         cmbTherapyProgram.setValue(Integer.parseInt(appointment.getProgramId()));
+
+        cmbTherapist.setDisable(false);
+
+        System.out.println(appointment.getTherapistId());
+        cmbTherapist.setValue(Integer.parseInt(appointment.getTherapistId()));
 
         try {
             double fee = appointmentBO.getProgramFee(appointment.getProgramId());

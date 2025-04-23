@@ -140,4 +140,23 @@ public class TherapistDAOImpl implements TherapistDAO {
         }
         return count;
     }
+
+    @Override
+    public List<Integer> getTherapistsByProgramId(Integer selectedProgramId) {
+        Session session = FactoryConfiguration.getInstance().getSession();
+        List<Integer> therapistIds = new ArrayList<>();
+
+        try {
+            Query<Integer> query = session.createQuery(
+                    "SELECT t.therapistId FROM Therapist t WHERE t.programID = :programId", Integer.class);
+            query.setParameter("programId", selectedProgramId);
+            therapistIds = query.list();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+
+        return therapistIds;
+    }
 }

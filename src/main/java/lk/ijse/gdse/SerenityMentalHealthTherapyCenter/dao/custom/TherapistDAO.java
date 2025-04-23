@@ -10,4 +10,6 @@ public interface TherapistDAO extends SuperDAO, CrudDAO<Therapist> {
     List<Integer> getAllIds();
 
     long getTotalTherapistsCount();
+
+    List<Integer> getTherapistsByProgramId(Integer selectedProgramId);
 }
