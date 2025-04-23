@@ -42,6 +42,7 @@ public class LoginViewController {
         if (userBO.isUserExists(username, password)) {
             SettingViewController.currentUserName = username;
             DashboardViewController.role = userDTO.getRole();
+            SettingViewController.userRole = userDTO.getRole();
             loadDashboard("dashboard-view.fxml");
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);

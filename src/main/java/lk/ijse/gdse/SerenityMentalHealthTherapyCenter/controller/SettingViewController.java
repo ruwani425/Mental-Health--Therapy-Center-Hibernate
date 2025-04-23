@@ -9,6 +9,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.Tab;
 import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.bo.BOFactory;
 import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.bo.custom.UserBO;
 import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.customexception.PatientPersistException;
@@ -21,7 +22,10 @@ import java.util.ResourceBundle;
 public class SettingViewController implements Initializable {
 
     @FXML
-    public Label lblNewUserName;
+    private Label lblNewUserName;
+
+    @FXML
+    private Tab addUserTabPane;
 
     @FXML
     private CheckBox checkBoxUserName;
@@ -57,11 +61,17 @@ public class SettingViewController implements Initializable {
     private JFXButton btnAddUser;
 
     public static String currentUserName;
+    public static String userRole;
 
     private final UserBO userBO = (UserBO) BOFactory.getInstance().getBO(BOFactory.BOType.USER);
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        if (userRole.equals("Receptionist")) {
+            addUserTabPane.setDisable(true);
+        }
+
         lblUserName.setText(currentUserName);
         lblNewUserName.setVisible(false);
         txtNewUserName.setVisible(false);

@@ -53,8 +53,11 @@ public class DashboardViewController implements Initializable {
         loadPage("home-view.fxml");
 
         if (role.equals("admin")) {
-
-        } else if (role.equals("receptionist")) {
+            imgPatientsBtn.setVisible(false);
+            imgBookingsBtn.setVisible(false);
+        } else if (role.equals("Receptionist")) {
+            imgTherapistsBtn.setVisible(false);
+            imgProgramsBtn.setVisible(false);
         } else {
             new Alert(Alert.AlertType.ERROR, "Role cannot be null");
         }
