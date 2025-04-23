@@ -9,4 +9,6 @@ import java.util.List;
 public interface TherapyProgramDAO extends SuperDAO, CrudDAO<TherapyProgram> {
     List<Integer> getAllIds();
     double getFeeById(String programId);
+
+    long getTotalProgramsCount();
 }

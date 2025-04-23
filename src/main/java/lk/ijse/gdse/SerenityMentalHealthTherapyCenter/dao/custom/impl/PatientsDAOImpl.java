@@ -123,4 +123,23 @@ public class PatientsDAOImpl implements PatientsDAO {
         Query<Integer> query = session.createQuery("SELECT p.id FROM Patient p", Integer.class);
         return query.list();
     }
+
+    @Override
+    public long getPatientCount() {
+        Session session = FactoryConfiguration.getInstance().getSession();
+        Transaction transaction = session.beginTransaction();
+        long count = 0;
+
+        try {
+            Query<Long> query = session.createQuery("SELECT COUNT(p.patientId) FROM Patient p", Long.class);
+            count = query.uniqueResult();
+            transaction.commit();
+        } catch (Exception e) {
+            transaction.rollback();
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return count;
+    }
 }

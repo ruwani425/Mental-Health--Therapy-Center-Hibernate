@@ -3,8 +3,11 @@ package lk.ijse.gdse.SerenityMentalHealthTherapyCenter.controller;
 import javafx.animation.ScaleTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Label;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -12,12 +15,25 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import java.io.IOException;
-import java.util.Objects;
+import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.bo.BOFactory;
+import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.bo.custom.DashBoardBO;
+import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.bo.custom.PatientsBO;
 
-public class DashboardViewController {
+import java.io.IOException;
+import java.net.URL;
+import java.sql.SQLException;
+import java.util.Objects;
+import java.util.ResourceBundle;
+
+public class DashboardViewController implements Initializable {
     @FXML
-    public AnchorPane homeAnchor;
+    private AnchorPane homeAnchor;
+    @FXML
+    private Label lblTherapistTotal;
+    @FXML
+    private Label lblPatientsTotal;
+    @FXML
+    private Label lblProgramsTotal;
 
     @FXML
     private ImageView imgLogOutBtn;
@@ -39,6 +55,29 @@ public class DashboardViewController {
 
     @FXML
     private ImageView imgSettingsBtn;
+
+    public static String role;
+
+    DashBoardBO dashBoardBO= (DashBoardBO) BOFactory.getInstance().getBO(BOFactory.BOType.DASHBOARD);
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        long patientCount = dashBoardBO.getPatientCount();
+        lblPatientsTotal.setText(String.valueOf(patientCount));
+        long totalPrograms = dashBoardBO.getTotalProgramsCount();
+        lblProgramsTotal.setText(String.valueOf(totalPrograms));
+        long totalTherapists = dashBoardBO.getTotalTherapistsCount();
+        lblTherapistTotal.setText(String.valueOf(totalTherapists));
+
+
+        if (role.equals("admin")) {
+
+        } else if (role.equals("receptionist")) {
+        } else {
+            new Alert(Alert.AlertType.ERROR, "Role cannot be null");
+        }
+    }
 
     @FXML
     void onMouseEnterdBtn(MouseEvent event) {

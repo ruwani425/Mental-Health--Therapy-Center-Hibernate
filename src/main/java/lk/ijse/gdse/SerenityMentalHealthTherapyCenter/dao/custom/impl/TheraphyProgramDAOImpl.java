@@ -130,4 +130,23 @@ public class TheraphyProgramDAOImpl implements TherapyProgramDAO {
         query.setParameter("id", programId);
         return query.uniqueResult();
     }
+
+    @Override
+    public long getTotalProgramsCount() {
+        Session session = FactoryConfiguration.getInstance().getSession();
+        Transaction transaction = session.beginTransaction();
+        long count = 0;
+
+        try {
+            Query<Long> query = session.createQuery("SELECT COUNT(tp) FROM TherapyProgram tp", Long.class);
+            count = query.uniqueResult();
+            transaction.commit();
+        } catch (Exception e) {
+            transaction.rollback();
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return count;
+    }
 }

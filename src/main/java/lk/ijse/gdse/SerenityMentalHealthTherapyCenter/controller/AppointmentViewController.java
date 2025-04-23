@@ -11,15 +11,23 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.bo.BOFactory;
 import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.bo.custom.AppointmentBO;
+import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.config.FactoryConfiguration;
 import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.dto.AppointmentDTO;
 import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.dto.tm.AppointmentTM;
+import net.sf.jasperreports.engine.*;
+import net.sf.jasperreports.view.JasperViewer;
+import org.hibernate.Session;
 
+import java.io.InputStream;
 import java.net.URL;
+import java.sql.Connection;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 public class AppointmentViewController implements Initializable {
@@ -126,6 +134,11 @@ public class AppointmentViewController implements Initializable {
                 btn.setOnAction(event -> {
                     AppointmentTM appointment = getTableView().getItems().get(getIndex());
                     System.out.println("Generating invoice for: " + appointment.getAppointmentId());
+                    try {
+                        generateInvoice();
+                    } catch (JRException e) {
+                        throw new RuntimeException(e);
+                    }
                 });
 
                 btn.setStyle("-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-weight: bold;");
@@ -151,6 +164,35 @@ public class AppointmentViewController implements Initializable {
                 }
             }
         });
+    }
+
+    private void generateInvoice() throws JRException {
+        Session session = null;
+        try {
+            session = FactoryConfiguration.getInstance().getSession();
+
+            Connection connection = session.doReturningWork(conn -> conn);
+
+            Map<String, Object> parameters = new HashMap<>();
+
+            JasperReport jasperReport = JasperCompileManager.compileReport(
+                    getClass().getResourceAsStream("/reports/appointment.jrxml"));
+
+            JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, connection);
+
+            JasperViewer.viewReport(jasperPrint, false);
+
+        } catch (JRException e) {
+            e.printStackTrace();
+            new Alert(Alert.AlertType.ERROR, "Failed to generate the report.").show();
+        } catch (Exception e) {
+            new Alert(Alert.AlertType.ERROR, "Something went wrong while accessing the database.").show();
+            e.printStackTrace();
+        } finally {
+            if (session != null && session.isOpen()) {
+                session.close();
+            }
+        }
     }
 
     private boolean isValidForm() {
@@ -392,4 +434,5 @@ public class AppointmentViewController implements Initializable {
             }
         }
     }
+
 }

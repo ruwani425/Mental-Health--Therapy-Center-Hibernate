@@ -13,6 +13,7 @@ import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.bo.BOFactory;
 import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.bo.custom.UserBO;
+import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.dto.UserDTO;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -36,8 +37,11 @@ public class LoginViewController {
         txtUserName.setStyle("-fx-border-color: transparent;");
         txtPassword.setStyle("-fx-border-color: transparent;");
 
+        UserDTO userDTO = userBO.getUserByUsername(username);
+
         if (userBO.isUserExists(username, password)) {
             SettingViewController.currentUserName = username;
+            DashboardViewController.role = userDTO.getRole();
             loadDashboard("dashboard-view.fxml");
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);

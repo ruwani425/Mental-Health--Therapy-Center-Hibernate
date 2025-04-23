@@ -8,4 +8,6 @@ import java.util.List;
 
 public interface PatientsDAO extends SuperDAO, CrudDAO<Patient> {
     List<Integer> getAllIds();
+
+    long getPatientCount();
 }
