@@ -7,7 +7,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Label;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -15,25 +14,15 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.bo.BOFactory;
-import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.bo.custom.DashBoardBO;
-import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.bo.custom.PatientsBO;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.SQLException;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class DashboardViewController implements Initializable {
     @FXML
     private AnchorPane homeAnchor;
-    @FXML
-    private Label lblTherapistTotal;
-    @FXML
-    private Label lblPatientsTotal;
-    @FXML
-    private Label lblProgramsTotal;
 
     @FXML
     private ImageView imgLogOutBtn;
@@ -58,18 +47,10 @@ public class DashboardViewController implements Initializable {
 
     public static String role;
 
-    DashBoardBO dashBoardBO= (DashBoardBO) BOFactory.getInstance().getBO(BOFactory.BOType.DASHBOARD);
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
-        long patientCount = dashBoardBO.getPatientCount();
-        lblPatientsTotal.setText(String.valueOf(patientCount));
-        long totalPrograms = dashBoardBO.getTotalProgramsCount();
-        lblProgramsTotal.setText(String.valueOf(totalPrograms));
-        long totalTherapists = dashBoardBO.getTotalTherapistsCount();
-        lblTherapistTotal.setText(String.valueOf(totalTherapists));
-
+        loadPage("home-view.fxml");
 
         if (role.equals("admin")) {
 
@@ -135,6 +116,11 @@ public class DashboardViewController implements Initializable {
         loadPage("therapists-view.fxml");
     }
 
+    @FXML
+    void navigateToHomePage(MouseEvent event) {
+        loadPage("home-view.fxml");
+    }
+
     private void loadPage(String fxmlFile) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/" + fxmlFile));
@@ -158,4 +144,9 @@ public class DashboardViewController implements Initializable {
             e.printStackTrace();
         }
     }
+
+    public void loadHomePage() {
+        loadPage("home-view.fxml");
+    }
+
 }

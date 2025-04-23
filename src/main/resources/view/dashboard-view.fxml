@@ -1,82 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="657.0" prefWidth="1153.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.gdse.SerenityMentalHealthTherapyCenter.controller.DashboardViewController">
    <children>
-      <AnchorPane fx:id="homeAnchor" layoutX="206.0" prefHeight="660.0" prefWidth="990.0">
-         <children>
-            <ImageView fitHeight="348.0" fitWidth="389.0" layoutX="558.0" layoutY="298.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../asserts/undraw_doctors_djoj%201.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="168.0" fitWidth="280.0" layoutX="99.0" layoutY="59.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../asserts/Rectangle%2075.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="168.0" fitWidth="280.0" layoutX="404.0" layoutY="58.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../asserts/Rectangle%2075.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="168.0" fitWidth="280.0" layoutX="694.0" layoutY="58.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../asserts/Rectangle%2075.png" />
-               </image>
-            </ImageView>
-            <Label layoutX="147.0" layoutY="75.0" prefHeight="31.0" prefWidth="128.0" text="Therapists">
-               <font>
-                  <Font name="System Bold" size="24.0" />
-               </font>
-            </Label>
-            <Label layoutX="462.0" layoutY="75.0" prefHeight="31.0" prefWidth="128.0" text="Patients">
-               <font>
-                  <Font name="System Bold" size="24.0" />
-               </font>
-            </Label>
-            <Label layoutX="744.0" layoutY="63.0" prefHeight="52.0" prefWidth="139.0" text="Programs">
-               <font>
-                  <Font name="System Bold" size="24.0" />
-               </font>
-            </Label>
-            <Label fx:id="lblTherapistTotal" layoutX="198.0" layoutY="134.0" prefHeight="35.0" prefWidth="56.0">
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </Label>
-            <Label fx:id="lblPatientsTotal" layoutX="505.0" layoutY="134.0" prefHeight="35.0" prefWidth="56.0">
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </Label>
-            <Label fx:id="lblProgramsTotal" layoutX="793.0" layoutY="133.0" prefHeight="35.0" prefWidth="56.0">
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </Label>
-            <ImageView fitHeight="8.0" fitWidth="128.0" layoutX="146.0" layoutY="201.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../asserts/blackBox.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="8.0" fitWidth="128.0" layoutX="451.0" layoutY="195.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../asserts/blackBox.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="8.0" fitWidth="128.0" layoutX="744.0" layoutY="198.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../asserts/blackBox.png" />
-               </image>
-            </ImageView>
-         </children></AnchorPane>
+      <AnchorPane fx:id="homeAnchor" layoutX="206.0" prefHeight="660.0" prefWidth="990.0" />
       <ImageView fitHeight="660.0" fitWidth="222.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../asserts/Rectangle%209%20(1).png" />
@@ -84,7 +15,7 @@
       </ImageView>
       <VBox layoutX="19.0" layoutY="37.0" prefHeight="447.0" prefWidth="165.0" spacing="20.0">
          <children>
-            <ImageView fx:id="imgHomeBtn" fitHeight="42.0" fitWidth="174.0" onMouseEntered="#onMouseEnterdBtn" onMouseExited="#onMouseExitedBtn" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="imgHomeBtn" fitHeight="42.0" fitWidth="174.0" onMouseClicked="#navigateToHomePage" onMouseEntered="#onMouseEnterdBtn" onMouseExited="#onMouseExitedBtn" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../asserts/homeGreenBtn.png" />
                </image>
