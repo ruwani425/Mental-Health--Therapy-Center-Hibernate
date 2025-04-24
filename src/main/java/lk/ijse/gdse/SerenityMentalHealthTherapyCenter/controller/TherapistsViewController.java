@@ -12,19 +12,32 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.bo.BOFactory;
 import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.bo.custom.TherapistsBO;
+import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.config.FactoryConfiguration;
 import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.customexception.PatientPersistException;
 import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.dto.PatientDTO;
 import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.dto.TherapistDTO;
 import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.dto.tm.PatientTM;
 import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.dto.tm.TherapistTM;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.view.JasperViewer;
+import org.hibernate.Session;
 
 import java.net.URL;
+import java.sql.Connection;
 import java.sql.Date;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 public class TherapistsViewController implements Initializable {
+
+    @FXML
+    private TableColumn<TherapistTM, Button> colPerfomance;
 
     @FXML
     private TableColumn<TherapistTM, Integer> colProgram;
@@ -95,6 +108,7 @@ public class TherapistsViewController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        setPerformanceButtonColumn();
         populateStatus();
         populatePrograms();
         setTableListener();
@@ -103,6 +117,57 @@ public class TherapistsViewController implements Initializable {
         btnDelete.setDisable(true);
         btnUpdate.setDisable(true);
     }
+
+    private void setPerformanceButtonColumn() {
+        colPerfomance.setCellFactory(param -> new TableCell<>() {
+            final JFXButton reportBtn = new JFXButton("Report");
+
+            {
+                reportBtn.setStyle("-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-weight: bold;");
+                reportBtn.setOnAction(event -> {
+                    TherapistTM selectedTherapist = getTableView().getItems().get(getIndex());
+                    generateTherapistReport(selectedTherapist);
+                });
+            }
+
+            @Override
+            protected void updateItem(Button item, boolean empty) {
+                super.updateItem(item, empty);
+
+                if (empty) {
+                    setGraphic(null);
+                } else {
+                    setGraphic(reportBtn);
+                }
+            }
+        });
+    }
+
+    private void generateTherapistReport(TherapistTM therapist) {
+        Session session = null;
+        try {
+            session = FactoryConfiguration.getInstance().getSession();
+            Connection connection = session.doReturningWork(conn -> conn);
+
+            Map<String, Object> parameters = new HashMap<>();
+            parameters.put("therapistId", therapist.getTherapistId());
+
+            JasperReport jasperReport = JasperCompileManager.compileReport(
+                    getClass().getResourceAsStream("/reports/perfomance_A4_1.jrxml"));
+
+            JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, connection);
+            JasperViewer.viewReport(jasperPrint, false);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            new Alert(Alert.AlertType.ERROR, "Failed to generate the report.").show();
+        } finally {
+            if (session != null && session.isOpen()) {
+                session.close();
+            }
+        }
+    }
+
 
     private void populatePrograms() {
         List<Integer> programIds = therapistsBO.getAllTherapyProgramIds();

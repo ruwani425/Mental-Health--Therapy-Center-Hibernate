@@ -14,16 +14,17 @@
 
 <AnchorPane prefHeight="660.0" prefWidth="990.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.gdse.SerenityMentalHealthTherapyCenter.controller.TherapistsViewController">
    <children>
-      <TableView fx:id="tblTherapist" layoutX="31.0" layoutY="381.0" prefHeight="255.0" prefWidth="935.0">
+      <TableView fx:id="tblTherapist" layoutX="14.0" layoutY="381.0" prefHeight="255.0" prefWidth="965.0">
         <columns>
-          <TableColumn fx:id="colTherapistId" prefWidth="98.0" text="Therapist Id" />
-          <TableColumn fx:id="colTherapistName" prefWidth="109.0" text="Name" />
-            <TableColumn fx:id="colTherapistAddress" prefWidth="113.33331298828125" text="Address" />
-            <TableColumn fx:id="colTherapistEmail" prefWidth="131.0" text="E mail" />
-            <TableColumn fx:id="colTherapistStatus" prefWidth="109.6666259765625" text="Status" />
-            <TableColumn fx:id="colTherapistDob" prefWidth="134.33331298828125" text="Date of birth" />
-            <TableColumn fx:id="colTherapistPhone" prefWidth="123.33331298828125" text="Phone" />
-            <TableColumn fx:id="colProgram" prefWidth="113.0" text="Program" />
+          <TableColumn fx:id="colTherapistId" prefWidth="86.0" text="Therapist Id" />
+          <TableColumn fx:id="colTherapistName" prefWidth="94.33334350585938" text="Name" />
+            <TableColumn fx:id="colTherapistAddress" prefWidth="100.66665649414062" text="Address" />
+            <TableColumn fx:id="colTherapistEmail" prefWidth="113.66665649414062" text="E mail" />
+            <TableColumn fx:id="colTherapistStatus" prefWidth="110.66668701171875" text="Status" />
+            <TableColumn fx:id="colTherapistDob" prefWidth="130.3333740234375" text="Date of birth" />
+            <TableColumn fx:id="colTherapistPhone" prefWidth="124.33331298828125" text="Phone" />
+            <TableColumn fx:id="colProgram" prefWidth="98.66668701171875" text="Program" />
+            <TableColumn fx:id="colPerfomance" prefWidth="102.33331298828125" text="Performance" />
         </columns>
       </TableView>
       <VBox layoutX="51.0" layoutY="100.0" prefHeight="145.0" prefWidth="100.0" spacing="33.0">

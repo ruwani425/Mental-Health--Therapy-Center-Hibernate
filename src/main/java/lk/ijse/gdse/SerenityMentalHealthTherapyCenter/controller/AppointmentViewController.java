@@ -8,6 +8,9 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.bo.BOFactory;
@@ -248,10 +251,8 @@ public class AppointmentViewController implements Initializable {
             new Alert(Alert.AlertType.ERROR, "Advance must be a valid number!").show();
             return false;
         }
-
         return true;
     }
-
 
     private void setFormDataFromTable(AppointmentTM appointment) {
         cmbPatient.setValue(Integer.parseInt(appointment.getPatientId()));
@@ -299,7 +300,6 @@ public class AppointmentViewController implements Initializable {
 
         btnPay.setText("Pay");
     }
-
 
     private void setCellValueFactory() {
         colPAppointmentId.setCellValueFactory(new PropertyValueFactory<>("appointmentId"));
@@ -365,7 +365,6 @@ public class AppointmentViewController implements Initializable {
     private void loadAppointmentsToTable() {
         try {
             List<AppointmentDTO> appointmentList = appointmentBO.getAllAppointments();
-
             ObservableList<AppointmentTM> pendingList = FXCollections.observableArrayList();
             ObservableList<AppointmentTM> completedList = FXCollections.observableArrayList();
 
@@ -386,15 +385,12 @@ public class AppointmentViewController implements Initializable {
                     pendingList.add(tm);
                 }
             }
-
             tblPendingAppointment.setItems(pendingList);
             tblCompletedAppoinment.setItems(completedList);
-
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-
 
     @FXML
     void btnPaymentOnAction(ActionEvent event) throws SQLException, ClassNotFoundException {

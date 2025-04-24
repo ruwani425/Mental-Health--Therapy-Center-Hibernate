@@ -1,0 +1,78 @@
+<!-- Created with Jaspersoft Studio version 7.0.0.final using JasperReports Library version 7.0.0-b478feaa9aab4375eba71de77b4ca138ad2f62aa  -->
+<jasperReport name="perfomance_A4_1" language="java" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="e0e77624-f21a-41f3-9173-4745a0d5389f">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="New Data Adapter (8)"/>
+	<parameter name="therapistId" class="java.lang.Integer"/>
+	<query language="SQL"><![CDATA[SELECT t.therapistId AS therapistId,
+t.therapistName AS therapistName,
+a.therapyProgram_programId AS programId,
+COUNT(a.appointmentId) AS appointmentCount,
+IFNULL(SUM(a.balance),0) AS totalRevenue
+FROM Therapist t
+LEFT JOIN Appointment a ON t.therapistId=a.therapist_therapistId
+WHERE t.therapistId = $P{therapistId}
+GROUP BY
+t.therapistId, t.therapistName, a.therapyProgram_programId]]></query>
+	<field name="therapistId" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="therapistId"/>
+		<property name="com.jaspersoft.studio.field.label" value="therapistId"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="Therapist"/>
+	</field>
+	<field name="therapistName" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="therapistName"/>
+		<property name="com.jaspersoft.studio.field.label" value="therapistName"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="Therapist"/>
+	</field>
+	<field name="programId" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="therapyProgram_programId"/>
+		<property name="com.jaspersoft.studio.field.label" value="programId"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="Appointment"/>
+	</field>
+	<field name="appointmentCount" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.name" value="appointmentCount"/>
+		<property name="com.jaspersoft.studio.field.label" value="appointmentCount"/>
+	</field>
+	<field name="totalRevenue" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.name" value="totalRevenue"/>
+		<property name="com.jaspersoft.studio.field.label" value="totalRevenue"/>
+	</field>
+	<background splitType="Stretch"/>
+	<title height="79" splitType="Stretch">
+		<element kind="staticText" uuid="abe63e4f-fb24-4827-9cd5-f24e4ec852c8" x="-16" y="0" width="580" height="79" fontSize="22.0" hTextAlign="Center" vTextAlign="Middle">
+			<text><![CDATA[Serenity Mental Health]]></text>
+		</element>
+	</title>
+	<pageHeader height="180" splitType="Stretch">
+		<element kind="staticText" uuid="ae8bfcc1-3f19-493d-80b9-41f9893b4a4d" x="-1" y="8" width="100" height="22">
+			<text><![CDATA[Therapist Id :]]></text>
+		</element>
+		<element kind="staticText" uuid="3c0e8047-d919-4700-b497-439b5bb20c07" x="0" y="34" width="100" height="22">
+			<text><![CDATA[Therapist Name :]]></text>
+		</element>
+		<element kind="staticText" uuid="866272a5-81ac-408a-95fd-46d689c59314" x="0" y="63" width="100" height="22">
+			<text><![CDATA[Program Id :]]></text>
+		</element>
+		<element kind="staticText" uuid="e46c7a86-0873-4cdd-b2c4-e0bb2330c8bb" x="1" y="91" width="109" height="22">
+			<text><![CDATA[Appointments Count :]]></text>
+		</element>
+		<element kind="staticText" uuid="509fba9e-e80c-4b16-b667-e8ff43f985dc" x="2" y="118" width="100" height="22">
+			<text><![CDATA[Revenue :]]></text>
+		</element>
+		<element kind="textField" uuid="f39a2e32-fc77-4eb4-b6b4-25ff2140bb23" x="116" y="9" width="100" height="15">
+			<expression><![CDATA[$F{therapistId}]]></expression>
+		</element>
+		<element kind="textField" uuid="f5cb3316-8bd6-4c7b-bb5e-e71714ce4b15" x="114" y="34" width="100" height="18">
+			<expression><![CDATA[$F{therapistName}]]></expression>
+		</element>
+		<element kind="textField" uuid="916f0bc3-bcf9-425b-a38b-082208fb1dd3" x="114" y="63" width="100" height="23">
+			<expression><![CDATA[$F{programId}]]></expression>
+		</element>
+		<element kind="textField" uuid="1be2a84b-bc3d-47e3-a096-99e7eabb8eeb" x="113" y="92" width="140" height="21">
+			<expression><![CDATA[$F{appointmentCount}]]></expression>
+		</element>
+		<element kind="textField" uuid="ac45cec1-1a33-4161-aa93-fe36b5c9dac1" x="110" y="118" width="100" height="22">
+			<expression><![CDATA[$F{totalRevenue}]]></expression>
+		</element>
+	</pageHeader>
+	<summary height="42" splitType="Stretch"/>
+</jasperReport>
