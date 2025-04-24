@@ -157,4 +157,11 @@ public class AppointmentBOImpl implements AppointmentBO {
     public List<Integer> getTherapistIdsByProgram(Integer selectedProgramId) {
         return therapistDAO.getTherapistsByProgramId(selectedProgramId);
     }
+
+    @Override
+    public void deleteAppointment(int appointmentId) throws SQLException, ClassNotFoundException {
+        Appointment appointment = new Appointment();
+        appointment.setAppointmentId(appointmentId);
+        appointmentDAO.delete(appointment);
+    }
 }

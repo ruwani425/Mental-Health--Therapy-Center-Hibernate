@@ -36,6 +36,8 @@ import java.util.ResourceBundle;
 public class AppointmentViewController implements Initializable {
 
     @FXML
+    private TableColumn <AppointmentTM,Button> colPAction;
+    @FXML
     private TableColumn<AppointmentTM, Button> colPInvoice;
 
     @FXML
@@ -208,6 +210,34 @@ public class AppointmentViewController implements Initializable {
             }
         });
 
+        colPAction.setCellFactory(param -> new TableCell<>() {
+            private final Button btn = new Button("Cansel");
+
+            {
+                btn.setOnAction(event -> {
+                    AppointmentTM appointment = getTableView().getItems().get(getIndex());
+                    try {
+                        appointmentBO.deleteAppointment(appointment.getAppointmentId());
+                        loadAppointmentsToTable();
+                    } catch (SQLException | ClassNotFoundException e) {
+                        throw new RuntimeException(e);
+                    }
+                });
+
+                btn.setStyle("-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-weight: bold;");
+            }
+
+            @Override
+            protected void updateItem(Button item, boolean empty) {
+                super.updateItem(item, empty);
+
+                if (empty || getTableView().getItems().get(getIndex()) == null) {
+                    setGraphic(null);
+                } else {
+                    setGraphic(btn);
+                }
+            }
+        });
 
         tblPendingAppointment.setOnMouseClicked(event -> {
             if (event.getClickCount() == 1) {

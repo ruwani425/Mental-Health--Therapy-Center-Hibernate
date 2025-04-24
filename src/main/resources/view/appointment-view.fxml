@@ -44,8 +44,9 @@
                               <TableColumn fx:id="colPTherapist" prefWidth="131.0" text="Therapist" />
                               <TableColumn fx:id="colPPatient" prefWidth="114.00003051757812" text="Patient" />
                               <TableColumn fx:id="colPTherapyProgram" minWidth="0.0" prefWidth="159.33331298828125" text="Therapy Program" />
-                              <TableColumn fx:id="colPBalance" minWidth="0.0" prefWidth="173.33331298828125" text="Balance" />
-                              <TableColumn fx:id="colPInvoice" prefWidth="150.0" text="Invoice" />
+                              <TableColumn fx:id="colPBalance" minWidth="0.0" prefWidth="106.0" text="Balance" />
+                              <TableColumn fx:id="colPInvoice" prefWidth="111.3333740234375" text="Invoice" />
+                              <TableColumn fx:id="colPAction" prefWidth="106.0" text="Action" />
                           </columns>
                         </TableView>
                      </children>
