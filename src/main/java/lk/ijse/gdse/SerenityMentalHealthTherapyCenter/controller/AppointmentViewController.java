@@ -19,7 +19,6 @@ import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.view.JasperViewer;
 import org.hibernate.Session;
 
-import java.io.InputStream;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.Date;
