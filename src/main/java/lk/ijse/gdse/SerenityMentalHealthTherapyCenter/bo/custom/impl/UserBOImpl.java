@@ -25,7 +25,7 @@ public class UserBOImpl implements UserBO {
     }
 
     @Override
-    public boolean saveUser(UserDTO userDTO) throws SQLException, ClassNotFoundException, PatientPersistException {
+    public boolean saveUser(UserDTO userDTO) throws SQLException, ClassNotFoundException {
         String hashedPassword = BCrypt.hashpw(userDTO.getPassword(), BCrypt.gensalt());
         User user = new User(userDTO.getUsername(), hashedPassword, userDTO.getRole());
         return userDAO.save(user);

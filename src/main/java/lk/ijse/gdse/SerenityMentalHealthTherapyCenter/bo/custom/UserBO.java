@@ -11,7 +11,7 @@ public interface UserBO extends SuperBO {
 
     boolean isUserExists(String username, String password);
 
-    boolean saveUser(UserDTO userDTO) throws PatientPersistException, SQLException, ClassNotFoundException;
+    boolean saveUser(UserDTO userDTO) throws SQLException, ClassNotFoundException;
 
     boolean update(UserDTO userDTO) throws SQLException, ClassNotFoundException;
 

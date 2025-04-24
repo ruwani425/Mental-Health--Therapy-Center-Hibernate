@@ -18,6 +18,7 @@ import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.bo.custom.AppointmentBO;
 import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.config.FactoryConfiguration;
 import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.dto.AppointmentDTO;
 import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.dto.tm.AppointmentTM;
+import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.entity.Appointment;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.view.JasperViewer;
 import org.hibernate.Session;
@@ -36,7 +37,7 @@ import java.util.ResourceBundle;
 public class AppointmentViewController implements Initializable {
 
     @FXML
-    private TableColumn <AppointmentTM,Button> colPAction;
+    private TableColumn<AppointmentTM, Button> colPAction;
     @FXML
     private TableColumn<AppointmentTM, Button> colPInvoice;
 
@@ -224,7 +225,7 @@ public class AppointmentViewController implements Initializable {
                     }
                 });
 
-                btn.setStyle("-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-weight: bold;");
+                btn.setStyle("-fx-background-color: #d31f1f; -fx-text-fill: white; -fx-font-weight: bold;");
             }
 
             @Override
@@ -513,6 +514,7 @@ public class AppointmentViewController implements Initializable {
 
     @FXML
     void searchAppointmentOnAction(KeyEvent keyEvent) {
-
+//        String text = txtSearch.getText();
+//        List<Appointment>appointmentList=appointmentBO.searchAppointments(text);
     }
 }

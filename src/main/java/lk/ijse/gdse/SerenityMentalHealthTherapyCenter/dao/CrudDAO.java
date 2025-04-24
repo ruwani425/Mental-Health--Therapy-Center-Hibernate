@@ -8,7 +8,7 @@ import java.util.ArrayList;
 public interface CrudDAO<T> extends SuperDAO {
     public ArrayList<T> getAllData() throws SQLException, ClassNotFoundException;
 
-    public boolean save(T Dto) throws SQLException, ClassNotFoundException, PatientPersistException;
+    public boolean save(T Dto) throws SQLException, ClassNotFoundException;
 
     public boolean update(T Dto) throws SQLException, ClassNotFoundException;
 

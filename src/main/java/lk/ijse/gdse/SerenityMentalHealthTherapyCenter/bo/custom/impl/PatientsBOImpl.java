@@ -18,7 +18,7 @@ public class PatientsBOImpl implements PatientsBO {
     private final PatientsDAO patientsDAO = (PatientsDAO) DAOFactory.getInstance().getDAO(DAOFactory.DAOType.PATIENT);
 
     @Override
-    public boolean savePatient(PatientDTO patientDTO) throws SQLException, ClassNotFoundException, MissingFeildException, PatientPersistException {
+    public boolean savePatient(PatientDTO patientDTO) throws MissingFeildException, PatientPersistException {
 
         if (patientDTO.getName().equals(" ") && patientDTO.getDateOfBirth().equals(null)) {
             throw new MissingFeildException("Patient name is missing");
@@ -32,7 +32,11 @@ public class PatientsBOImpl implements PatientsBO {
         patient.setDateOfBirth(String.valueOf(patientDTO.getDateOfBirth()));
         patient.setEmail(patientDTO.getEmail());
         patient.setPhoneNumber(String.valueOf(patientDTO.getPhoneNumber()));
-        return patientsDAO.save(patient);
+        try {
+            return patientsDAO.save(patient);
+        } catch (SQLException | ClassNotFoundException e) {
+            throw new PatientPersistException(e.getMessage());
+        }
     }
 
     @Override

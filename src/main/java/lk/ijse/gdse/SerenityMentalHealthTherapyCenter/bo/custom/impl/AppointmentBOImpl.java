@@ -90,8 +90,6 @@ public class AppointmentBOImpl implements AppointmentBO {
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
             return false;
-        } catch (PatientPersistException e) {
-            throw new RuntimeException(e);
         }
     }
 
