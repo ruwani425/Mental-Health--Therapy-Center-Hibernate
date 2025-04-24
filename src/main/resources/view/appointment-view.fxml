@@ -74,6 +74,7 @@
       </TabPane>
       <Label fx:id="lblAppointmentDate" layoutX="212.0" layoutY="111.0" prefHeight="18.0" prefWidth="128.0" />
       <Label layoutX="559.0" layoutY="145.0" text="Therapist" />
-      <TextField fx:id="txtSearch" layoutX="53.0" layoutY="41.0" promptText="search here..." />
+      <TextField fx:id="txtSearch" layoutX="53.0" layoutY="41.0" prefHeight="28.0" prefWidth="220.0" promptText="search here..." />
+      <JFXButton id="bevel" fx:id="searchAppointments" layoutX="292.0" layoutY="41.0" minHeight="28.0" minWidth="71.0" onAction="#searchAppointmentOnAction" prefHeight="28.0" prefWidth="71.0" stylesheets="@../styleSheets/buttons.css" text="search" textAlignment="JUSTIFY" textFill="#4f91fc" wrapText="true" />
    </children>
 </AnchorPane>

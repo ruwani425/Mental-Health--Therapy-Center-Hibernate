@@ -1,0 +1,152 @@
+<!-- Created with Jaspersoft Studio version 7.0.0.final using JasperReports Library version 7.0.0-b478feaa9aab4375eba71de77b4ca138ad2f62aa  -->
+<jasperReport name="invoice_A4_1" language="java" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="ca237c83-637d-4c31-b68c-fb13b4c77bd9">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="New Data Adapter (4)"/>
+	<parameter name="appointmentId" class="java.lang.String"/>
+	<query language="SQL"><![CDATA[SELECT
+a.appointmentId,
+a.date AS appointmentDate,
+a.balance,
+a.status AS appointmentStatus,
+p.patientId,
+p.nic,
+p.name AS patientName,
+p.email AS patientEmail,
+p.phoneNumber AS patientPhone,
+t.therapistId,
+t.therapistName,
+t.email AS therapistEmail,
+t.phone As therapistPhone,
+tp.programId,
+tp.programName,
+tp.duration,
+tp.programFee,
+pay.paymentId,
+pay.status AS paymentStatus,
+pay.amount,
+pay.paymentDate
+FROM
+Appointment a
+JOIN Patient p ON a.patient_patientId = p.patientId
+JOIN Therapist t ON a.therapist_therapistId = t.therapistId
+JOIN TherapyProgram tp ON a.therapyProgram_programId = tp.programId
+LEFT JOIN Payment pay ON a.paymentId=pay.paymentId
+WHERE a.appointmentId=$P{appointmentId}]]></query>
+	<field name="appointmentId" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="appointmentId"/>
+		<property name="com.jaspersoft.studio.field.label" value="appointmentId"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="Appointment"/>
+	</field>
+	<field name="date" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.name" value="date"/>
+		<property name="com.jaspersoft.studio.field.label" value="date"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="Appointment"/>
+	</field>
+	<field name="balance" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.name" value="balance"/>
+		<property name="com.jaspersoft.studio.field.label" value="balance"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="Appointment"/>
+	</field>
+	<field name="status" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="status"/>
+		<property name="com.jaspersoft.studio.field.label" value="status"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="Appointment"/>
+	</field>
+	<field name="patientName" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="name"/>
+		<property name="com.jaspersoft.studio.field.label" value="patientName"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="Patient"/>
+	</field>
+	<field name="therapistName" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="therapistName"/>
+		<property name="com.jaspersoft.studio.field.label" value="therapistName"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="Therapist"/>
+	</field>
+	<field name="programName" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="programName"/>
+		<property name="com.jaspersoft.studio.field.label" value="programName"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="TherapyProgram"/>
+	</field>
+	<field name="programFee" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.name" value="programFee"/>
+		<property name="com.jaspersoft.studio.field.label" value="programFee"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="TherapyProgram"/>
+	</field>
+	<field name="paymentStatus" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="status"/>
+		<property name="com.jaspersoft.studio.field.label" value="paymentStatus"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="Payment"/>
+	</field>
+	<field name="amount" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.name" value="amount"/>
+		<property name="com.jaspersoft.studio.field.label" value="amount"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="Payment"/>
+	</field>
+	<field name="paymentDate" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.name" value="paymentDate"/>
+		<property name="com.jaspersoft.studio.field.label" value="paymentDate"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="Payment"/>
+	</field>
+	<background splitType="Stretch"/>
+	<title height="84" splitType="Stretch">
+		<element kind="staticText" uuid="f44de3ca-3fb0-4a1e-8cfb-13a132d0e57e" x="-20" y="0" width="595" height="79" fontName="SansSerif" fontSize="18.0" bold="true" italic="false" hTextAlign="Center">
+			<text><![CDATA[Serenity Mental Health]]></text>
+		</element>
+	</title>
+	<pageHeader height="298" splitType="Stretch">
+		<element kind="staticText" uuid="67f24738-081a-4f9d-bde7-f28a92f7f5a6" x="-6" y="7" width="56" height="33" fontSize="12.0" hTextAlign="Left" vTextAlign="Middle">
+			<text><![CDATA[Patient :]]></text>
+		</element>
+		<element kind="staticText" uuid="2673c4b1-1c57-4d11-b351-ad9cfee1f963" x="-5" y="44" width="105" height="33" fontSize="12.0" hTextAlign="Left" vTextAlign="Middle">
+			<text><![CDATA[Appointment Id :]]></text>
+		</element>
+		<element kind="staticText" uuid="2db8197a-1b2c-43e7-8afe-8d6510a07704" x="-5" y="80" width="56" height="33" fontSize="12.0" hTextAlign="Left" vTextAlign="Middle">
+			<text><![CDATA[Date :]]></text>
+		</element>
+		<element kind="textField" uuid="4d66ec61-cd91-4e63-a9ef-ecb74e0edfcd" x="59" y="9" width="100" height="30">
+			<expression><![CDATA[$F{patientName}]]></expression>
+		</element>
+		<element kind="textField" uuid="9f4ae708-6313-480b-bcdc-bed06a9dad4d" x="104" y="47" width="100" height="30">
+			<expression><![CDATA[$F{appointmentId}]]></expression>
+		</element>
+		<element kind="textField" uuid="f24dbe5e-3fab-4c4a-a581-e02ab25f417e" x="57" y="82" width="100" height="30">
+			<expression><![CDATA[$F{date}]]></expression>
+		</element>
+		<element kind="staticText" uuid="f496cc10-80cd-4e07-b5ee-d851a1330d06" x="-4" y="163" width="114" height="33" fontSize="12.0" hTextAlign="Left" vTextAlign="Middle">
+			<text><![CDATA[Therapy Program :]]></text>
+		</element>
+		<element kind="textField" uuid="95914aed-383f-46e7-b3b5-017cae3e276a" x="116" y="166" width="100" height="30">
+			<expression><![CDATA[$F{programName}]]></expression>
+		</element>
+		<element kind="staticText" uuid="f0d8bbcd-56f4-4c72-b32b-8849a5a8dd8c" x="-3" y="207" width="33" height="33" fontSize="12.0" hTextAlign="Left" vTextAlign="Middle">
+			<text><![CDATA[Fee :]]></text>
+		</element>
+		<element kind="textField" uuid="46360cb9-2dcc-4d6c-bba8-4131d16eff26" x="33" y="208" width="100" height="30">
+			<expression><![CDATA[$F{programFee}]]></expression>
+		</element>
+		<element kind="staticText" uuid="7b3c2cb5-d382-49e1-a223-db0806d9f660" x="-3" y="252" width="102" height="33" fontSize="12.0" hTextAlign="Left" vTextAlign="Middle">
+			<text><![CDATA[Payment Status :]]></text>
+		</element>
+		<element kind="textField" uuid="cbfbc00e-51b8-4a34-968d-24e15ae60270" x="114" y="252" width="100" height="30">
+			<expression><![CDATA[$F{status}]]></expression>
+		</element>
+		<element kind="staticText" uuid="62f23bb9-7841-4be6-b934-a9513b1c1c36" x="-3" y="123" width="62" height="33" fontSize="12.0" hTextAlign="Left" vTextAlign="Middle">
+			<text><![CDATA[Therapist :]]></text>
+		</element>
+		<element kind="textField" uuid="8ce68604-ceed-490b-bc26-6aaa14cd607a" x="64" y="125" width="100" height="30">
+			<expression><![CDATA[$F{therapistName}]]></expression>
+		</element>
+	</pageHeader>
+	<pageFooter height="98" splitType="Stretch">
+		<element kind="staticText" uuid="0e331d20-0b0b-44ad-be2e-dc5e1711f6b5" x="363" y="32" width="196" height="23">
+			<text><![CDATA[No:65,H.W.Amarasuriya mawatha,Galle]]></text>
+		</element>
+		<element kind="staticText" uuid="c71e8bf9-5320-4895-b502-02c4fd14b590" x="364" y="58" width="196" height="14">
+			<text><![CDATA[Tel:0912547888 /  0112547689]]></text>
+		</element>
+		<element kind="staticText" uuid="09d4d243-5b30-4ca1-9052-07351bf37e5c" x="364" y="79" width="196" height="14">
+			<text><![CDATA[E mail : Serenity@gmail.com]]></text>
+		</element>
+	</pageFooter>
+	<summary height="42" splitType="Stretch"/>
+</jasperReport>

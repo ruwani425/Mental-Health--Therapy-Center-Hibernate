@@ -6,9 +6,11 @@ import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.entity.Appointment;
 import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.entity.Patient;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class AppointmentDAOImpl implements AppointmentDAO {
 

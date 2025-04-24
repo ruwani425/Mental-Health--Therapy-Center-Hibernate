@@ -9,6 +9,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyEvent;
 import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.bo.BOFactory;
 import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.bo.custom.AppointmentBO;
 import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.config.FactoryConfiguration;
@@ -31,6 +32,9 @@ import java.util.Map;
 import java.util.ResourceBundle;
 
 public class AppointmentViewController implements Initializable {
+
+    @FXML
+    private JFXButton searchAppointments;
 
     @FXML
     private Label lblAdvancePayment;
@@ -149,7 +153,7 @@ public class AppointmentViewController implements Initializable {
                     AppointmentTM appointment = getTableView().getItems().get(getIndex());
                     System.out.println("Generating invoice for: " + appointment.getAppointmentId());
                     try {
-                        generateInvoice();
+                        generateInvoice(String.valueOf(appointment.getAppointmentId()));
                     } catch (JRException e) {
                         throw new RuntimeException(e);
                     }
@@ -180,28 +184,24 @@ public class AppointmentViewController implements Initializable {
         });
     }
 
-    private void generateInvoice() throws JRException {
+    private void generateInvoice(String appointmentId) throws JRException {
         Session session = null;
         try {
             session = FactoryConfiguration.getInstance().getSession();
-
             Connection connection = session.doReturningWork(conn -> conn);
 
             Map<String, Object> parameters = new HashMap<>();
+            parameters.put("appointmentId", appointmentId);
 
             JasperReport jasperReport = JasperCompileManager.compileReport(
-                    getClass().getResourceAsStream("/reports/appointment.jrxml"));
+                    getClass().getResourceAsStream("/reports/invoice_A4_1.jrxml"));
 
             JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, connection);
-
             JasperViewer.viewReport(jasperPrint, false);
 
-        } catch (JRException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             new Alert(Alert.AlertType.ERROR, "Failed to generate the report.").show();
-        } catch (Exception e) {
-            new Alert(Alert.AlertType.ERROR, "Something went wrong while accessing the database.").show();
-            e.printStackTrace();
         } finally {
             if (session != null && session.isOpen()) {
                 session.close();
@@ -453,4 +453,8 @@ public class AppointmentViewController implements Initializable {
         }
     }
 
+    @FXML
+    void searchAppointmentOnAction(KeyEvent keyEvent) {
+
+    }
 }
