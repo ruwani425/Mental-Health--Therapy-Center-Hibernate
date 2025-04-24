@@ -40,11 +40,12 @@
                         <TableView fx:id="tblPendingAppointment" layoutX="1.0" prefHeight="183.0" prefWidth="943.0">
                           <columns>
                             <TableColumn fx:id="colPAppointmentId" prefWidth="121.33332824707031" text="Appointment Id" />
-                            <TableColumn fx:id="colPDate" prefWidth="170.33334350585938" text="Date" />
-                              <TableColumn fx:id="colPTherapist" prefWidth="152.99996948242188" text="Therapist" />
-                              <TableColumn fx:id="colPPatient" prefWidth="134.6666259765625" text="Patient" />
-                              <TableColumn fx:id="colPTherapyProgram" minWidth="0.0" prefWidth="203.66668701171875" text="Therapy Program" />
-                              <TableColumn fx:id="colPBalance" minWidth="0.0" prefWidth="157.0" text="Balance" />
+                            <TableColumn fx:id="colPDate" prefWidth="89.66667175292969" text="Date" />
+                              <TableColumn fx:id="colPTherapist" prefWidth="131.0" text="Therapist" />
+                              <TableColumn fx:id="colPPatient" prefWidth="114.00003051757812" text="Patient" />
+                              <TableColumn fx:id="colPTherapyProgram" minWidth="0.0" prefWidth="159.33331298828125" text="Therapy Program" />
+                              <TableColumn fx:id="colPBalance" minWidth="0.0" prefWidth="173.33331298828125" text="Balance" />
+                              <TableColumn fx:id="colPInvoice" prefWidth="150.0" text="Invoice" />
                           </columns>
                         </TableView>
                      </children>
