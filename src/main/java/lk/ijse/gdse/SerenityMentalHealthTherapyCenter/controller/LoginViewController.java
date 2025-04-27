@@ -13,7 +13,10 @@ import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.bo.BOFactory;
 import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.bo.custom.UserBO;
+import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.customexception.InvalidCredentialException;
+import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.customexception.UserNotFoundException;
 import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.dto.UserDTO;
+import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.entity.Appointment;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -39,22 +42,29 @@ public class LoginViewController {
 
         UserDTO userDTO = userBO.getUserByUsername(username);
 
-        if (userBO.isUserExists(username, password)) {
-            SettingViewController.currentUserName = username;
-            DashboardViewController.role = userDTO.getRole();
-            SettingViewController.userRole = userDTO.getRole();
-            loadDashboard("dashboard-view.fxml");
-        } else {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Login Error");
-            alert.setHeaderText("Invalid username or password");
-            alert.setContentText("Please check your credentials and try again.");
-            alert.showAndWait();
+        try {
+            if (userBO.isUserExists(username, password)) {
+                SettingViewController.currentUserName = username;
+                DashboardViewController.role = userDTO.getRole();
+                SettingViewController.userRole = userDTO.getRole();
+                AppointmentViewController.role = userDTO.getRole();
+                loadDashboard("dashboard-view.fxml");
+            } else {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Login Error");
+                alert.setHeaderText("Invalid username or password");
+                alert.setContentText("Please check your credentials and try again.");
+                alert.showAndWait();
 
-            txtUserName.clear();
-            txtPassword.clear();
-            txtUserName.setStyle("-fx-border-color: red;");
-            txtPassword.setStyle("-fx-border-color: red;");
+                txtUserName.clear();
+                txtPassword.clear();
+                txtUserName.setStyle("-fx-border-color: red;");
+                txtPassword.setStyle("-fx-border-color: red;");
+            }
+        } catch (UserNotFoundException e) {
+            new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
+        } catch (InvalidCredentialException e) {
+            new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
         }
     }
 

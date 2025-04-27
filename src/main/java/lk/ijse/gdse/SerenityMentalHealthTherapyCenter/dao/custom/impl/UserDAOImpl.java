@@ -1,5 +1,7 @@
 package lk.ijse.gdse.SerenityMentalHealthTherapyCenter.dao.custom.impl;
 
+import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.customexception.InvalidCredentialException;
+import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.customexception.UserNotFoundException;
 import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.dao.custom.UserDAO;
 import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.entity.User;
 import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.config.FactoryConfiguration;
@@ -39,21 +41,26 @@ public class UserDAOImpl implements UserDAO {
 
 
     @Override
-    public boolean validateUser(String username, String password) {
-        try (Session session = FactoryConfiguration.getInstance().getSession()) {
-            String hql = "FROM User WHERE username = :username";
-            Query<User> query = session.createQuery(hql, User.class);
-            query.setParameter("username", username);
+    public boolean validateUser(String username, String password) throws UserNotFoundException, InvalidCredentialException {
+        Session session = FactoryConfiguration.getInstance().getSession();
+        String hql = "FROM User WHERE username = :username";
+        Query<User> query = session.createQuery(hql, User.class);
+        query.setParameter("username", username);
 
-            User user = query.uniqueResult();
+        User user = query.uniqueResult();
+//
+//            if (user != null && BCrypt.checkpw(password, user.getPassword())) {
+//                return true;
+//            }
+//            return false;
 
-            if (user != null && BCrypt.checkpw(password, user.getPassword())) {
-                return true;
-            }
-            return false;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
+        if (user == null) {
+            throw new UserNotFoundException("user not found.");
+        }
+        if (BCrypt.checkpw(password, user.getPassword())) {
+            return true;
+        }else {
+            throw new InvalidCredentialException("invalid credential.");
         }
     }
 

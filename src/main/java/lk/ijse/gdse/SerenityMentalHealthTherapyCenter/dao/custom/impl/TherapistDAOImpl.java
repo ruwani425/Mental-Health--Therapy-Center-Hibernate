@@ -18,16 +18,11 @@ public class TherapistDAOImpl implements TherapistDAO {
         Transaction transaction = session.beginTransaction();
         ArrayList<Therapist> therapists = new ArrayList<>();
 
-        try {
-            List<Therapist> therapistList = session.createQuery("FROM Therapist ", Therapist.class).list();
-            therapists.addAll(therapistList);
-            transaction.commit();
-        } catch (Exception e) {
-            transaction.rollback();
-            e.printStackTrace();
-        } finally {
-            session.close();
-        }
+
+        List<Therapist> therapistList = session.createQuery("FROM Therapist ", Therapist.class).list();
+        therapists.addAll(therapistList);
+        transaction.commit();
+
         return therapists;
     }
 

@@ -21,6 +21,7 @@ import java.net.URL;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class PatientsViewController implements Initializable {
@@ -137,6 +138,14 @@ public class PatientsViewController implements Initializable {
             txtPatientEmail.setStyle(null);
         }
 
+        // NIC
+        if (!txtnicNumber.getText().matches("^(?:\\d{9}[vVxX]|\\d{12})$")) {
+            txtnicNumber.setStyle("-fx-border-color: red;");
+            isValid = false;
+        } else {
+            txtnicNumber.setStyle(null);
+        }
+
         // Gender
         if (cmbGender.getSelectionModel().getSelectedItem() == null) {
             cmbGender.setStyle("-fx-border-color: red;");
@@ -155,7 +164,6 @@ public class PatientsViewController implements Initializable {
 
         return isValid;
     }
-
 
     private void loadPatientData() {
         patientList.clear();
@@ -208,6 +216,7 @@ public class PatientsViewController implements Initializable {
         datePickerDob.setValue(patient.getDateOfBirth().toLocalDate());
         btnDelete.setDisable(false);
         btnUpdate.setDisable(false);
+        btnSave.setDisable(true);
     }
 
 
@@ -217,16 +226,36 @@ public class PatientsViewController implements Initializable {
 
     @FXML
     void btnDeletePatientOnAction(ActionEvent event) throws SQLException, ClassNotFoundException {
-        boolean isDeleted = patientsBO.deletePatient(id);
-        if (isDeleted) {
-            new Alert(Alert.AlertType.INFORMATION, "Patient deleted successfully!").show();
-            loadPatientData();
-            clearFields();
-            btnDelete.setDisable(true);
+        ButtonType yes = new ButtonType("Yes", ButtonBar.ButtonData.YES);
+        ButtonType no = new ButtonType("No", ButtonBar.ButtonData.NO);
+
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to delete this patient?", yes, no);
+        alert.setTitle("Confirmation");
+        alert.setHeaderText(null);
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.isPresent() && result.get() == yes) {
+            boolean isDeleted = patientsBO.deletePatient(id);
+            if (isDeleted) {
+                new Alert(Alert.AlertType.INFORMATION, "Patient deleted successfully!").show();
+                loadPatientData();
+                clearFields();
+                btnDelete.setDisable(true);
+                btnUpdate.setDisable(true);
+                btnSave.setDisable(false);
+            } else {
+                btnDelete.setDisable(true);
+                btnUpdate.setDisable(true);
+                btnSave.setDisable(false);
+                new Alert(Alert.AlertType.ERROR, "Failed to delete patient!").show();
+            }
         } else {
-            new Alert(Alert.AlertType.ERROR, "Failed to delete patient!").show();
+            btnDelete.setDisable(true);
+            btnUpdate.setDisable(true);
+            btnSave.setDisable(false);
         }
     }
+
 
     private void clearFields() {
         txtPatientName.clear();
@@ -293,6 +322,8 @@ public class PatientsViewController implements Initializable {
             clearFields();
             loadPatientData();
             btnUpdate.setDisable(true);
+            btnDelete.setDisable(true);
+            btnSave.setDisable(false);
         } else {
             new Alert(Alert.AlertType.ERROR, "Failed to update patient!").show();
         }

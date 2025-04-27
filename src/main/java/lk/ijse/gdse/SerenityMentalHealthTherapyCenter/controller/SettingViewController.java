@@ -12,7 +12,9 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
 import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.bo.BOFactory;
 import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.bo.custom.UserBO;
+import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.customexception.InvalidCredentialException;
 import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.customexception.PatientPersistException;
+import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.customexception.UserNotFoundException;
 import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.dto.UserDTO;
 
 import java.net.URL;
@@ -118,7 +120,16 @@ public class SettingViewController implements Initializable {
         String conformNewPassword = txtConformNewPassword.getText();
 
         String finalUserName;
-        boolean isValid = userBO.isUserExists(currentUserName, currentPassword);
+        boolean isValid = false;
+
+        try {
+            isValid = userBO.isUserExists(currentUserName, currentPassword);
+        } catch (UserNotFoundException e) {
+            new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
+        } catch (InvalidCredentialException e) {
+            new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
+        }
+
         UserDTO currentUserDTO = userBO.getUserByUsername(currentUserName);
 
         if (checkBoxUserName.isSelected()) {
@@ -165,6 +176,7 @@ public class SettingViewController implements Initializable {
         txtUserName.clear();
         txtPassword.clear();
         txtConformPassword.clear();
+        txtNewPassword.clear();
         resetFieldBorderColor(txtPassword);
         resetFieldBorderColor(txtConformPassword);
         resetFieldBorderColor(txtNewPassword);

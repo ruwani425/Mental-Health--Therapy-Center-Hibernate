@@ -21,7 +21,7 @@ public class TherapistsBOImpl implements TherapistsBO {
     private final TherapyProgramDAO therapyProgramDAO = (TherapyProgramDAO) DAOFactory.getInstance().getDAO(DAOFactory.DAOType.THERAPYPROGRAM);
 
     @Override
-    public boolean saveTherapist(TherapistDTO therapistDTO) throws SQLException, ClassNotFoundException, PatientPersistException {
+    public boolean saveTherapist(TherapistDTO therapistDTO) throws SQLException, ClassNotFoundException {
 
         Therapist therapist = new Therapist();
         therapist.setTherapistId(therapistDTO.getTherapistId());

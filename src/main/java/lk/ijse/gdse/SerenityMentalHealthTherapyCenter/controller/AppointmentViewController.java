@@ -29,10 +29,7 @@ import java.sql.Date;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class AppointmentViewController implements Initializable {
 
@@ -122,10 +119,16 @@ public class AppointmentViewController implements Initializable {
     @FXML
     private TableColumn<AppointmentTM, Button> colCInvoice;
 
+    public static String role;
+
     AppointmentBO appointmentBO = (AppointmentBO) BOFactory.getInstance().getBO(BOFactory.BOType.APPOINTMENT);
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        if (role.equals("admin")) {
+            btnPay.setDisable(true);
+        }
 
         loadAppointmentsToTable();
         setCellValueFactory();
@@ -212,16 +215,29 @@ public class AppointmentViewController implements Initializable {
         });
 
         colPAction.setCellFactory(param -> new TableCell<>() {
-            private final Button btn = new Button("Cansel");
+            private final Button btn = new Button("Cancel");
 
             {
                 btn.setOnAction(event -> {
                     AppointmentTM appointment = getTableView().getItems().get(getIndex());
-                    try {
-                        appointmentBO.deleteAppointment(appointment.getAppointmentId());
-                        loadAppointmentsToTable();
-                    } catch (SQLException | ClassNotFoundException e) {
-                        throw new RuntimeException(e);
+
+                    ButtonType yes = new ButtonType("Yes", ButtonBar.ButtonData.YES);
+                    ButtonType no = new ButtonType("No", ButtonBar.ButtonData.NO);
+
+                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to cancel this appointment?", yes, no);
+                    alert.setTitle("Confirmation");
+                    alert.setHeaderText(null);
+
+                    Optional<ButtonType> result = alert.showAndWait();
+                    if (result.isPresent() && result.get() == yes) {
+                        try {
+                            appointmentBO.deleteAppointment(appointment.getAppointmentId());
+                            loadAppointmentsToTable();
+                            new Alert(Alert.AlertType.INFORMATION, "Appointment cancelled successfully!").show();
+                        } catch (SQLException | ClassNotFoundException e) {
+                            new Alert(Alert.AlertType.ERROR, "Failed to cancel appointment").show();
+                            e.printStackTrace();
+                        }
                     }
                 });
 
@@ -239,6 +255,7 @@ public class AppointmentViewController implements Initializable {
                 }
             }
         });
+
 
         tblPendingAppointment.setOnMouseClicked(event -> {
             if (event.getClickCount() == 1) {

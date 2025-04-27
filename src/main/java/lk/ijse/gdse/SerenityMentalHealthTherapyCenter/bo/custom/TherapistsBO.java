@@ -9,7 +9,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 public interface TherapistsBO extends SuperBO {
-    boolean saveTherapist(TherapistDTO therapistDTO) throws SQLException, ClassNotFoundException, PatientPersistException;
+    boolean saveTherapist(TherapistDTO therapistDTO) throws SQLException, ClassNotFoundException;
 
     List<TherapistDTO> getAllTherapists() throws SQLException, ClassNotFoundException;
 

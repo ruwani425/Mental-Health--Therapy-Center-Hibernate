@@ -54,7 +54,6 @@ public class DashboardViewController implements Initializable {
 
         if (role.equals("admin")) {
             imgPatientsBtn.setVisible(false);
-            imgBookingsBtn.setVisible(false);
         } else if (role.equals("Receptionist")) {
             imgTherapistsBtn.setVisible(false);
             imgProgramsBtn.setVisible(false);

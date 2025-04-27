@@ -29,10 +29,7 @@ import java.net.URL;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class TherapistsViewController implements Initializable {
 
@@ -116,6 +113,7 @@ public class TherapistsViewController implements Initializable {
         setCellValueFactory();
         btnDelete.setDisable(true);
         btnUpdate.setDisable(true);
+        btnSave.setDisable(false);
     }
 
     private void setPerformanceButtonColumn() {
@@ -180,6 +178,7 @@ public class TherapistsViewController implements Initializable {
         String email = txtTherapistEmail.getText();
         String phone = txtTherapistPhone.getText();
         String status = cmbTherapistStatus.getSelectionModel().getSelectedItem();
+        Integer program = comboBoxTherapyProgram.getSelectionModel().getSelectedItem();
         boolean isValid = true;
 
         // Reset field styles
@@ -188,6 +187,7 @@ public class TherapistsViewController implements Initializable {
         txtTherapistEmail.setStyle("-fx-border-color: transparent;");
         txtTherapistPhone.setStyle("-fx-border-color: transparent;");
         cmbTherapistStatus.setStyle("-fx-border-color: transparent;");
+        comboBoxTherapyProgram.setStyle("-fx-border-color: transparent;");
         datePickerDob.setStyle("-fx-border-color: transparent;");
 
         // Validate name
@@ -220,6 +220,12 @@ public class TherapistsViewController implements Initializable {
             isValid = false;
         }
 
+        // Validate therapy program
+        if (program == null) {
+            comboBoxTherapyProgram.setStyle("-fx-border-color: red;");
+            isValid = false;
+        }
+
         // Validate date of birth
         if (datePickerDob.getValue() == null) {
             datePickerDob.setStyle("-fx-border-color: red;");
@@ -232,6 +238,7 @@ public class TherapistsViewController implements Initializable {
 
         return isValid;
     }
+
 
     private void loadTherapistData() {
         therapistTMS.clear();
@@ -274,6 +281,7 @@ public class TherapistsViewController implements Initializable {
     private void setTableListener() {
         tblTherapist.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
+                btnSave.setDisable(true);
                 txtTherapistName.setText(newSelection.getTherapistName());
                 txtTherapistAddress.setText(newSelection.getAddress());
                 txtTherapistEmail.setText(newSelection.getEmail());
@@ -294,18 +302,39 @@ public class TherapistsViewController implements Initializable {
 
     @FXML
     void btnDeleteTherapistOnAction(ActionEvent event) throws SQLException, ClassNotFoundException {
-        boolean isDeleted = therapistsBO.DeleteTherapist(id);
+        ButtonType yes = new ButtonType("Yes", ButtonBar.ButtonData.YES);
+        ButtonType no = new ButtonType("No", ButtonBar.ButtonData.NO);
 
-        if (isDeleted) {
-            loadTherapistData();
-            clearFields();
-            new Alert(Alert.AlertType.CONFIRMATION, "Therapist Deleted Successfully").show();
-            btnDelete.setDisable(true);
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to delete this therapist?", yes, no);
+        alert.setTitle("Confirmation");
+        alert.setHeaderText(null);
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.isPresent() && result.get() == yes) {
+            boolean isDeleted = therapistsBO.DeleteTherapist(id);
+
+            if (isDeleted) {
+                loadTherapistData();
+                clearFields();
+                new Alert(Alert.AlertType.INFORMATION, "Therapist Deleted Successfully").show();
+                btnDelete.setDisable(true);
+                btnUpdate.setDisable(true);
+                btnSave.setDisable(false);
+            } else {
+                clearFields();
+                btnDelete.setDisable(true);
+                btnUpdate.setDisable(true);
+                btnSave.setDisable(false);
+                new Alert(Alert.AlertType.ERROR, "Therapist Deletion failed").show();
+            }
         } else {
             clearFields();
-            new Alert(Alert.AlertType.ERROR, "Therapist Deletion failed").show();
+            btnDelete.setDisable(true);
+            btnUpdate.setDisable(true);
+            btnSave.setDisable(false);
         }
     }
+
 
     @FXML
     void btnSaveTherapistOnAction(ActionEvent event) throws SQLException, ClassNotFoundException, PatientPersistException {
@@ -361,8 +390,14 @@ public class TherapistsViewController implements Initializable {
         if (isUpdated) {
             loadTherapistData();
             clearFields();
+            btnSave.setDisable(false);
+            btnUpdate.setDisable(true);
+            btnDelete.setDisable(true);
             new Alert(Alert.AlertType.INFORMATION, "Therapist updated Successfully").show();
         } else {
+            btnSave.setDisable(false);
+            btnUpdate.setDisable(true);
+            btnDelete.setDisable(true);
             new Alert(Alert.AlertType.ERROR, "Therapist could not be updated").show();
         }
     }

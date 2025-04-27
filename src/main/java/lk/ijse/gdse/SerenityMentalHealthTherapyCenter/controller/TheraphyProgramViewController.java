@@ -7,9 +7,7 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.bo.BOFactory;
 import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.bo.custom.TherapyProgramBO;
@@ -20,6 +18,7 @@ import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.dto.tm.TherapyProgramTM;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class TheraphyProgramViewController implements Initializable {
@@ -109,20 +108,44 @@ public class TheraphyProgramViewController implements Initializable {
         id = String.valueOf(program.getProgramId());
         btnDelete.setDisable(false);
         btnUpdate.setDisable(false);
+        btnSave.setDisable(true);
     }
 
     @FXML
     void btnDeleteProgramOnAction(ActionEvent event) throws SQLException, ClassNotFoundException {
-        boolean isDeleted = therapyProgramBO.deleteTherapyProgram(id);
+        ButtonType yes = new ButtonType("Yes", ButtonBar.ButtonData.YES);
+        ButtonType no = new ButtonType("No", ButtonBar.ButtonData.NO);
 
-        if (isDeleted) {
-            loadProgramData();
-            clearFields();
-            new Alert(Alert.AlertType.CONFIRMATION, "Therapy Program Deleted").show();
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to delete this therapy program?", yes, no);
+        alert.setTitle("Confirmation");
+        alert.setHeaderText(null);
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.isPresent() && result.get() == yes) {
+            boolean isDeleted = therapyProgramBO.deleteTherapyProgram(id);
+
+            if (isDeleted) {
+                loadProgramData();
+                clearFields();
+                btnDelete.setDisable(true);
+                btnUpdate.setDisable(true);
+                btnSave.setDisable(false);
+                new Alert(Alert.AlertType.INFORMATION, "Therapy Program Deleted Successfully").show();
+            } else {
+                clearFields();
+                btnDelete.setDisable(true);
+                btnUpdate.setDisable(true);
+                btnSave.setDisable(false);
+                new Alert(Alert.AlertType.ERROR, "Failed to delete therapy program").show();
+            }
         } else {
-            new Alert(Alert.AlertType.ERROR, "failed to delete therapy program").show();
+            clearFields();
+            btnDelete.setDisable(true);
+            btnUpdate.setDisable(true);
+            btnSave.setDisable(false);
         }
     }
+
 
     private void clearFields() {
         txtProgramName.clear();
@@ -220,8 +243,14 @@ public class TheraphyProgramViewController implements Initializable {
         if (isUpdated) {
             loadProgramData();
             clearFields();
+            btnDelete.setDisable(true);
+            btnUpdate.setDisable(true);
+            btnSave.setDisable(false);
             new Alert(Alert.AlertType.INFORMATION, "Program Updated").show();
         } else {
+            btnDelete.setDisable(true);
+            btnUpdate.setDisable(true);
+            btnSave.setDisable(false);
             new Alert(Alert.AlertType.ERROR, "program not Updated").show();
         }
     }

@@ -1,7 +1,9 @@
 package lk.ijse.gdse.SerenityMentalHealthTherapyCenter.bo.custom.impl;
 
 import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.bo.custom.UserBO;
+import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.customexception.InvalidCredentialException;
 import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.customexception.PatientPersistException;
+import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.customexception.UserNotFoundException;
 import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.dao.DAOFactory;
 import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.dao.custom.UserDAO;
 import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.dto.UserDTO;
@@ -20,7 +22,7 @@ public class UserBOImpl implements UserBO {
     }
 
     @Override
-    public boolean isUserExists(String username, String password) {
+    public boolean isUserExists(String username, String password) throws UserNotFoundException, InvalidCredentialException {
         return userDAO.validateUser(username, password);
     }
 
