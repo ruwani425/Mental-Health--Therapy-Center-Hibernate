@@ -48,11 +48,6 @@ public class UserDAOImpl implements UserDAO {
         query.setParameter("username", username);
 
         User user = query.uniqueResult();
-//
-//            if (user != null && BCrypt.checkpw(password, user.getPassword())) {
-//                return true;
-//            }
-//            return false;
 
         if (user == null) {
             throw new UserNotFoundException("user not found.");
