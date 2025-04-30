@@ -45,6 +45,17 @@
          </font>
       </Label>
       <Separator layoutX="1.0" layoutY="557.0" prefHeight="3.0" prefWidth="909.0" />
-      <JFXPasswordField fx:id="txtPassword" layoutX="503.0" layoutY="324.0" prefHeight="28.0" prefWidth="278.0" promptText="Enter Password" />
+      <JFXPasswordField fx:id="txtPassword" layoutX="503.0" layoutY="324.0" onKeyReleased="#hidePasswordOnAction" prefHeight="28.0" prefWidth="278.0" promptText="Enter Password" />
+      <JFXTextField fx:id="txtShowPassword" layoutX="504.0" layoutY="324.0" onKeyReleased="#showPasswordOnAction" prefHeight="28.0" prefWidth="278.0" />
+      <ImageView fx:id="imgClosedEye" fitHeight="28.0" fitWidth="31.0" layoutX="750.0" layoutY="324.0" onMouseClicked="#closeEyeClickOnAction" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../asserts/close%20eye.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="imgOpenEye" fitHeight="28.0" fitWidth="31.0" layoutX="750.0" layoutY="323.0" onMouseClicked="#openEyeClickOnAction" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../asserts/open%20eye.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>
