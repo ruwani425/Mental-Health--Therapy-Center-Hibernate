@@ -73,13 +73,13 @@
             <Image url="@../asserts/blackBox.png" />
          </image>
       </ImageView>
-      <Label fx:id="lblDate" layoutX="105.0" layoutY="509.0" prefHeight="61.0" prefWidth="300.0">
+      <Label fx:id="lblDate" layoutX="105.0" layoutY="424.0" prefHeight="70.0" prefWidth="500.0">
          <font>
-            <Font name="System Bold" size="36.0" />
+            <Font name="System Bold" size="48.0" />
          </font></Label>
-      <Label fx:id="lblTime" layoutX="105.0" layoutY="572.0" prefHeight="61.0" prefWidth="300.0">
+      <Label fx:id="lblTime" layoutX="105.0" layoutY="504.0" prefHeight="70.0" prefWidth="500.0">
          <font>
-            <Font name="System Bold" size="36.0" />
+            <Font name="System Bold" size="48.0" />
          </font>
       </Label>
    </children>

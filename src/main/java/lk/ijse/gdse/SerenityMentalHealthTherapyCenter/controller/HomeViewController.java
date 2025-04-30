@@ -26,7 +26,8 @@ public class HomeViewController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        lblDate.setText(java.time.LocalDate.now().toString());
+        lblDate.setText(java.time.LocalDate.now()
+                .format(java.time.format.DateTimeFormatter.ofPattern("dd MMMM yyyy")));
 
         javafx.animation.Timeline timeline = new javafx.animation.Timeline(
                 new javafx.animation.KeyFrame(javafx.util.Duration.seconds(1), event -> {
