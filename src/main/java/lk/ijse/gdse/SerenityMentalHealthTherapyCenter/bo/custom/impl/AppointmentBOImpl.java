@@ -2,7 +2,6 @@ package lk.ijse.gdse.SerenityMentalHealthTherapyCenter.bo.custom.impl;
 
 import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.bo.custom.AppointmentBO;
 import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.config.FactoryConfiguration;
-import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.customexception.PatientPersistException;
 import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.dao.DAOFactory;
 import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.dao.custom.*;
 import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.dto.AppointmentDTO;
@@ -10,9 +9,7 @@ import lk.ijse.gdse.SerenityMentalHealthTherapyCenter.entity.*;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import java.sql.Date;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -157,9 +154,10 @@ public class AppointmentBOImpl implements AppointmentBO {
     }
 
     @Override
-    public void deleteAppointment(int appointmentId) throws SQLException, ClassNotFoundException {
+    public boolean deleteAppointment(int appointmentId) throws SQLException, ClassNotFoundException {
         Appointment appointment = new Appointment();
         appointment.setAppointmentId(appointmentId);
-        appointmentDAO.delete(appointment);
+
+        return appointmentDAO.delete(appointment);
     }
 }

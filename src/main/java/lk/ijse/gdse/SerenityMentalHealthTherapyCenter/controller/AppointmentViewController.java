@@ -218,6 +218,8 @@ public class AppointmentViewController implements Initializable {
             private final Button btn = new Button("Cancel");
 
             {
+                btn.setStyle("-fx-background-color: #d31f1f; -fx-text-fill: white; -fx-font-weight: bold;");
+
                 btn.setOnAction(event -> {
                     AppointmentTM appointment = getTableView().getItems().get(getIndex());
 
@@ -231,24 +233,26 @@ public class AppointmentViewController implements Initializable {
                     Optional<ButtonType> result = alert.showAndWait();
                     if (result.isPresent() && result.get() == yes) {
                         try {
-                            appointmentBO.deleteAppointment(appointment.getAppointmentId());
-                            loadAppointmentsToTable();
-                            new Alert(Alert.AlertType.INFORMATION, "Appointment cancelled successfully!").show();
+                            boolean isDeleted = appointmentBO.deleteAppointment(appointment.getAppointmentId());
+                            if (isDeleted) {
+                                loadAppointmentsToTable(); // Refresh table
+                                new Alert(Alert.AlertType.INFORMATION, "Appointment cancelled successfully!").show();
+                            } else {
+                                new Alert(Alert.AlertType.ERROR, "Failed to cancel appointment").show();
+                            }
                         } catch (SQLException | ClassNotFoundException e) {
-                            new Alert(Alert.AlertType.ERROR, "Failed to cancel appointment").show();
+                            new Alert(Alert.AlertType.ERROR, "Database error occurred").show();
                             e.printStackTrace();
                         }
                     }
                 });
-
-                btn.setStyle("-fx-background-color: #d31f1f; -fx-text-fill: white; -fx-font-weight: bold;");
             }
 
             @Override
             protected void updateItem(Button item, boolean empty) {
                 super.updateItem(item, empty);
 
-                if (empty || getTableView().getItems().get(getIndex()) == null) {
+                if (empty || getIndex() >= getTableView().getItems().size()) {
                     setGraphic(null);
                 } else {
                     setGraphic(btn);
